@@ -3,13 +3,13 @@
 
 #include <vector>
 
-#include "../../Graphics/DisplayObject.h"
+#include "InteractiveObject.h"
 
 using namespace std;
 
 namespace TenMilManUI_UI {	
 
-	class DisplayObjectContainer : public DisplayObject {
+	class DisplayObjectContainer : public InteractiveObject {
 	protected:
 		vector<DisplayObject *> children; 
 		
@@ -19,7 +19,7 @@ namespace TenMilManUI_UI {
 	public:	
 		// constructor
 		DisplayObjectContainer(DisplayObject *p, int x=0, int y=0, double rot=0.0, double s=1.0, double o=1.0)
-			:DisplayObject(p,x,y,rot,s,o){}	
+			:InteractiveObject(p,x,y,rot,s,o){}	
 		virtual ~DisplayObjectContainer(){
 			children.clear();
 		}
