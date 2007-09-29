@@ -321,11 +321,11 @@
 <folderInfo id="cdt.managedbuild.toolchain.gnu.base.1431216167.1096689126." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.base.1601584247" name="cdt.managedbuild.toolchain.gnu.base" superClass="cdt.managedbuild.toolchain.gnu.base">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.73443620" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
-<builder autoBuildTarget="all" buildPath="${workspace_loc:/TenMilManUI/SharedLibrary2}" cleanBuildTarget="clean" enableAutoBuild="false" enableCleanBuild="true" enabledIncrementalBuild="true" id="cdt.managedbuild.target.gnu.builder.base.1588809912" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="-1" superClass="cdt.managedbuild.target.gnu.builder.base"/>
+<builder autoBuildTarget="all" buildPath="${workspace_loc:/TenMilManUI/SharedLibrary}" cleanBuildTarget="clean" enableAutoBuild="false" enableCleanBuild="true" enabledIncrementalBuild="true" id="cdt.managedbuild.target.gnu.builder.base.1588809912" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="-1" superClass="cdt.managedbuild.target.gnu.builder.base"/>
 <tool id="cdt.managedbuild.tool.gnu.archiver.base.247952692" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1652573762" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 <option id="gnu.cpp.compiler.option.include.paths.383342637" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-<listOptionValue builtIn="false" value="/usr/include/SDL"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI/include/SDL}&quot;"/>
 </option>
 <option id="gnu.cpp.compiler.option.other.other.412468453" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -fPIC" valueType="string"/>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.855545014" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -346,7 +346,10 @@
 </option>
 <option defaultValue="true" id="gnu.cpp.link.option.shared.623709661" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" valueType="boolean"/>
 <option id="gnu.cpp.link.option.paths.16854425" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI/libraries/libsocketcpp}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI/libraries/SDL}&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI/libraries64/libsocketcpp}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI/libraries64/SDL}&quot;"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1110613212" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
