@@ -39,7 +39,27 @@ public:
 	static UserInput* createInstance();
 	static UserInput* instance();
 
-	virtual bool update()=0;
+	virtual bool update()=0;	
+	
+	virtual int getX(){
+		return indata.x;
+	}
+	
+	virtual int getY(){
+		return indata.y;
+	}
+
+	virtual bool isPressed(){
+		return indata.pressed;
+	}
+	
+	virtual bool isSelect(){
+		return indata.select;
+	}
+
+	virtual bool isQuit(){
+		return quit;
+	}
 };
 
 #endif

@@ -16,37 +16,59 @@
 
 #include <SDL.h>
 #include <string>
+#include <map>
+
+#include "TenMilManUI_Enums.h"
 #include "UserInputs/UserInput.h"
 #include "ITenMilManUIApp.h"
+#include "UI/Core/DisplayObjectContainer.h"
+#include "UI/Core/UIComponent.h"
 
-namespace TenMilManUI {
-	enum SCREEN_OPTION { FULLSCREEN, WINDOWED };
-	enum UIEXCEPTIONS { UIEXCEPTION_SDL_INIT_FAILED, UIEXCEPTION_OPENGL_INIT_FAILED };
-	
-	class TenMilManUI {
-		public:
-			static TenMilManUI* createInstance(int ,int ,int ,SCREEN_OPTION ,UserInput *) throw(int);
-			static TenMilManUI* instance();			
-			
-			void registerApplication(ITenMilManUIApp *app) throw(int);
-			void run() throw(int);
-			void quit() throw(int);		
-			
+using namespace TenMilManUI_CORE_UI_Core;
+using namespace std;
+
+namespace TenMilManUI_APP{
+	class ITenMilManUIApp;
+}
+
+namespace TenMilManUI_CORE {	
+
+	class TenMilManUI {		
 		private:
 		    static TenMilManUI* inst;
-			ITenMilManUIApp *app;
-			
-
+		    int screenWidth;
+		    int screenHeight;
+		    int screenBPP;
+		    UserInput* userInput;
+		    
+		    map<long ,DisplayObject*> rootObjs;		    
+		    TenMilManUI_APP::ITenMilManUIApp *app;
+						
 			// Indicates whether UI should continue running
 			// Made for Multi-Threading
 		    pthread_mutex_t runningMutex;
 			bool running;
-			
-			TenMilManUI(int,int,int,SCREEN_OPTION,UserInput *) throw(int);			
+					
+			TenMilManUI(TenMilManUI_APP::ITenMilManUIApp *) throw(int);						
 			virtual ~TenMilManUI();
 			
+			void update(); 
 			void draw();
 			bool isRunning();
+		
+		public:
+
+			static TenMilManUI* createInstance(TenMilManUI_APP::ITenMilManUIApp *) throw(int);
+			static TenMilManUI* instance();			
+			
+			void run() throw(int);
+			void quit() throw(int);
+			
+			void addDisplayObject(DisplayObject *obj){
+				obj->init();
+				rootObjs.insert(make_pair(obj->getObjectID(), obj));
+			}
+			
 	};
 
 }

@@ -2,4 +2,4 @@
 
 #include "DisplayObject.h"
 
-long DisplayObject::nextObjectID = 0;
+unsigned long DisplayObject::nextObjectID = 0;
