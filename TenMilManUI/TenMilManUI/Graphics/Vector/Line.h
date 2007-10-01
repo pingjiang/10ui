@@ -23,7 +23,7 @@
 #include <string>
 #include <list>
 
-namespace TenMilManUI_Graphics_Vector {	
+namespace TenMilManUI_CORE_Graphics_Vector {	
 
 	class Line : public DisplayObject {
 	protected:
@@ -51,30 +51,14 @@ namespace TenMilManUI_Graphics_Vector {
 		virtual void init(){}
 		virtual void update(){}	
 		virtual void draw(){
-			if( isEnable ){
-				glPushMatrix();
-		
-				// translate, rotate, scale
-				glTranslated((GLdouble)x,(GLdouble)y,0);
-				glRotatef((GLfloat)rotation,0,0,1);
-				glScalef((GLfloat)this->scalex,(GLfloat)this->scaley,1.0);
-				
-				// this is for retrieving the mouse coords later
-				glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
-				glGetDoublev( GL_PROJECTION_MATRIX, projection );
-				glGetIntegerv( GL_VIEWPORT, viewport );
-		
-				glColor4f(lineColor[0], lineColor[1], lineColor[2],(GLfloat)this->opacity);
-				glLineWidth(lineWidth);
-								
-				// draw line
-				glBegin(GL_LINES);		                
-					glVertex2d((GLdouble)0,(GLdouble)0);
-					glVertex2d((GLdouble)x2-x,(GLdouble)y2-y);					
-				glEnd();
-				
-				glPopMatrix();
-			}
+			glColor4f(lineColor[0], lineColor[1], lineColor[2],(GLfloat)this->opacity);
+			glLineWidth(lineWidth);
+							
+			// draw line
+			glBegin(GL_LINES);		                
+				glVertex2d((GLdouble)left,(GLdouble)bottom);
+				glVertex2d((GLdouble)left+w,(GLdouble)bottom+w);					
+			glEnd();
 		}
 		
 		int getX2(){
@@ -87,11 +71,23 @@ namespace TenMilManUI_Graphics_Vector {
 		
 		void setX2(int nx){
 			x2 = nx;
+			setW((x2>x)?x2-x:x-x2);
 		}
 		
 		void setY2(int ny){
 			y2 = ny;
+			setW((y2>y)?y2-y:y-y2);
+		}				
+		
+		virtual void setW(int nw){
+			DisplayObject::setW(nw);
+			x2 = x+nw;
 		}
+
+		virtual void setH(int nh){
+			DisplayObject::setH(nh);
+			y2 = y+nh;
+		}		
 		
 		const float* getLineColor(){
 			return lineColor;

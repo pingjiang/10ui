@@ -21,28 +21,18 @@
 #include <string>
 #include <list>
 
-namespace TenMilManUI_Graphics_Raster {
+namespace TenMilManUI_CORE_Graphics_Raster {
 	enum RASTERABLE_EXCEPTIONS { SET_TEXTURE_FAILED };
 		
 	class Rasterable : public DisplayObject {	
 	protected:
 		int texw;
 		int texh;
-		
-		double centerx;
-		double centery;		
-
-		double left;
-		double bottom;
-		
-		// Sizing
-		int w; 
-		int h; 
-		
+				
 		// texture
 		bool textureSet;
 		GLuint texture;
-	
+		
 		SDL_Surface *LoadTextureFromFile(const char *filename)
 		{
 			Uint8 *rowhi, *rowlo;
@@ -60,8 +50,10 @@ namespace TenMilManUI_Graphics_Raster {
 			image = tempimg;
 			setW(image->w);
 			setH(image->h);
-			this->setX(this->getX());
-			this->setY(this->getY());
+			
+			//TODO What the Fuck is this?
+			setX(getX());
+			setY(getY());
 			
 			SDL_SetAlpha  (image, SDL_SRCALPHA , 0);
 	
@@ -177,21 +169,9 @@ namespace TenMilManUI_Graphics_Raster {
 			
 		// game loop (and init) function
 		virtual void init(){}
-		virtual void update(){}	
-		virtual void draw(){
-			if( isEnable && textureSet ){
-				glPushMatrix();
-												
-				// translate, rotate, scale
-				glTranslated((GLdouble)centerx,(GLdouble)centery,0);
-				glRotatef((GLfloat)rotation,0,0,1);
-				glScalef((GLfloat)this->scalex,(GLfloat)this->scaley,1.0);
-				
-				// this is for retrieving the mouse coords later
-				glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
-				glGetDoublev( GL_PROJECTION_MATRIX, projection );
-				glGetIntegerv( GL_VIEWPORT, viewport );
-		
+		virtual void update(){}
+		virtual void draw(){		
+			if( textureSet ){
 				glColor4d(0.0,0.0,0.0,(GLfloat)this->opacity);
 		
 				// bind texture to rectangle
@@ -204,52 +184,10 @@ namespace TenMilManUI_Graphics_Raster {
 					glTexCoord2i(1,1); glVertex2d(left+texw,bottom+texh);
 					glTexCoord2i(1,0); glVertex2d(left+texw,bottom);
 				glEnd();
-				
-				glPopMatrix();
 			}
 		}
 		
-		// getter/setter functions
-		virtual void setX(int nx){
-			DisplayObject::setX(nx);
-			
-			// Recalculate centerx 
-			centerx = (double)x+scalex*(double)w/2.0;
-		}
-		
-		virtual void setY(int ny){
-			DisplayObject::setY(ny);
-			
-			// Recalculate centery
-			centery = (double)y+scaley*(double)h/2.0;
-		}
-		
-		virtual int getW(){
-			return w;
-		}
-		
-		virtual void setW(int nw){
-			left = -(double)nw/2.0;
-			w = nw;
-		}
-		
-		virtual int getH(){
-			return h;
-		}
-		
-		virtual void setH(int nh){
-			bottom = -(double)nh/2.0;
-			h = nh;
-		}
-
-		double getCenterX(){
-			return centerx;
-		}
-		
-		double getCenterY(){
-			return centery;
-		}	
-				
+		// getter/setter functions				
 		// set functions
 		virtual void setTextureFromFile(std::string &fname) throw(int) {
 			textureSet = LoadGLTextures(fname.c_str());
@@ -281,3 +219,4 @@ namespace TenMilManUI_Graphics_Raster {
 }
 
 #endif /*RASTERABLE_H_*/
+

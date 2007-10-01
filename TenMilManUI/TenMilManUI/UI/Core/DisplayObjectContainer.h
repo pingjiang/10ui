@@ -3,51 +3,31 @@
 
 #include <vector>
 
+#include "../../Graphics/DisplayObject.h"			
 #include "InteractiveObject.h"
 
 using namespace std;
 
-namespace TenMilManUI_UI {	
+namespace TenMilManUI_CORE_UI_Core {	
 
 	class DisplayObjectContainer : public InteractiveObject {
 	protected:
-		vector<DisplayObject *> children; 
-		
-		double centerx;
-		double centery;
-		
+		vector<DisplayObject *> children;
+	
 	public:	
 		// constructor
-		DisplayObjectContainer(DisplayObject *p, int x=0, int y=0, double rot=0.0, double s=1.0, double o=1.0)
-			:InteractiveObject(p,x,y,rot,s,o){}	
-		virtual ~DisplayObjectContainer(){
-			children.clear();
-		}
-			
+		DisplayObjectContainer(DisplayObject *p, int x=0, int y=0, int w=0, int h=0, double rot=0.0, double s=1.0, double o=1.0)
+			:InteractiveObject(p,x,y,w,h,rot,s,o){}
+		virtual ~DisplayObjectContainer();
+		
 		// game loop (and init) function
-		virtual void draw(){
-			if( isEnable ){
-				glPushMatrix();
+		virtual void update();		
+		virtual void preDraw();		
+		virtual void draw();		
+		virtual void postDraw();
 		
-				// translate, rotate, scale
-				glTranslated((GLdouble)x,(GLdouble)y,0);
-				glRotatef((GLfloat)rotation,0,0,1);
-				glScalef((GLfloat)this->scalex,(GLfloat)this->scaley,1.0);
-				
-				// this is for retrieving the mouse coords later
-				glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
-				glGetDoublev( GL_PROJECTION_MATRIX, projection );
-				glGetIntegerv( GL_VIEWPORT, viewport );
-				
-				vector<DisplayObject *>::iterator it = children.begin();
-				while(it != children.end()){
-					(*it)->draw();
-				}
-		
-				glPopMatrix();
-			}
-		}
-				
+		void addChild(DisplayObject* child);		
+		void removeChild(DisplayObject* child);
 	};
 }
 

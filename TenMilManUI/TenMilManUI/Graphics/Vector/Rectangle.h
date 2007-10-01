@@ -24,17 +24,10 @@
 #include <string>
 #include <list>
 
-namespace TenMilManUI_Graphics_Vector {
+namespace TenMilManUI_CORE_Graphics_Vector {
 		
 	class Rectangle : public Shape {	
-	protected:
-		double left;
-		double bottom;
-		
-		// Sizing
-		int w;
-		int h;
-		
+	protected:		
 	public:
 		// constructor
 		Rectangle(DisplayObject *p, int x=0, int y=0, int w=0, int h=0, float r=0.0, float g=0.0, float b=0.0, float sr=0.0, float sg=0.0, float sb=0.0, float strSize=0.0, double rot=0.0, double s=1.0, double o=1.0)
@@ -48,82 +41,37 @@ namespace TenMilManUI_Graphics_Vector {
 		virtual void init(){}
 		virtual void update(){}	
 		virtual void draw(){
-			if( isEnable ){
-				glPushMatrix();
-					
-				//cx = (cx * this->parent->getScaleX());
-				//cy = (cy * this->parent->getScaleY());
-								
-				// translate, rotate, scale
-				glTranslated((GLdouble)centerx,(GLdouble)centery,0);
-				glRotatef((GLfloat)rotation,0,0,1);
-				glScalef((GLfloat)this->scalex,(GLfloat)this->scaley,1.0);
-				
-				// this is for retrieving the mouse coords later
-				glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
-				glGetDoublev( GL_PROJECTION_MATRIX, projection );
-				glGetIntegerv( GL_VIEWPORT, viewport );
-		
-				// rectangle's color
-				glColor4d(color[0], color[1], color[2],(GLfloat)this->opacity);
-						
-				// draw rectangle
-				glBegin(GL_QUADS);		                
-					glVertex2d(left,bottom);
-					glVertex2d(left,bottom+h);
-					glVertex2d(left+w,bottom+w);
-					glVertex2d(left+w,bottom);
-				glEnd();
-				
-				// rectangle's stroke
+			
+			
+			// rectangle's stroke
 				glColor4f(strokeColor[0], strokeColor[1], strokeColor[2],(GLfloat)this->opacity);
-				glLineWidth(strokeSize);
-								
+				
 				// draw line
-				glBegin(GL_LINE_STRIP);	
-					glVertex2d(left,bottom);
-					glVertex2d(left,bottom+h);
-					glVertex2d(left+w,bottom+h);
-					glVertex2d(left+w,bottom);
+				glBegin(GL_QUADS);	            						
+					glVertex2f((left-strokeSize),(bottom-strokeSize));
+					glVertex2f((left-strokeSize),(bottom+h+strokeSize));
+					glVertex2f((left+w+strokeSize),(bottom+h+strokeSize));
+					glVertex2f((left+w+strokeSize),(bottom-strokeSize));
 				glEnd();
-					
-				glPopMatrix();
-			}
-		}
-		
-		// getter/setter functions
-		virtual void setX(int nx){
-			Shape::setX(nx);
 			
-			// Recalculate centerx 
-			centerx = (double)x+scalex*(double)w/2.0;
+			// rectangle's color
+				glColor4d(color[0], color[1], color[2],(GLfloat)this->opacity);
+				
+				// draw rectangle
+				glBegin(GL_QUADS);		
+
+					glVertex2i((int)left,(int)bottom);
+					glVertex2i((int)left,(int)(bottom+h));
+					glVertex2i((int)(left+w),(int)(bottom+h));
+					glVertex2i((int)(left+w),(int)(bottom));
+					/*glVertex2i(100,100);
+					glVertex2i(100,150);
+					glVertex2i(150,150);
+					glVertex2i(150,100);*/
+				glEnd();
+
 		}
-		
-		virtual void setY(int ny){
-			Shape::setY(ny);
-			
-			// Recalculate centery
-			centery = (double)y+scaley*(double)h/2.0;
-		}
-		
-		virtual int getW(){
-			return w;
-		}
-		
-		virtual void setW(int nw){
-			left = -(double)nw/2.0;
-			w = nw;
-		}
-		
-		virtual int getH(){
-			return h;
-		}
-		
-		virtual void setH(int nh){
-			bottom = -(double)nh/2.0;
-			h = nh;
-		}
-		
+
 	};
 
 }

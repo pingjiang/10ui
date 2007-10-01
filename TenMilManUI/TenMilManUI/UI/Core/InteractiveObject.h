@@ -3,17 +3,20 @@
 
 #include "../../Graphics/DisplayObject.h"
 
-namespace TenMilManUI_UI {	
+namespace TenMilManUI_CORE_UI_Core {	
 
 	class InteractiveObject : public DisplayObject {
-	protected:
-		
+	protected:					
 	public:	
 		// constructor
-		InteractiveObject(DisplayObject *p, int x=0, int y=0, double rot=0.0, double s=1.0, double o=1.0)
-			:DisplayObject(p,x,y,rot,s,o){}	
+		InteractiveObject(DisplayObject *p, int x=0, int y=0, int w=0, int h=0, double rot=0.0, double s=1.0, double o=1.0)
+			:DisplayObject(p,x,y,rot,s,o){
+			setX(x);
+			setY(y);
+			setW(w);
+			setH(h);	
+		}	
 		virtual ~InteractiveObject(){}
-		
 	};
 }
 #endif /*INTERACTIVEOBJECT_H_*/

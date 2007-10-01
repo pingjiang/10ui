@@ -29,7 +29,7 @@
 class DisplayObject {
 public: 
 private:
-	static long nextObjectID;
+	static unsigned long nextObjectID;
 
 protected:
 	long objid;
@@ -39,12 +39,16 @@ protected:
 		DisplayObject *parent;
 		
 		// Enable/Disable
-		bool isEnable;
+		bool enabled;
 	
 		// Positioning
 		int x;
 		int y;
-				
+		
+		// Sizing 
+		int w;
+		int h;
+						
 		// Scaling
 		double scalex;
 		double scaley;
@@ -54,11 +58,23 @@ protected:
 	
 		// Visibility
 		float opacity;
+		bool visible;
+			
+		
+		// OpenGL implementation specifics
+		GLint viewport[4];
+		GLdouble modelview[16];
+		GLdouble projection[16];
+		
+		double centerx;
+		double centery;		
+
+		double left;
+		double bottom;
 	
-	// OpenGL implementation specifics
-	GLint viewport[4];
-	GLdouble modelview[16];
-	GLdouble projection[16];
+	// setupView
+	virtual void setupGLView(){
+	}
 	
 public:
 	
@@ -67,7 +83,7 @@ public:
 		objid = DisplayObject::nextObjectID++;
 		
 		this->parent = p;
-		this->isEnable = true;
+		this->enabled = true;
 		
 		this->rotation = r;
 		this->scalex = s;
@@ -75,16 +91,42 @@ public:
 		this->setX(x);
 		this->setY(y);
 		this->parent = 0;
+
+		this->setW(10);
+		this->setH(10);		
 		
 		setOpacity(o);
+		visible = true;
 	}
 
 	virtual ~DisplayObject(){}
 		
-	// game loop (and init) function
+	// Game Loop (and init) function
 	virtual void init() = 0;
 	virtual void update() = 0;
-	virtual void draw() = 0;
+	
+		// Draw Functions
+		// Handles setting up the view (translates, scales, rotates)
+		// Calls glPushMatrix();
+		virtual void preDraw(){
+			glPushMatrix();	
+			
+			// translate, rotate, scale
+			glTranslatef((GLdouble)centerx,(GLdouble)centery,0);
+			glRotatef((GLfloat)rotation,0,0,1);
+			glScalef((GLfloat)this->scalex,(GLfloat)this->scaley,1.0);
+			
+			// this is for retrieving the mouse coords later
+			glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
+			glGetDoublev( GL_PROJECTION_MATRIX, projection );
+			glGetIntegerv( GL_VIEWPORT, viewport );
+		}
+		// Draws, most likely to be subclassed
+		virtual void draw() = 0;
+		// Calls glPopMatrix();
+		virtual void postDraw(){
+			glPopMatrix();
+		}
 
 	
 	// Getter/Setter Functions
@@ -96,12 +138,20 @@ public:
 		this->parent = p;
 	}
 
-	bool isEnabled(){
-		return isEnable;
+	bool getEnabled(){
+		return enabled;
 	}
 
 	void setEnabled(bool e){
-		isEnable = e;
+		enabled = e;
+	}
+	
+	bool getVisible(){
+		return visible;
+	}
+
+	void setVisible(bool e){
+		visible = e;
 	}
 	
 
@@ -121,21 +171,48 @@ public:
 		}
 	}
 	
-	int getX(){
-		return x;
-	}
-	
-	int getY(){
-		return y;
-	}
-	
-	virtual void setX(int nx){
+	virtual void setX(int nx){	
 		x = nx;
+		
+		// Recalculate centerx 
+		centerx = (double)x+scalex*(double)w/2.0;
+	}	
+	virtual int getX(){
+		return x;
 	}
 	
 	virtual void setY(int ny){
 		y = ny;
+		
+		// Recalculate centery
+		centery = (double)y+scaley*(double)h/2.0;
 	}
+	virtual int getY(){
+		return y;
+	}
+			
+	virtual int getW(){
+		return w;
+	}
+	virtual void setW(int nw){
+		this->w = nw;
+		
+		// Recalculate centerx, left
+		centerx = (double)x+scalex*(double)nw/2.0;
+		left = -(double)nw/2.0;
+	}
+
+	virtual int getH(){
+		return h;
+	}
+	virtual void setH(int nh){
+		this->h = nh;
+		
+		// Recalculate centery, bottom
+		centery = (double)y+scaley*(double)h/2.0;
+		bottom = -(double)nh/2.0;
+	}
+			
 
 	void globalToLocalCoord(int sx, int sy, double *ox, double *oy){
 		GLfloat mx = (GLfloat) sx;

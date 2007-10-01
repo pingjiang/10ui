@@ -23,13 +23,10 @@
 #include <string>
 #include <list>
 
-namespace TenMilManUI_Graphics_Vector {
+namespace TenMilManUI_CORE_Graphics_Vector {
 		
 	class Shape : public DisplayObject {	
 	protected:
-		double centerx;
-		double centery;
-		
 		float color[3];
 		
 		float strokeColor[3];
@@ -37,7 +34,7 @@ namespace TenMilManUI_Graphics_Vector {
 	
 	public:	
 		// constructor
-		Shape(DisplayObject *p, int x=0, int y=0, float r=0.0, float g=0.0, float b=0.0, float sr=0.0, float sg=0.0, float sb=0.0, float strSize=0.0, double rot=0.0, double s=1.0, double o=1.0)
+		Shape(DisplayObject *p, int x=0, int y=0, float r=0.0, float g=0.0, float b=0.0, float sr=0.0, float sg=0.0, float sb=0.0, float strSize=5.0, double rot=0.0, double s=1.0, double o=1.0)
 			:DisplayObject(p,x,y,rot,s,o){
 			
 			color[0] = r;
@@ -49,27 +46,7 @@ namespace TenMilManUI_Graphics_Vector {
 			strokeColor[2] = sb;
 			strokeSize = strSize;
 		}	
-		virtual ~Shape(){}
-			
-		// game loop (and init) function
-		virtual void init(){}
-		virtual void update(){}	
-		virtual void draw(){}
-		
-		// getter/setter functions		
-		virtual int getW()=0;		
-		virtual void setW(int nw)=0;		
-		virtual int getH()=0;		
-		virtual void setH(int nh)=0;
-
-		double getCenterX(){
-			return centerx;
-		}
-		
-		double getCenterY(){
-			return centery;
-		}	
-		
+		virtual ~Shape(){}		
 	};
 
 }
