@@ -2,16 +2,22 @@
 #define TMMUI_TESTAPP_H_
 
 #include <iostream>
+#include <string>
 
 #include <TenMilManUI/ITenMilManUIApp.h>
 #include <TenMilManUI/TenMilManUI.h>
 #include <TenMilManUI/TenMilManUI_Enums.h>
 #include <TenMilManUI/UserInputs/SDLMouseInput.h>
 #include <TenMilManUI/Graphics/Vector/Rectangle.h>
-
+#include <TenMilManUI/Graphics/Vector/Line.h>
+#include <TenMilManUI/Graphics/Text/Text.h>
+#include <TenMilManUI/Graphics/Raster/Rasterable.h>
+#include <TenMilManUI/Graphics/Font/FontManager_FT2.h>
 
 using namespace std;
 using namespace TenMilManUI_CORE_Graphics_Vector;
+using namespace TenMilManUI_CORE_Graphics_Raster;
+using namespace TenMilManUI_CORE_Graphics_Text;
 using namespace TenMilManUI_CORE;
 
 namespace TenMilManUI_APP {
@@ -20,21 +26,20 @@ namespace TenMilManUI_APP {
 	public:
 		TMMUI_TestApp(){}
 		virtual ~TMMUI_TestApp(){}
+
+		void initRectangleTest();
+		void initLineTest();		
+		void initRasterTest();		
+		void initTextTest();
 		
-		void init() throw() {			
-			TenMilManUI::instance()->addDisplayObject(new Rectangle(NULL, 100, 100, 100, 100,	//x,y,w,h
-																		  1.0,0.0,0.0, 			//r,g,b
-																		  0.0, 1.0, 1.0, 		//stroke color
-																		  1.0));				//
-			TenMilManUI::instance()->addDisplayObject(new Rectangle(NULL, 100, 100, 100, 100,1.0,0.0,0.0, 0.0, 1.0, 1.0, 1.0));				
-		}
-		void update_preframe() throw(int) {
+		virtual void init() throw(int);
+		virtual void update_preframe() throw(int) {
 			
 		}
-		void update_frame() throw(int) {
+		virtual void update_frame() throw(int) {
 			
 		}
-		void deinit() throw(int) {
+		virtual void deinit() throw(int) {
 			
 		}
 		
