@@ -20,6 +20,9 @@
 #include <math.h>
 #include <string>
 #include <list>
+#include <iostream>
+
+using namespace std;
 
 namespace TenMilManUI_CORE_Graphics_Raster {
 	enum RASTERABLE_EXCEPTIONS { SET_TEXTURE_FAILED };
@@ -144,8 +147,8 @@ namespace TenMilManUI_CORE_Graphics_Raster {
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);   // 2d texture (x and y size)
 	
-			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST); // scale linearly when image bigger than texture
-			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); // scale linearly when image smalled than texture
+			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
+			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // scale linearly when image smalled than texture
 	
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
@@ -172,7 +175,7 @@ namespace TenMilManUI_CORE_Graphics_Raster {
 		virtual void update(){}
 		virtual void draw(){		
 			if( textureSet ){
-				glColor4d(0.0,0.0,0.0,(GLfloat)this->opacity);
+				glColor4d(1.0,1.0,1.0,(GLfloat)this->opacity);
 		
 				// bind texture to rectangle
 				glBindTexture(GL_TEXTURE_2D, texture);
@@ -184,14 +187,21 @@ namespace TenMilManUI_CORE_Graphics_Raster {
 					glTexCoord2i(1,1); glVertex2d(left+texw,bottom+texh);
 					glTexCoord2i(1,0); glVertex2d(left+texw,bottom);
 				glEnd();
+				
+				
+				//cout << left << ","<< bottom << ","<< w << ","<< h << endl;
 			}
+		}
+		virtual void postDraw(){
+			glBindTexture(GL_TEXTURE_2D, 0);
+			DisplayObject::postDraw();
 		}
 		
 		// getter/setter functions				
 		// set functions
-		virtual void setTextureFromFile(std::string &fname) throw(int) {
+		virtual void setTextureFromFile(const std::string &fname) throw(int) {
 			textureSet = LoadGLTextures(fname.c_str());
-			if(textureSet){
+			if(!textureSet){
 				throw SET_TEXTURE_FAILED;
 			}
 		}

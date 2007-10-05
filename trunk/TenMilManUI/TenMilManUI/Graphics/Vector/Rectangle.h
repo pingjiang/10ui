@@ -44,7 +44,7 @@ namespace TenMilManUI_CORE_Graphics_Vector {
 			
 			
 			// rectangle's stroke
-				glColor4f(strokeColor[0], strokeColor[1], strokeColor[2],(GLfloat)this->opacity);
+				glColor4f(strokeColor[0], strokeColor[1], strokeColor[2],(GLfloat)opacity*strokeColor[3]);
 				
 				// draw line
 				glBegin(GL_QUADS);	            						

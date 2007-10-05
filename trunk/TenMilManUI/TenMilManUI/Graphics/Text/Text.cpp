@@ -1,9 +1,5 @@
 #include "Text.h"
 
-Text::Text()
-{
-}
-
-Text::~Text()
-{
+namespace TenMilManUI_CORE_Graphics_Text {	
+	Text::~Text(){}
 }
