@@ -10,7 +10,7 @@ This is the work log of Rob Evans, that is all.
          * Get objects that are at pt (x,y)
          * See which if any are registered with the manager
          * If registered, tell them to process the event
-      * Implementing !InteractiveObject::_select(Event evt) function
+      * Implementing !InteractiveObject::select(Event evt) function
          * Takes event, get event handlers for evt->evtName
          * Process all event handlers for evtName
       * Made !DisplayObject a subclass of !EventDispatcher
