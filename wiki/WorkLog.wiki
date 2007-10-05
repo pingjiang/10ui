@@ -1,0 +1,22 @@
+#summary Project Progress Logging
+
+= Oct 5, 2007 =
+*New Graphics*
+  * Shape (Abstract)
+  * Rectangle
+  * Line
+  * Rasterable
+  * Text
+
+*New Support Systems*
+  * FontManager_FT2
+    * Uses FreeType2
+    * Handles reading in font and creating opengl texture
+  * Graphics/Util Folder
+  * ColorHex
+    * Web color hex strings (#FFF)
+ 
+*Breaking API Changes*
+  * DisplayObject
+    * preDraw/postDraw
+    
