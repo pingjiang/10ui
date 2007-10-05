@@ -24,6 +24,8 @@
 #include "UI/Core/DisplayObjectContainer.h"
 #include "UI/Core/UIComponent.h"
 
+#define TenUI TenMilManUI::instance()
+
 using namespace TenMilManUI_CORE_UI_Core;
 using namespace std;
 
@@ -52,12 +54,13 @@ namespace TenMilManUI_CORE {
 			TenMilManUI(TenMilManUI_APP::ITenMilManUIApp *) throw(int);						
 			virtual ~TenMilManUI();
 			
+			void initFontManager();
+			
 			void update(); 
 			void draw();
 			bool isRunning();
-		
+					
 		public:
-
 			static TenMilManUI* createInstance(TenMilManUI_APP::ITenMilManUIApp *) throw(int);
 			static TenMilManUI* instance();			
 			

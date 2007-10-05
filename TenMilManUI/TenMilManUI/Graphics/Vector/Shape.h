@@ -29,7 +29,7 @@ namespace TenMilManUI_CORE_Graphics_Vector {
 	protected:
 		float color[3];
 		
-		float strokeColor[3];
+		float strokeColor[4];
 		float strokeSize;
 	
 	public:	
@@ -44,6 +44,8 @@ namespace TenMilManUI_CORE_Graphics_Vector {
 			strokeColor[0] = sr;
 			strokeColor[1] = sg;
 			strokeColor[2] = sb;
+			strokeColor[3] = 1.0;
+			
 			strokeSize = strSize;
 		}	
 		virtual ~Shape(){}		

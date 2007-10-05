@@ -72,9 +72,15 @@ protected:
 		double left;
 		double bottom;
 	
-	// setupView
-	virtual void setupGLView(){
+	// recalc centerx, centery
+	virtual void calcCenterX(){
+		centerx = (double)x+scalex*(double)w/2.0;
 	}
+
+	virtual void calcCenterY(){
+		centery = (double)y+scaley*(double)h/2.0;
+	}
+	
 	
 public:
 	
@@ -198,7 +204,7 @@ public:
 		this->w = nw;
 		
 		// Recalculate centerx, left
-		centerx = (double)x+scalex*(double)nw/2.0;
+		calcCenterX();
 		left = -(double)nw/2.0;
 	}
 
@@ -209,7 +215,7 @@ public:
 		this->h = nh;
 		
 		// Recalculate centery, bottom
-		centery = (double)y+scaley*(double)h/2.0;
+		calcCenterY();
 		bottom = -(double)nh/2.0;
 	}
 			
@@ -220,13 +226,24 @@ public:
 		GLfloat mz;
 		GLdouble posX, posY, posZ;
 		
-		glReadPixels( int(mx), int(my), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &mz );
-
+		//glReadPixels( int(mx), int(my), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &mz );
 		gluUnProject( mx, my, 0.0, modelview, projection, viewport, &posX, &posY, &posZ);
 
 		(*ox) = posX;
 		(*oy) = posY;
 	}
+	
+	void localToGlobalCoord(int sx, int sy, int *ox, int *oy){
+			GLfloat mx = (GLfloat) sx;
+			GLfloat my = (GLfloat) sy;
+			GLfloat mz;
+			GLdouble posX, posY, posZ;
+			
+			gluProject( mx, my, 0.0, modelview, projection, viewport, &posX, &posY, &posZ);
+
+			(*ox) = (int) posX;
+			(*oy) = (int) posY;
+		}
 	
 	// more get, sets
 	double getRotation(){

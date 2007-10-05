@@ -18,7 +18,7 @@ typedef struct color4F {
 	float g;
 	float b;
 	float alpha;
-	color4(float nr, float ng, float nb, float nalpha):r(nr),g(ng),b(nb),alpha(nalpha){}
+	color4F(float nr, float ng, float nb, float nalpha):r(nr),g(ng),b(nb),alpha(nalpha){}
 } Color4;
 
 typedef struct transformF {
@@ -26,8 +26,17 @@ typedef struct transformF {
 	float rotate;
 	float scalex;
 	float scaley;
-	TransformF(PointF &ntranslate, float nrotate=0.0, float nscalex=1.0, float nscaley=1.0)
+	transformF(PointF &ntranslate, float nrotate=0.0, float nscalex=1.0, float nscaley=1.0)
 		:translate(ntranslate),rotate(nrotate),scalex(nscalex),scaley(nscaley){}
 } TransformF;
+
+///This function gets the first power of 2 >= the
+///int that we pass it.
+inline int next_p2 ( int a )
+{
+	int rval=1;
+	while(rval<a) rval<<=1;
+	return rval;
+}
 
 #endif /*UTILS_H_*/

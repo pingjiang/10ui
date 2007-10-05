@@ -22,6 +22,8 @@
 #include <math.h>
 #include <string>
 #include <list>
+#include <iostream>
+using namespace std;
 
 namespace TenMilManUI_CORE_Graphics_Vector {	
 
@@ -31,13 +33,27 @@ namespace TenMilManUI_CORE_Graphics_Vector {
 		float	lineColor[3];
 		float 	lineWidth;
 		
+		virtual void calcCenterX(){
+			centerx = (double)((x2>x)?x:x2)+scalex*(double)w/2.0;
+		}
+
+		virtual void calcCenterY(){
+			centery = (double)((y2>y)?y:y2)+scaley*(double)h/2.0;
+		}
+		
 	public:	
 		// constructor
-		Line(DisplayObject *p, int x=0, int y=0, int x2=0, int y2=0, float r=0.0, float g=0.0, float b=0.0, float lineWidth=0.0, double rot=0.0, double s=1.0, double o=1.0)
+		Line(DisplayObject *p, 	int x=0, int y=0, int x2=0, int y2=0, 
+								float r=0.0, float g=0.0, float b=0.0, 
+								float lineWidth=0.0, 
+								double rot=0.0, double s=1.0, double o=1.0)
 			:DisplayObject(p,x,y,rot,s,o){			
 			
-			this->x2 = x2;			
-			this->y2 = y2;
+
+			setX(x);			
+			setY(y);
+			setX2(x2);			
+			setY2(y2);
 			
 			lineColor[0]=r;
 			lineColor[1]=g;
@@ -50,15 +66,37 @@ namespace TenMilManUI_CORE_Graphics_Vector {
 		// game loop (and init) function
 		virtual void init(){}
 		virtual void update(){}	
+		
+		void preDraw(){
+			DisplayObject::preDraw();
+			
+			glEnable(GL_SCISSOR_TEST);
+			
+			//int gx;
+			//int gy;
+			//localToGlobalCoord(left, bottom, &gx, &gy);
+			
+			glScissor(	getGlobalX()-((x2>x)?0:w), 
+						getGlobalY()-((y2>y)?0:h), 
+						w, 
+						h);
+						
+			
+		}
 		virtual void draw(){
 			glColor4f(lineColor[0], lineColor[1], lineColor[2],(GLfloat)this->opacity);
 			glLineWidth(lineWidth);
-							
+
 			// draw line
-			glBegin(GL_LINES);		                
-				glVertex2d((GLdouble)left,(GLdouble)bottom);
-				glVertex2d((GLdouble)left+w,(GLdouble)bottom+w);					
+			glBegin(GL_LINES);				
+				glVertex2d((GLdouble)((x2>x)?left:left+w),(GLdouble)((y2>y)?bottom:bottom+h));
+				glVertex2d((GLdouble)((x2>x)?left+w:left),(GLdouble)((y2>y)?bottom+h:bottom));					
 			glEnd();
+		}
+		void postDraw(){
+			glDisable(GL_SCISSOR_TEST);
+
+			DisplayObject::postDraw();
 		}
 		
 		int getX2(){
@@ -69,14 +107,30 @@ namespace TenMilManUI_CORE_Graphics_Vector {
 			return y2;
 		}
 		
+		
+
+		virtual void setX(int nx){	
+			x = nx;
+						
+			// Recalculate centerx 
+			centerx = (double)((x2>x)?x:x2)+scalex*(double)w/2.0;
+		}	
+
+		virtual void setY(int ny){
+			y = ny;
+			
+			// Recalculate centery
+			centery = (double)((y2>y)?y:y2)+scaley*(double)h/2.0;
+		}
+		
 		void setX2(int nx){
 			x2 = nx;
-			setW((x2>x)?x2-x:x-x2);
+			DisplayObject::setW((x2>x)?x2-x:x-x2);
 		}
 		
 		void setY2(int ny){
 			y2 = ny;
-			setW((y2>y)?y2-y:y-y2);
+			DisplayObject::setH((y2>y)?y2-y:y-y2);
 		}				
 		
 		virtual void setW(int nw){

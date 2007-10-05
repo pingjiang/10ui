@@ -1,5 +1,5 @@
 #include "TenMilManUI.h"
-
+#include "Graphics/Font/FontManager_FT2.h"
 #include <iostream>
 using namespace std;
 
@@ -50,16 +50,23 @@ namespace TenMilManUI_CORE {
 		glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);				// Black Background
 		glClearDepth(1.0f);									// Depth Buffer Setup
-		glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
-		glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
+		//glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
+		//glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
+		
 
-		//glEnable(GL_BLEND);
-		//glColor4f(1.0f, 1.0f, 1.0f, 1.0);					// Full Brightness.  50% Alpha
-		//glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);	// Set The Blending Function For Translucency
-					
+		glEnable(GL_BLEND);
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0);					// Full Brightness.  50% Alpha
+		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);	// Set The Blending Function For Translucency
+		
 	}	
-	TenMilManUI::~TenMilManUI(){}
+	TenMilManUI::~TenMilManUI(){
+		map<long,DisplayObject*>::iterator it = rootObjs.begin();
+		while(it != rootObjs.end()){
+			delete (it->second);
+			++it;
+		}
+	}
 	
 	/**********************************
 	 * 	 		Public Methods	  	  *	 
@@ -106,6 +113,9 @@ namespace TenMilManUI_CORE {
 			(it->second)->postDraw();
 			++it;
 		}
+		
+
+		//FontMgr.print("Calibra",100,100,"Hello World");
 		
 		SDL_GL_SwapBuffers();
 		
