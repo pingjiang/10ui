@@ -1,6 +1,7 @@
 #summary Project Progress Logging
 
 = Oct 5, 2007 =
+== TenMilManUI ==
 *New Graphics*
   * Shape (Abstract)
   * Rectangle
@@ -19,4 +20,20 @@
 *Breaking API Changes*
   * DisplayObject
     * preDraw/postDraw
-    
+
+
+== TMMUI_TestApp ==
+*New Features*
+ - Implemented new TenMilManUIApp API
+ - New Tests
+    - Rectangle
+    - Line
+    - Text
+    - Rasterable
+
+*New Support Systems*
+ - TestResources Folder
+    - RasterTest
+       - Images
+    - TextText
+       - Fonts
