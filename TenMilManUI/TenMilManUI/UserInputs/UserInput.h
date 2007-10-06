@@ -39,6 +39,7 @@ public:
 	static UserInput* createInstance();
 	static UserInput* instance();
 
+	virtual void init() = 0;
 	virtual bool update()=0;	
 	
 	virtual int getX(){

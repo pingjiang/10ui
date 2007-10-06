@@ -20,6 +20,8 @@ public:
 	static UserInput* createInstance();
 	static UserInput* instance();
 
+	virtual void init(){}
+	
 	virtual bool update(){
 		SDL_PollEvent( &event );
 		indata.select = false;

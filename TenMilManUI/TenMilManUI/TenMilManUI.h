@@ -54,6 +54,8 @@ namespace TenMilManUI_CORE {
 			TenMilManUI(TenMilManUI_APP::ITenMilManUIApp *) throw(int);						
 			virtual ~TenMilManUI();
 			
+			void initSDL();
+			void initOpenGL();
 			void initFontManager();
 			
 			void update(); 

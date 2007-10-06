@@ -61,8 +61,7 @@ namespace TenMilManUI_CORE_Graphics_Text {
 		virtual void update(){}	
 		virtual void draw(){
 			glColor4d(color.getRed(),color.getGreen(),color.getBlue(),(GLfloat)this->opacity);
-			//FontMgr.print("Calibra",100,100,"Hello World");
-			FontMgr.print(fontKey,100,100,"%s",text.c_str());
+			FontMgr->render(fontKey,FontFamilyData::DEFAULT, fontSize, "%s",text.c_str());
 		}
 		virtual void postDraw(){
 			glBindTexture(GL_TEXTURE_2D, 0);

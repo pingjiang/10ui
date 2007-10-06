@@ -325,9 +325,8 @@
 <tool id="cdt.managedbuild.tool.gnu.archiver.base.247952692" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1652573762" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 <option id="gnu.cpp.compiler.option.include.paths.383342637" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-<listOptionValue builtIn="false" value="/usr/include/freetype2"/>
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI/include/SDL}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI/include/FTGL}&quot;"/>
+<listOptionValue builtIn="false" value="/usr/include/freetype2"/>
 </option>
 <option id="gnu.cpp.compiler.option.other.other.412468453" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -fPIC" valueType="string"/>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.855545014" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -340,6 +339,7 @@
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.1473711241" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">
 <option id="gnu.cpp.link.option.libs.2098185022" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="freetype"/>
 <listOptionValue builtIn="false" value="SDL"/>
 <listOptionValue builtIn="false" value="SDL_image"/>
 <listOptionValue builtIn="false" value="GL"/>

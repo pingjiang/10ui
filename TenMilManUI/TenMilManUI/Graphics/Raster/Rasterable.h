@@ -187,9 +187,6 @@ namespace TenMilManUI_CORE_Graphics_Raster {
 					glTexCoord2i(1,1); glVertex2d(left+texw,bottom+texh);
 					glTexCoord2i(1,0); glVertex2d(left+texw,bottom);
 				glEnd();
-				
-				
-				//cout << left << ","<< bottom << ","<< w << ","<< h << endl;
 			}
 		}
 		virtual void postDraw(){

@@ -30,35 +30,13 @@ namespace TenMilManUI_CORE {
 		userInput = app->getUserInput();
 		
 		running = true;
-	    pthread_mutex_init(&runningMutex,NULL);
-		
-		// initialize sdl video
-		if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
-			throw UIEXCEPTION_SDL_INIT_FAILED;
-			return;
-		}
-		if ( SDL_SetVideoMode(screenWidth, screenHeight, screenBPP, SDL_OPENGL | SDL_FULLSCREEN ) == NULL ) { 
-			SDL_Quit();
-			throw UIEXCEPTION_SDL_INIT_FAILED;
-			return;
-		}
+	    pthread_mutex_init(&runningMutex,NULL);	
+	    	    
+	    
+	    initSDL();
+	    initOpenGL();
 
-		SDL_WM_SetCaption(app->getName(), NULL);
-		
-		// initialize OpenGL
-		glEnable(GL_TEXTURE_2D);							// Enable Texture Mapping
-		glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);				// Black Background
-		glClearDepth(1.0f);									// Depth Buffer Setup
-		//glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
-		//glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
-		
-
-		glEnable(GL_BLEND);
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0);					// Full Brightness.  50% Alpha
-		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);	// Set The Blending Function For Translucency
-		
+	    initFontManager();
 	}	
 	TenMilManUI::~TenMilManUI(){
 		map<long,DisplayObject*>::iterator it = rootObjs.begin();
@@ -91,6 +69,38 @@ namespace TenMilManUI_CORE {
 	/**********************************
 	 * 	 		Private Methods	  	  *	 
 	 **********************************/
+	void TenMilManUI::initSDL(){
+		// initialize sdl video
+		if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
+			throw UIEXCEPTION_SDL_INIT_FAILED;
+			return;
+		}
+		if ( SDL_SetVideoMode(screenWidth, screenHeight, screenBPP, SDL_OPENGL | ((app->getScreenOptions() == FULLSCREEN)?SDL_FULLSCREEN:0) ) == NULL ) { 
+			SDL_Quit();
+			throw UIEXCEPTION_SDL_INIT_FAILED;
+			return;
+		}
+
+		SDL_WM_SetCaption(app->getName(), NULL);
+	}
+	
+	void TenMilManUI::initOpenGL(){		
+		// initialize OpenGL
+		glEnable(GL_TEXTURE_2D);							// Enable Texture Mapping
+		glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);				// Black Background
+		glClearDepth(1.0f);									// Depth Buffer Setup
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations		
+
+		glEnable(GL_BLEND);
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0);					// Full Brightness.  50% Alpha
+		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);	// Set The Blending Function For Translucency		
+	}
+	
+	void TenMilManUI::initFontManager(){
+		FontManager_FT2::createInstance(app->getFontDirectory());
+	}
+	
 	void TenMilManUI::draw(){
 		map<long,DisplayObject*>::iterator it = rootObjs.begin();
 		int vPort[4];
@@ -113,9 +123,6 @@ namespace TenMilManUI_CORE {
 			(it->second)->postDraw();
 			++it;
 		}
-		
-
-		//FontMgr.print("Calibra",100,100,"Hello World");
 		
 		SDL_GL_SwapBuffers();
 		
