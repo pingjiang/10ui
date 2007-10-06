@@ -1,4 +1,4 @@
-#summary Project Progress Logging
+#summary Project Progress Log
 
 = Oct 6, 2007 =
 === TenMilManUI ===
