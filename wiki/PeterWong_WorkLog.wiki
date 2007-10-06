@@ -2,14 +2,14 @@
 
 = Oct 6, 2007 =
 === TenMilManUI ===
-  * {{{FontManager_FT2}}} *Changes*
+  * *Changed* {{{FontManager_FT2}}}
     * Singleton
     * Initialized with a fonts directory
       * Loads all fonts in directory at specified pixel height.
       * Pixel height should be big enough to be scaled down for all uses
     * Reads in font files into FontFamilyData
 
-  * {{{FontFamilyData}}} *New*
+  * *Created* {{{FontFamilyData}}}
     * Revamped version of {{{FontData}}}
     * Now is structured more intuitively around Font Families
       * Font Families have fonts for bold, italic, and bold&italic
@@ -23,7 +23,7 @@
       * static methods for traversing and manipulating files/folders
       * currently only has a method to return a list of files in a folder
 
-  * {{{TenMilManUI}}} *Changes*
+  * *Changed* {{{TenMilManUI}}}
     * New initialization methods
       * {{{void initSDL}}}        
         * broke out from init method
@@ -35,18 +35,18 @@
         * REQUIRES SDL/OPENGL TO BE SETUP ALREADY
           * Creates OpenGL textures for fonts
 
-  * {{{ITenMilManUIApp}}} *Changes*
+  * *Changed* {{{ITenMilManUIApp}}}
     * New pure virtual method
       * {{{string getFontDirectory()}}}
         * Supplies directory of fonts used by application
 
 === TMMUI_TestApp ===
-  * *Matching* {{{ITenMilManUIApp}} *API Changes*
+  * *Changed* {{{TMMUI_TestApp}}
     * Implemented new getFontDirectory
-  * *Changed Text Test*
-    * Changed colors of Text Test
-    * Tests for minor issue with edges of glyphs not blending correctly
-      * Dirty black outline
+    * *Changed* Text Test
+      * Changed colors of Text Test
+      * Tests for minor issue with edges of glyphs not blending correctly
+        * Dirty black outline
       
 
 = Oct 5, 2007 =
