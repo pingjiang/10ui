@@ -1,0 +1,5 @@
+#summary Screenshots of 10ui Applications
+
+= TMMUI_TestApp =
+  This application brief test of 10ui's graphics systems.
+[http://10ui.googlecode.com/files/2007_10_6_TMMUI_TestApp.png]
