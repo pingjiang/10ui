@@ -1,9 +1,13 @@
 #ifndef ITENMILMANUIAPP_H_
 #define ITENMILMANUIAPP_H_
 
+#include <string>
+
 #include "TenMilManUI.h"
 #include "TenMilManUI_Enums.h"
 #include "UserInputs/UserInput.h"
+
+using std::string;
 
 namespace TenMilManUI_CORE {
 	class TenMilManUI;
@@ -37,6 +41,7 @@ namespace TenMilManUI_APP {
 			virtual int 			getScreenBPP() = 0;
 			virtual TenMilManUI_CORE::SCREEN_OPTION 	getScreenOptions() = 0;
 			virtual UserInput* 		getUserInput() = 0;
+			virtual string			getFontDirectory() =0;
 			
 			virtual ~ITenMilManUIApp(){}
 	};
