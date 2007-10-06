@@ -1,5 +1,6 @@
 #summary Screenshots of 10ui Applications
+#labels Featured,Screenshot,Application
 
 = TMMUI_TestApp =
   This application brief test of 10ui's graphics systems.
-[http://10ui.googlecode.com/files/2007_10_6_TMMUI_TestApp.png]
+[http://www.vrac.iastate.edu/~pwwong/10ui/wiki_images/2007_10_6_TMMUI_TestApp.png]
