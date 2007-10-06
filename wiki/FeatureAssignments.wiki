@@ -1,4 +1,4 @@
-#summary Assignment of features to be integrated into a designated weekly build
+#summary Assignment of features to be integrated into a weekly build
 
 = Oct 17, 2007 =
 * Peter Wong *
