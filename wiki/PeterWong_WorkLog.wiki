@@ -9,7 +9,8 @@
       * Pixel height should be big enough to be scaled down for all uses
     * Reads in font files into FontFamilyData
 
-  * {{{FontData}}} -> {{{FontFamilyData}}} *Changes*
+  * {{{FontFamilyData}}} *New*
+    * Revamped version of {{{FontData}}}
     * Now is structured more intuitively around Font Families
       * Font Families have fonts for bold, italic, and bold&italic
     * More Textures (bold, italic, and bold&italic)
