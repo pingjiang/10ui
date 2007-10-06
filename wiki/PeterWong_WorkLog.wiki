@@ -41,7 +41,7 @@
         * Supplies directory of fonts used by application
 
 === TMMUI_TestApp ===
-  * *Changed* {{{TMMUI_TestApp}}
+  * *Changed* {{{TMMUI_TestApp}}}
     * Implemented new getFontDirectory
     * *Changed* Text Test
       * Changed colors of Text Test
