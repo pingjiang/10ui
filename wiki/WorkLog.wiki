@@ -1,39 +1,39 @@
 #summary Project Progress Logging
 
 = Oct 5, 2007 =
-== TenMilManUI ==
-*New Graphics*
-  * Shape (Abstract)
-  * Rectangle
-  * Line
-  * Rasterable
-  * Text
+=== TenMilManUI ===
+  * *New Graphics*
+    * Shape (Abstract)
+    * Rectangle
+    * Line
+    * Rasterable
+    * Text
 
-*New Support Systems*
-  * FontManager_FT2
-    * Uses FreeType2
-    * Handles reading in font and creating opengl texture
-  * Graphics/Util Folder
-  * ColorHex
-    * Web color hex strings (#FFF)
+  * *New Support Systems*
+    * FontManager_FT2
+      * Uses FreeType2
+      * Handles reading in font and creating opengl texture
+    * Graphics/Util Folder
+    * ColorHex
+      * Web color hex strings (#FFF)
  
-*Breaking API Changes*
-  * DisplayObject
-    * preDraw/postDraw
+  * *Breaking API Changes*
+    * DisplayObject
+      * preDraw/postDraw
 
 
-== TMMUI_TestApp ==
-*New Features*
- - Implemented new TenMilManUIApp API
- - New Tests
-    - Rectangle
-    - Line
-    - Text
-    - Rasterable
+=== TMMUI_TestApp ===
+  * *New Features*
+    * Implemented new TenMilManUIApp API
+    * New Tests
+      * Rectangle
+      * Line
+      * Text
+      * Rasterable
 
-*New Support Systems*
- - TestResources Folder
-    - RasterTest
-       - Images
-    - TextText
-       - Fonts
+  * *New Support Systems*
+    * TestResources Folder
+    * RasterTest
+       * Images
+    * TextText
+       * Fonts
