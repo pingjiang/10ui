@@ -1,4 +1,4 @@
-#summary PPeter Wong's Work Log
+#summary Peter Wong's Work Log
 
 = Oct 6, 2007 =
 === TenMilManUI ===
