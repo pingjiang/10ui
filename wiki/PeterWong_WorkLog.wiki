@@ -20,7 +20,7 @@
   * *Created conveniency global function*
     * {{{getTenUI()}}} returns the {{{TenMilManUI}}} instance
 
-=== TMMUI_TestAPP ===
+=== TMMUI_TestApp ===
   * Using {{{IMPLEMENT_TENUI_APP}}} macro
   * Using new TenUI namespace
   * Cleaned up code
