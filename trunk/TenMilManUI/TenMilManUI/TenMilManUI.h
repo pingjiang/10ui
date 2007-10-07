@@ -15,27 +15,35 @@
 #endif
 
 #include <SDL.h>
-#include <string>
+#include <iostream>
 #include <map>
+#include <string>
 
 #include "TenMilManUI_Enums.h"
-#include "UserInputs/UserInput.h"
 #include "ITenMilManUIApp.h"
+#include "Graphics/Font/FontManager_FT2.h"
 #include "UI/Core/DisplayObjectContainer.h"
 #include "UI/Core/UIComponent.h"
+#include "UserInputs/UserInput.h"
 
-#define TenUI TenMilManUI::instance()
+#define IMPLEMENT_TENUI_APP( tenuiApp ) int main(void) {																			\
+											TenUI::ITenMilManUIApp* app = (TenUI::ITenMilManUIApp*) new TenUI::tenuiApp;			\
+											TenUI::TenMilManUI* tui = TenUI::TenMilManUI::createInstance(app);						\
+											tui->run();																				\
+											return 0;																				\
+									  }
 
-using namespace TenMilManUI_CORE_UI_Core;
 using namespace std;
 
-namespace TenMilManUI_APP{
+namespace TenUI{
 	class ITenMilManUIApp;
 }
 
-namespace TenMilManUI_CORE {	
+namespace TenUI {	
 
 	class TenMilManUI {		
+		
+		// Private Variables
 		private:
 		    static TenMilManUI* inst;
 		    int screenWidth;
@@ -44,14 +52,16 @@ namespace TenMilManUI_CORE {
 		    UserInput* userInput;
 		    
 		    map<long ,DisplayObject*> rootObjs;		    
-		    TenMilManUI_APP::ITenMilManUIApp *app;
+		    ITenMilManUIApp *app;
 						
 			// Indicates whether UI should continue running
 			// Made for Multi-Threading
 		    pthread_mutex_t runningMutex;
 			bool running;
-					
-			TenMilManUI(TenMilManUI_APP::ITenMilManUIApp *) throw(int);						
+
+		// Private Methods
+		private:
+			TenMilManUI(ITenMilManUIApp *) throw(int);						
 			virtual ~TenMilManUI();
 			
 			void initSDL();
@@ -61,10 +71,15 @@ namespace TenMilManUI_CORE {
 			void update(); 
 			void draw();
 			bool isRunning();
-					
+		
+
+		// Public Methods
 		public:
-			static TenMilManUI* createInstance(TenMilManUI_APP::ITenMilManUIApp *) throw(int);
+			static TenMilManUI* createInstance(ITenMilManUIApp *) throw(int);
 			static TenMilManUI* instance();			
+
+			int getScreenHeight(){ return screenHeight; }
+			int getScreenWidth(){ return screenWidth; }
 			
 			void run() throw(int);
 			void quit() throw(int);
@@ -77,5 +92,7 @@ namespace TenMilManUI_CORE {
 	};
 
 }
+
+TenUI::TenMilManUI* getTenUI();
 
 #endif /*TENMILMANUI_H_*/

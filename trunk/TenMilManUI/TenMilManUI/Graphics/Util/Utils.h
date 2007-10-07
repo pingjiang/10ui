@@ -32,7 +32,7 @@ typedef struct transformF {
 
 ///This function gets the first power of 2 >= the
 ///int that we pass it.
-inline int next_p2 ( int a )
+inline int nextPowerOfTwo ( int a )
 {
 	int rval=1;
 	while(rval<a) rval<<=1;

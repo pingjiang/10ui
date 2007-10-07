@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace TenMilManUI_CORE_UI_Core {	
+namespace TenUI {	
 
 	class DisplayObjectContainer : public InteractiveObject {
 	protected:

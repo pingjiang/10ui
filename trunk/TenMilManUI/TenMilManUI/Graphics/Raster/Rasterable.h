@@ -24,7 +24,7 @@
 
 using namespace std;
 
-namespace TenMilManUI_CORE_Graphics_Raster {
+namespace TenUI {
 	enum RASTERABLE_EXCEPTIONS { SET_TEXTURE_FAILED };
 		
 	class Rasterable : public DisplayObject {	

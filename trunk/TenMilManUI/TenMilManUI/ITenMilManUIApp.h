@@ -9,39 +9,30 @@
 
 using std::string;
 
-namespace TenMilManUI_CORE {
-	class TenMilManUI;
-}
+class TenMilManUI;
 
-namespace TenMilManUI_APP {
+namespace TenUI {
 
 	enum APPEXCEPTIONS { APPEXCEPTION_TENMILMANUIAPP_INIT_FAILED };
 
 	class ITenMilManUIApp {
-		private:
-			//TenMilManUI_CORE::TenMilManUI* tenui;		
-			
+		private:		
 		protected:
-			/*TenMilManUI_CORE::TenMilManUI* getTenUI(){
-				return tenui;
-			}*/
 		public:
 			ITenMilManUIApp();
-			//void setTenUI(TenMilManUI_CORE::TenMilManUI *tui);
 			
-			// must setup 
 			virtual void init() throw(int) = 0;
-			virtual void update_preframe() throw(int) = 0;
-			virtual void update_frame() throw(int) = 0;
-			virtual void deinit() throw(int) = 0;
+			virtual void update_preframe() throw(APPEXCEPTIONS) = 0;
+			virtual void update_frame() throw(APPEXCEPTIONS) = 0;
+			virtual void deinit() throw(APPEXCEPTIONS) = 0;
 			
-			virtual char* 			getName() = 0; 
-			virtual int 			getScreenWidth() = 0;
-			virtual int 			getScreenHeight() = 0;
-			virtual int 			getScreenBPP() = 0;
-			virtual TenMilManUI_CORE::SCREEN_OPTION 	getScreenOptions() = 0;
-			virtual UserInput* 		getUserInput() = 0;
-			virtual string			getFontDirectory() =0;
+			virtual char* 		getName() = 0; 
+			virtual int 		getScreenWidth() = 0;
+			virtual int 		getScreenHeight() = 0;
+			virtual int 		getScreenBPP() = 0;
+			virtual TenUI::SCREEN_OPTION 	getScreenOptions() = 0;
+			virtual UserInput* 	getUserInput() = 0;
+			virtual string		getFontDirectory() =0;
 			
 			virtual ~ITenMilManUIApp(){}
 	};

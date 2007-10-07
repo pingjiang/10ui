@@ -8,12 +8,12 @@
 #include <string>
 #include <iostream>
 
+#define PATH_SEPERATOR "/"
+
 using std::string;
 using std::vector;
 
 class FileUtils {
-public:
-	
 public:	
 	static int getDirFiles (const string &dir, vector<string> &files){
 	    DIR *dp;

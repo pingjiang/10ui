@@ -27,7 +27,7 @@
 
 using namespace std;
 
-namespace TenMilManUI_CORE_Graphics_Text {
+namespace TenUI {
 
 	//@Property	Text, string, RW
 	//@Style 	Font, string, RW

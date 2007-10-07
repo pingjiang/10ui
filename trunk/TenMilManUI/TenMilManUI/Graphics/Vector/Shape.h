@@ -23,7 +23,7 @@
 #include <string>
 #include <list>
 
-namespace TenMilManUI_CORE_Graphics_Vector {
+namespace TenUI {
 		
 	class Shape : public DisplayObject {	
 	protected:
