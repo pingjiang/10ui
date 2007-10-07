@@ -15,45 +15,48 @@
 #include <TenMilManUI/Graphics/Font/FontManager_FT2.h>
 
 using namespace std;
-using namespace TenMilManUI_CORE_Graphics_Vector;
-using namespace TenMilManUI_CORE_Graphics_Raster;
-using namespace TenMilManUI_CORE_Graphics_Text;
-using namespace TenMilManUI_CORE;
 
-namespace TenMilManUI_APP {
-	class TMMUI_TestApp : public ITenMilManUIApp
-	{
-	public:
-		TMMUI_TestApp(){}
-		virtual ~TMMUI_TestApp(){}
+namespace TenUI {
 
-		void initRectangleTest();
-		void initLineTest();		
-		void initRasterTest();		
-		void initTextTest();
+	class TMMUI_TestApp : public ITenMilManUIApp {
 		
-		virtual void init() throw(int);
-		virtual void update_preframe() throw(int) {
+		/***************************************/
+		/************ Public Methods ***********/
+		/***************************************/
+		public:
+			TMMUI_TestApp(){}
+			virtual ~TMMUI_TestApp(){}		
+
+		/***************************************/
+		/*********** Private Methods ***********/
+		/***************************************/
+		private:
+			void initRectangleTest();
+			void initLineTest();		
+			void initRasterTest();		
+			void initTextTest();
+
+		/***************************************/
+		/**** ItenMilManUIApp Implmentation ****/
+		/***************************************/
+		public:
+			virtual void init() throw(int);
+			virtual void update_preframe() throw(APPEXCEPTIONS) {}
+			virtual void update_frame() throw(APPEXCEPTIONS) {}
+			virtual void deinit() throw(APPEXCEPTIONS) {}
 			
-		}
-		virtual void update_frame() throw(int) {
+			virtual char* getName()							{ return "TMMUI_TestApp"; }
+					
+			virtual int getScreenWidth()					{ return 1280; }
+			virtual int getScreenHeight()					{ return 1024; }
+			virtual int getScreenBPP()						{ return 32; }
+			virtual TenUI::SCREEN_OPTION getScreenOptions()	{return TenUI::WINDOWED;}
 			
-		}
-		virtual void deinit() throw(int) {
+			virtual UserInput* getUserInput()				{ return SDLMouseInput::createInstance(); }
 			
-		}
-		
-		virtual char* getName(){ return "TMMUI_TestApp"; }
-		
-		
-		virtual int getScreenWidth(){ return 1280; }
-		virtual int getScreenHeight(){ return 1024; }
-		virtual int getScreenBPP(){ return 32; }
-		virtual TenMilManUI_CORE::SCREEN_OPTION getScreenOptions(){return TenMilManUI_CORE::FULLSCREEN;}
-		virtual UserInput* getUserInput(){
-			return SDLMouseInput::createInstance();
-		}
+			virtual string getFontDirectory()				{return "TestResources/FontTest";}		
 	};
+	
 }
 
 #endif /*TMMUI_TESTAPP_H_*/

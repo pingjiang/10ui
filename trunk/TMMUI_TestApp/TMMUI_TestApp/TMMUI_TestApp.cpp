@@ -1,6 +1,6 @@
 #include "TMMUI_TestApp.h"
 
-namespace TenMilManUI_APP {
+namespace TenUI {
 		
 	void TMMUI_TestApp::initRectangleTest(){			
 		Rectangle *tmpRect;
@@ -30,42 +30,30 @@ namespace TenMilManUI_APP {
 	void TMMUI_TestApp::initRasterTest(){
 		Rasterable *tmpRaster = new Rasterable(NULL, 1024,640);
 		tmpRaster->setTextureFromFile("TestResources/RasterTest/bomber_blue.png");
-		TenUI->addDisplayObject(tmpRaster);
+		getTenUI()->addDisplayObject(tmpRaster);
 
 		tmpRaster = new Rasterable(NULL, 64,64);
 		tmpRaster->setTextureFromFile("TestResources/RasterTest/barney.jpg");	
-		TenUI->addDisplayObject(tmpRaster);
+		getTenUI()->addDisplayObject(tmpRaster);
 		
 		tmpRaster = new Rasterable(NULL, 704,64);
 		tmpRaster->setTextureFromFile("TestResources/RasterTest/keepon_motion.jpg");	
-		TenUI->addDisplayObject(tmpRaster);
+		getTenUI()->addDisplayObject(tmpRaster);
 	}
 	
 	void TMMUI_TestApp::initTextTest(){
-		try{
-			FontMgr.loadFont("TestResources/FontTest/CALIBRI.TTF","Calibra");
-		}catch(int e){
-			switch(e){
-			case FontManager_FT2::LOAD_FONT_EXCEPTION:
-				cout << "Load Font Exception" << endl;
-			case FontManager_FT2::FONTKEY_ALREADY_EXISTS:
-				cout << "FontKey already exists" << endl;
-			}
-		}
-		
-
-		Rectangle *tmpRect = new Rectangle(NULL, 64, 768, 576, 64, 			// x,y,w,h
-											  0,0,0, 	// fill color
+		Rectangle *tmpRect = new Rectangle(NULL, 64, 768, 640, 64, 			// x,y,w,h
+											  .1,0,.8, 	// fill color
 											  0,0,0, 	// stroke color
 											  0);	
-		TenUI->addDisplayObject(tmpRect);
+		getTenUI()->addDisplayObject(tmpRect);
 		
 		Text *text = new Text(NULL, 64, 768);
-		text->setFont("Calibra");
-		text->setFontSize(16);
+		text->setFont("Calibri");
+		text->setFontSize(18);
 		text->setText("I find out what the world needs, then I proceed to invent");
-		text->setColor("#FFF");
-		TenUI->addDisplayObject((DisplayObject*)text);		
+		text->setColor("#ff8811");
+		getTenUI()->addDisplayObject((DisplayObject*)text);		
 	}
 	
 
@@ -75,12 +63,7 @@ namespace TenMilManUI_APP {
 		initTextTest();
 		initRasterTest();						
 	}
-
+	
 }
 
-	int main(void){		
-		TenMilManUI_APP::ITenMilManUIApp* app = (TenMilManUI_APP::ITenMilManUIApp*) (new TenMilManUI_APP::TMMUI_TestApp());
-		TenMilManUI_CORE::TenMilManUI* tui = TenMilManUI_CORE::TenMilManUI::createInstance(app);		
-		tui->run();
-	}
-
+IMPLEMENT_TENUI_APP(TMMUI_TestApp)
