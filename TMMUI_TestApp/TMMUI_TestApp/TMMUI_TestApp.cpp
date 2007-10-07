@@ -1,5 +1,8 @@
 #include "TMMUI_TestApp.h"
 
+// TenUI Application Entry Point
+IMPLEMENT_TENUI_APP(TMMUI_TestApp)
+
 namespace TenUI {
 		
 	void TMMUI_TestApp::initRectangleTest(){			
@@ -66,4 +69,3 @@ namespace TenUI {
 	
 }
 
-IMPLEMENT_TENUI_APP(TMMUI_TestApp)
