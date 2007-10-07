@@ -10,17 +10,18 @@
 = Oct 10, 2007 Build =
 
 *Peter Wong*
-  * Graphics Debugged/Tested
-    * Rasterable
-    * Line
-    * Rectangle
-    * Text
+  * ~~Graphics Debugged/Tested~~
+    * ~~Rasterable~~
+    * ~~Line~~
+    * ~~Rectangle~~
+    * ~~Text~~
   * InteractiveObjects Picker
     * Given X,Y Coord
     * Returns stack of InteractiveObjects under coord
   * Rename TenMilManUI Project to TenUI
-  * Merge namespaces to TenUI
+  * ~~Merge namespaces to TenUI~~
   * ~~Move SDL_Utils.h to TenUI/Utils directory~~
+  * 
 
 *Rob Evans*
   * Initial version of Managers
