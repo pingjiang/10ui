@@ -3,7 +3,7 @@
 
 #include "../../Graphics/DisplayObject.h"
 
-namespace TenMilManUI_CORE_UI_Core {	
+namespace TenUI {	
 
 	class InteractiveObject : public DisplayObject {
 	protected:					

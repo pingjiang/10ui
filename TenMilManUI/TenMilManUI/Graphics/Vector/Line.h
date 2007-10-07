@@ -25,7 +25,7 @@
 #include <iostream>
 using namespace std;
 
-namespace TenMilManUI_CORE_Graphics_Vector {	
+namespace TenUI {	
 
 	class Line : public DisplayObject {
 	protected:

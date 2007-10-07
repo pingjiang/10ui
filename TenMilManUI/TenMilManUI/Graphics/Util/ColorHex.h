@@ -39,12 +39,11 @@ public:
 		setColor(ch);
 	}
 	
-	float setColor(const string &ch){
+	void setColor(const string &ch){
 		if(ch.at(0) == '#'){
 			if(ch.size() == 7){
 				for(int i=0; i<3; ++i){
 					colorv[i] = ((float)(hexCharToInt(ch.at(i*2+1))*16+hexCharToInt(ch.at(i*2+2))))/255.0;
-					cout << "color: " << colorv[i] << endl;
 				}
 			}else if(ch.size() == 4){
 				for(int i=0; i<3; ++i){

@@ -1,15 +1,12 @@
 #include "TenMilManUI.h"
-#include "Graphics/Font/FontManager_FT2.h"
-#include <iostream>
-using namespace std;
 
-namespace TenMilManUI_CORE {	
+namespace TenUI {	
 
 	/**********************************
 	 * 	   Singleton Implementation	  *	 
 	 **********************************/
 	TenMilManUI* TenMilManUI::inst = 0;
-	TenMilManUI* TenMilManUI::createInstance(TenMilManUI_APP::ITenMilManUIApp *app) throw(int){
+	TenMilManUI* TenMilManUI::createInstance(ITenMilManUIApp *app) throw(int){
 		if(TenMilManUI::inst == 0){
 			TenMilManUI::inst = new TenMilManUI(app);
 		}
@@ -22,7 +19,7 @@ namespace TenMilManUI_CORE {
 	/**********************************
 	 * 	 	Constructor/Destructor	  *	 
 	 **********************************/
-	TenMilManUI::TenMilManUI(TenMilManUI_APP::ITenMilManUIApp *app) throw(int)	{
+	TenMilManUI::TenMilManUI(ITenMilManUIApp *app) throw(int)	{
 		this->app = app;
 		screenWidth = app->getScreenWidth();		
 		screenHeight = app->getScreenHeight();
@@ -94,7 +91,9 @@ namespace TenMilManUI_CORE {
 
 		glEnable(GL_BLEND);
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0);					// Full Brightness.  50% Alpha
-		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);	// Set The Blending Function For Translucency		
+		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);	// Set The Blending Function For Translucency	
+		
+		glEnable (GL_LINE_SMOOTH);
 	}
 	
 	void TenMilManUI::initFontManager(){
@@ -148,3 +147,6 @@ namespace TenMilManUI_CORE {
 	}
 	
 }
+
+
+TenUI::TenMilManUI* getTenUI(){ return TenUI::TenMilManUI::instance(); }

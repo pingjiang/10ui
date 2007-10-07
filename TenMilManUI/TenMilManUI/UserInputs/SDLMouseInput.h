@@ -6,8 +6,13 @@
 #define SDLMOUSEINPUT_H
 
 #include <SDL.h>
+
 #include "UserInput.h"
-#include "../Globals.h"
+#include "../TenMilManUI.h"
+
+namespace TenUI {
+	class TenMilManUI;
+}
 
 class SDLMouseInput : UserInput {
 protected:
@@ -29,7 +34,7 @@ public:
 		if( event.type == SDL_MOUSEMOTION )
 		{
 			indata.x = event.button.x;
-			indata.y = SCREEN_HEIGHT - event.button.y;
+			indata.y = getTenUI()->getScreenHeight() - event.button.y;
 		}
 		if( event.type == SDL_MOUSEBUTTONDOWN && !indata.pressed)
 		{

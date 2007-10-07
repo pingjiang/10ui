@@ -1,6 +1,6 @@
 #include "DisplayObjectContainer.h"
 
-namespace TenMilManUI_CORE_UI_Core {	
+namespace TenUI {	
 
 	DisplayObjectContainer::~DisplayObjectContainer(){
 		children.clear();

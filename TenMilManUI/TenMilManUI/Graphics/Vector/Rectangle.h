@@ -24,7 +24,7 @@
 #include <string>
 #include <list>
 
-namespace TenMilManUI_CORE_Graphics_Vector {
+namespace TenUI {
 		
 	class Rectangle : public Shape {	
 	protected:		
