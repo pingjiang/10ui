@@ -1,5 +1,31 @@
 #summary Peter Wong's Work Log
 
+
+= Oct 7, 2007 =
+=== TenMilManUI ===
+  * *Merged Namespaces*
+    * Everything is now under the {{{TenUI}}} namespace
+  
+  * Created application simplifying macro
+    * {{{IMPLEMENT_TENUI_APP( _tenuiApp_ )}}}
+    * This macro writes out the programs entry point (main function)
+       * Instantiates TenUIApp
+       * Instantiates {{{TenMilManUI}}}
+       * calls {{{TenMilManUI::run()}}}
+
+  * Cleanup
+    * Removed Globals.h
+    * Moved SDL_util.h to Util folder
+
+  * Created conveniency global function
+    * {{{getTenUI()}} returns the {{{TenMilManUI}} instance
+
+=== TMMUI_TestAPP ===
+  * Using {{{IMPLEMENT_TENUI_APP}}} macro
+  * Using new TenUI namespace
+  * Cleaned up code
+
+
 = Oct 6, 2007 =
 === TenMilManUI ===
   * *Changed* {{{FontManager_FT2}}}
