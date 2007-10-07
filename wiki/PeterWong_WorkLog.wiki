@@ -20,7 +20,7 @@
   * *Created conveniency global function*
     * {{{getTenUI()}}} returns the {{{TenMilManUI}}} instance
 
-  * Anti-Aliased Lines
+  * *Anti-aliased Lines*
     * added {{{glEnable(GL_LINE_SMOOTH)}}} to {{{initOpenGL()}}}
 
 === TMMUI_TestApp ===
