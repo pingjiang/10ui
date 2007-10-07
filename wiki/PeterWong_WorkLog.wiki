@@ -18,7 +18,7 @@
     * Moved SDL_util.h to Util folder
 
   * Created conveniency global function
-    * {{{getTenUI()}} returns the {{{TenMilManUI}} instance
+    * {{{getTenUI()}}} returns the {{{TenMilManUI}}} instance
 
 === TMMUI_TestAPP ===
   * Using {{{IMPLEMENT_TENUI_APP}}} macro
