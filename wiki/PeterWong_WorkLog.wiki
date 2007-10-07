@@ -6,18 +6,18 @@
   * *Merged Namespaces*
     * Everything is now under the {{{TenUI}}} namespace
   
-  * Created application simplifying macro
+  * *Created application simplifying macro*
     * {{{IMPLEMENT_TENUI_APP( _tenuiApp_ )}}}
     * This macro writes out the programs entry point (main function)
        * Instantiates TenUIApp
        * Instantiates {{{TenMilManUI}}}
        * calls {{{TenMilManUI::run()}}}
 
-  * Cleanup
+  * *Cleanup*
     * Removed Globals.h
     * Moved SDL_util.h to Util folder
 
-  * Created conveniency global function
+  * *Created conveniency global function*
     * {{{getTenUI()}}} returns the {{{TenMilManUI}}} instance
 
 === TMMUI_TestAPP ===
