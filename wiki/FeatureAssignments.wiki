@@ -20,7 +20,7 @@
     * Returns stack of InteractiveObjects under coord
   * Rename TenMilManUI Project to TenUI
   * Merge namespaces to TenUI
-  * Move SDL_Utils.h to TenUI/Utils directory
+  * ~~Move SDL_Utils.h to TenUI/Utils directory~~
 
 *Rob Evans*
   * Initial version of Managers
