@@ -1,6 +1,19 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Mon 10/8/07===
+   * Moved classes to TenUI namespace
+      * Managers
+      * Event, !EventHandler, !EventDispatcher
+   * Removed !InteractiveObject
+   * Discussed new structure of !InputData with Thomas
+      * Decided to subclass into !RealTimeData, !GestureData, !MouseData(?)
+   * TODO:
+      * Implement !EventHandler::process(Event evt)
+      * Update !UserInput to deal with data for new architecture
+      * Update Event to handle necessary data
+      * Talk to Peter about necessity of !DragManager
+
 ===Fri 10/5/07===
    * Working on manager related stuff
       * Modified definition so managers now deal with !UIComponents instead of !InteractiveObjects
