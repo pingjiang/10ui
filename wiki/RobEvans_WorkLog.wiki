@@ -1,6 +1,31 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Wed 10/10/07===
+   * Subclassed !InputData class in !UserInput.cpp, original !InputClass should be sufficient for the mouse
+      * !InputData
+         *    ADDED side_id
+      * !GestureData
+         * INHERITS x,y (starting point)
+         *    ADDED gestureStr (string containing the sequence of the gesture ex. "LDUR")
+      * !RealTimeData
+         * INHERITS x,y {starting point, center point} (depending on event type)
+         *    ADDED evtType { "DRAG", "ROTATE", "ZOOM" }
+         *    ADDED amt     {   dist,    angle,  scale }
+   * Modified !UserInput
+      * ADDED getSide()
+      * ADDED getClass() { MOUSE, GESTURE, REALTIME }
+   * Event class will need the same info as !InputData, do we need a new class?
+      * #define Event !InputData%BR%
+        #define !GestureEvent !GestureData%BR%
+        #define !RealTimeEvent !RealTimeData
+   * Work on !SelectManager
+      * Updated !SelectManager::update() to get input from !UserInput and check if it's repeated input
+      * Processes select event to objects at (x,y)
+   * Moved select from !InteractiveObject to UIComponent
+
+   * TODO:
+      * Implement !EventHandler::process(Event evt)
 ===Mon 10/8/07===
    * Moved classes to TenUI namespace
       * Managers
