@@ -26,6 +26,10 @@ This is the work log of Rob Evans, that is all.
    * Worked on implementing !EventHandler::process(Event evt)
       * Successfully added to component and called on select
       * Problem: Event doesn't contain a target object, should add that
+      * Talked to Peter, apparently, controls are going to be subclasses of !EventHandlers as well
+         * With this setup, what should !EventHandlers be registered with the !UIComponent since the UIComponent is an !EventHandler?
+   * Removed !InputData, !GestureData and !RealTimeData classes
+      * Will need to re-work how data is Xfered then
    * TODO:
       * Implement !EventHandler::process(Event evt)
 ===Mon 10/8/07===
