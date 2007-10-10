@@ -23,7 +23,9 @@ This is the work log of Rob Evans, that is all.
       * Updated !SelectManager::update() to get input from !UserInput and check if it's repeated input
       * Processes select event to objects at (x,y)
    * Moved select from !InteractiveObject to UIComponent
-
+   * Worked on implementing !EventHandler::process(Event evt)
+      * Successfully added to component and called on select
+      * Problem: Event doesn't contain a target object, should add that
    * TODO:
       * Implement !EventHandler::process(Event evt)
 ===Mon 10/8/07===
