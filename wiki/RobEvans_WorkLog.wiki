@@ -1,6 +1,23 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Fri 10/12/07===
+   * Modifying !UserInput
+      * Make multiple instantiation of !UserInput possible (remove singleton-ness)
+         * Change w/o making it incompatible with current test program
+         * !UserInput now contains set<!UserInput> inputs which keeps track of all !UserInputs
+         * isCreated and inst variables from !UserInput will now be part of the subclasses, since they'll be singletons
+         * getX() and all accessor functions are now implemented in the subclasses, but they'll need to be specified in the !UserInput class
+         * !UserInput::instance() now retrieves the first !UserInput in the set !UserInput::inputs
+         * !SDLMouseInput::createInstance() handles !SDLMouseInput static vars and adds itself to !UserInput::inputs
+      * Finished moving info from !InputData to !UserInput subclasses
+   * Modifying !SelectManager
+      * Update !SelectManager::update() to deal with modified !UserInput class
+      * !SelectManager::update() now works with modified !UserInput class, but there'll be problems with advanced behavior (only checks a couple things for equivalence right now) as it is
+         * Checks for equivalent events via x,y,pressed & select -> what will happen for special table events?
+   * Create !TableInput : !UserInput
+      * Made basic setup for getting events from the table
+      * Forgot that quitting was done through !UserInput, without !TableInput having a "quit" you can't quit; had to kill from pitfall
 ===Wed 10/10/07===
    * Subclassed !InputData class in !UserInput.cpp, original !InputClass should be sufficient for the mouse
       * !InputData
