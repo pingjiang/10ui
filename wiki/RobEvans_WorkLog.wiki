@@ -1,6 +1,19 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Mon 10/15/07===
+   * Working on understanding !EventHandlers
+      * !SelectManager registers UIComponents; unfortunately, all the things that can be displayed (currently) aren't derived from UIComponent
+      * I'll talk with Peter about it more later, instead of implementing handleEvent (since I can't easily test it, I'll work on !SelectManager::update() to encompass more events besides selection)
+   * !SelectManager::update()
+      * Added logic to also handle "PRESS" events (!OnMouseDown equivalent)
+      * Added map<int,UIComponent>pressedObjects to keep track of pressed objects as well
+      * TODO: Add logic to add/remove items from the selected(&pressed) objects maps
+
+   * TODO:
+      * objs -> obj in !SelectManager
+      * Modify for dispatching multiple events in !SelectManager
+      * Create a test class for testing !EventHandler
 ===Fri 10/12/07===
    * Modifying !UserInput
       * Make multiple instantiation of !UserInput possible (remove singleton-ness)
