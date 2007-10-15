@@ -1,5 +1,15 @@
 #summary Peter Wong's Work Log
 
+= Oct 15, 2007 =
+=== TenMilManUI ===
+  * *Fixed Line and Rectangle Display*
+    * [http://code.google.com/p/10ui/issues/detail?id=1 Issue 1]
+    * Corrected misuse of glEnable/Disable(GL_Texture_2D)
+    * *Affected Classes::Methods*
+       * TenMilManUI::initOpenGL()
+       * FontFamilyData::render()
+       * Rasterable::preDraw()
+       * Rasterable::postDraw()
 
 = Oct 7, 2007 =
 === TenMilManUI ===
