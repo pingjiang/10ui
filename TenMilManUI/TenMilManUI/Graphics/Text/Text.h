@@ -63,10 +63,6 @@ namespace TenUI {
 			glColor4d(color.getRed(),color.getGreen(),color.getBlue(),(GLfloat)this->opacity);
 			FontMgr->render(fontKey,FontFamilyData::DEFAULT, fontSize, "%s",text.c_str());
 		}
-		virtual void postDraw(){
-			glBindTexture(GL_TEXTURE_2D, 0);
-			DisplayObject::postDraw();
-		}
 	};
 	
 }

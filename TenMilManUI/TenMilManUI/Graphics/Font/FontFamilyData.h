@@ -71,6 +71,9 @@ namespace TenUI {
 					lines.push_back(line);
 				}
 				
+
+				glEnable(GL_TEXTURE_2D);
+				
 				glListBase(list_base);
 	
 				for(unsigned int i=0;i<lines.size();i++) {
@@ -91,6 +94,8 @@ namespace TenUI {
 	
 					glPopMatrix();
 				}
+				
+				glDisable(GL_TEXTURE_2D);
 	
 		}
 		

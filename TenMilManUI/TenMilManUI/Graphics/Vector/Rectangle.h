@@ -41,12 +41,10 @@ namespace TenUI {
 		virtual void init(){}
 		virtual void update(){}	
 		virtual void draw(){
-			
-			
 			// rectangle's stroke
 				glColor4f(strokeColor[0], strokeColor[1], strokeColor[2],(GLfloat)opacity*strokeColor[3]);
 				
-				// draw line
+			// draw line
 				glBegin(GL_QUADS);	            						
 					glVertex2f((left-strokeSize),(bottom-strokeSize));
 					glVertex2f((left-strokeSize),(bottom+h+strokeSize));
@@ -57,19 +55,13 @@ namespace TenUI {
 			// rectangle's color
 				glColor4d(color[0], color[1], color[2],(GLfloat)this->opacity);
 				
-				// draw rectangle
-				glBegin(GL_QUADS);		
-
+			// draw rectangle
+				glBegin(GL_QUADS);
 					glVertex2i((int)left,(int)bottom);
 					glVertex2i((int)left,(int)(bottom+h));
 					glVertex2i((int)(left+w),(int)(bottom+h));
 					glVertex2i((int)(left+w),(int)(bottom));
-					/*glVertex2i(100,100);
-					glVertex2i(100,150);
-					glVertex2i(150,150);
-					glVertex2i(150,100);*/
 				glEnd();
-
 		}
 
 	};
