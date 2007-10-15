@@ -9,7 +9,10 @@ This is the work log of Rob Evans, that is all.
       * Added logic to also handle "PRESS" events (!OnMouseDown equivalent)
       * Added map<int,UIComponent>pressedObjects to keep track of pressed objects as well
       * TODO: Add logic to add/remove items from the selected(&pressed) objects maps
-
+   * objs -> obj in SelectManager
+      * Modified so instead of a stack of objects, only one is checked the "top" graphically
+      * NOTE: The "top" graphically depends on the order the objects are registered to the SelectManager, it's assumed that they'll be registered on instantiation.
+   * After making the objs->obj change in SelectManager, I tried to run the test app - it doesn't appear to run anymore...
    * TODO:
       * objs -> obj in !SelectManager
       * Modify for dispatching multiple events in !SelectManager
