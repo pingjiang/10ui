@@ -156,6 +156,9 @@ namespace TenUI {
 			glTexImage2D(GL_TEXTURE_2D, 0, 4, img->w, img->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->pixels);
 			SDL_FreeSurface(img);
 			
+
+			glBindTexture(GL_TEXTURE_2D, 0);   // 2d texture (x and y size)
+			
 			return true;
 		}
 	
@@ -173,12 +176,20 @@ namespace TenUI {
 		// game loop (and init) function
 		virtual void init(){}
 		virtual void update(){}
+		
+		virtual void preDraw(){
+			DisplayObject::preDraw();
+			
+			// bind texture to rectangle			
+			if( textureSet ){
+				glEnable(GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, texture); 
+			}
+		}
+		
 		virtual void draw(){		
 			if( textureSet ){
-				glColor4d(1.0,1.0,1.0,(GLfloat)this->opacity);
-		
-				// bind texture to rectangle
-				glBindTexture(GL_TEXTURE_2D, texture);
+				glColor4d(1.0,1.0,1.0,(GLfloat)this->opacity);		
 				
 				// draw rectangle
 				glBegin(GL_QUADS);		                
@@ -190,7 +201,10 @@ namespace TenUI {
 			}
 		}
 		virtual void postDraw(){
-			glBindTexture(GL_TEXTURE_2D, 0);
+			if( textureSet ){
+				glBindTexture(GL_TEXTURE_2D, 0);
+				glDisable(GL_TEXTURE_2D);
+			}
 			DisplayObject::postDraw();
 		}
 		

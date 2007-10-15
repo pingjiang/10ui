@@ -83,7 +83,12 @@ namespace TenUI {
 	
 	void TenMilManUI::initOpenGL(){		
 		// initialize OpenGL
-		glEnable(GL_TEXTURE_2D);							// Enable Texture Mapping
+		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
+		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // scale linearly when image smalled than texture
+
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+		
 		glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);				// Black Background
 		glClearDepth(1.0f);									// Depth Buffer Setup
