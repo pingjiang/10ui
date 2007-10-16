@@ -1,6 +1,31 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Tues 10/16/07===
+   * Created !InteractiveRectangle which subclasses !UIComponent
+      * Hopefully this will allow me to create and test event handler code
+      * Test program doesn't run, although it does compile successfully
+   * Made !UIComponent a subclass of !EventHandler
+      * This will handle the basic events that all basic controls will have
+      * Changed !EventHandler::getObjectID() to !EventHandler::getEvtHandlerID() because there was ambiguity
+   * Added names for events to !UIComponent
+      * In !UIComponent.h
+         * static std::string ~event name~
+      * In !UIComponent.cpp
+         * std::string !UIComponent::~event name~ = "~event name~";
+   * Got the !SelectManager working as desired, but object info is incorrect -> !GetW() and !GetH() are returning 10
+      * Tracked the problem down to the !DisplayObject class
+         * !DisplayObject constructor sets w and h to 10, always
+         * FIX: Went higher up to the first class that specified w & h in the constructor, !DisplayObjectContainer - specified that it use the w & h arguments to actually set the values
+   * Modified !SelectManager
+      * Added the ability to dispatch multiple events { UNPRESS == CLICK, so dispatch both }
+      * Modified PRESS events so only "detected" if the last event wasn't a press
+   * Created test class "!InteractiveRectangle" for testing event handlers
+      * Successfully tested PRESS, UNPRESS and CLICK events
+   * TODO:
+      * Remove select from !SDLMouseInput, implement in !SelectManager instead
+      * Add HOVER_IN, HOVER_OUT and HOVER_MOVE to the events that are detected and dispatched
+
 ===Mon 10/15/07===
    * Working on understanding !EventHandlers
       * !SelectManager registers UIComponents; unfortunately, all the things that can be displayed (currently) aren't derived from UIComponent
