@@ -8,12 +8,40 @@ This is the work log of Rob Evans, that is all.
       * Modifying obj -> objs in !SelectManager
    * Got all the events working
       * Realized it wasn't processing them in with the proper order -> doesn't go through registeredHandlers just handles the events itself
-      * FIX: create UIComponent::processEvent(Event) which will check the registeredHandlers
+      * FIX: create !UIComponent::processEvent(Event) which will check the registeredHandlers
    * Added Shape::setFillColor(r,g,b) and Shape::setStrokeColor(r,g,b)
+   * Added Shape::getFillColor(r,g,b) and Shape::getStrokeColor(r,g,b)
+   * %X% Removed userInput member of !TenMilManUI replacing it with static functions of !UserInput
+      * Changed !UserInput::isQuit() from a pure virtual function to a static function that returns true if ANY of the !UserInputs returns true isQuit() and false otherwise
+      * Changed !UserInput::update() from a pure virtual function to a static function that returns false if there aren't any !UserInputs instantiated, otherwise it updates all !UserInputs and returns true
+   * Added userInput member back in after failing testing
+   * !TableProject Meeting
+   * Attempting to allow for multiple !UserInputs again...
+      * Started out slow - remove userInput
+      * Replace !ITenMilManUI::getUserInput() with !ITenMilManUI::initializeUserInput()
+         * New function is void and simply instantiates the !UserInputs w/o returning their values, implemented in !TMMUI_TestApp.h
+         * In !TenMilManUI::TenMilManUI(app) run initializeUserInput() rather than getUserInput()
+      * In !TenMilManUI::run()
+         * Replace userInput->{update(),isQuit()} with !SDLMouseInput::instance()->{update(),isQuit()} (since !SDLMouseInput is the only way to quit currently)
+         * %X% Problem? How will !TableInput be processed? If !TableInput->update() pops an event off a queue of events we'll have problems; can't run !TableInput->update() in !TenMilManUI::run() AND !SelectManager->update()
+            * Peter said !SelectManager shouldn't be updating the !UserInput, it should just assume !TenMilManUI::run() has updated it already
+         * %X% New problem? If !TenMilManUI::run() updates !UserInput from the table (popping off events from it) what if run() runs faster than !SelectManager::update() lost events?
+            * Possible fix: Put in a queue somewhere for !TableInput::update() to shove events onto so !SelectManager can handle them in it's own sweet time
+      * %Y% So far so good...
+         * Changed virtual bool isQuit() to static bool isQuit() which checks it's inputs for for isQuit()
+            * Feared there might be a problem since inputs have isQuit() and !UserInput has isQuit(), but no errors given
+            * %X% The app crashed just like when I made the changes previously
+               * I found the problem was in !UserInput::isQuit()
+               * Since the subclasses had isQuit() but !UserInput also had a static isQuit() it crashed
+               * %Y% FIXED: Renamed subclass isQuit() to getQuit() (less intuitive) and added virtual bool getQuit() to !UserInput
+      * Now checks both inputs for "quit" - w00t
+      * Still need to clean-up !TenMilManUI::run() but the worst of it is over
+      * NOTE: I'll need to do the same thing I did for isQuit/getQuit for update()
 
    * TODO:
-      * ~~Remove select from !SDLMouseInput, implement in !SelectManager instead~~
-      * ~~Add HOVER_IN, HOVER_OUT and HOVER_MOVE to the events that are detected and dispatched~~
+      * %Y% Remove select from !SDLMouseInput, implement in !SelectManager instead
+      * %Y% Add HOVER_IN, HOVER_OUT and HOVER_MOVE to the events that are detected and dispatched
+      * Make !UserInput handle multiple inputs
 ===Tues 10/16/07===
    * Created !InteractiveRectangle which subclasses !UIComponent
       * Hopefully this will allow me to create and test event handler code
