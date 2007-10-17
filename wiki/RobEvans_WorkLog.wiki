@@ -1,6 +1,19 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Wed 10/17/07===
+   * Removed select from !SDLMouseInput and !TableInput
+   * Modified !SelectManager::update() to interpret "selects" (clicks)
+   * Realized for HOVER_IN, HOVER_OUT and HOVER_MOVE we'll want to send it to ALL objects at a point, not just the top object
+      * Modifying obj -> objs in !SelectManager
+   * Got all the events working
+      * Realized it wasn't processing them in with the proper order -> doesn't go through registeredHandlers just handles the events itself
+      * FIX: create UIComponent::processEvent(Event) which will check the registeredHandlers
+   * Added Shape::setFillColor(r,g,b) and Shape::setStrokeColor(r,g,b)
+
+   * TODO:
+      * ~~Remove select from !SDLMouseInput, implement in !SelectManager instead~~
+      * ~~Add HOVER_IN, HOVER_OUT and HOVER_MOVE to the events that are detected and dispatched~~
 ===Tues 10/16/07===
    * Created !InteractiveRectangle which subclasses !UIComponent
       * Hopefully this will allow me to create and test event handler code
