@@ -1,6 +1,26 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Thurs 10/18/07===
+   * Modifying !UserInputs
+      * Changed virtual bool !UserInput::update() to static bool !UserInput::update() and added virtual bool !UserInput::run_update()
+      * In the subclasses <class>::update() was changed to <class>::run_update()
+   * Modifying !SelectManager
+      * Need to !SelectManager::update() for each !UserInput -> added a little temporary struct for handling data, "Input"
+      * Added !SelectManager::last_m,last_t which are Input (so update() doesn't confuse the last A from the last B)
+   * Oy. Just realized we'll need last for EVERY user on the table since we don't want them to interfere with each other
+      * Already knew we'd need to make a dynamic # of last (for different #s of inputs) but I didn't even think about multiple users
+      * Mapping out exactly what we'll want to interact as far as hovering is concerned and additional data that'll be needed
+         * uid // user id data attached to events
+         * !UserInputs are processed one at a time, mouse input shouldn't affect table input
+         * Within table inputs, at least for the old architecture, ~~we won't even want different fids interacting~~ no fids, only hover on hands
+   * TODO:
+      * Make !UserInput handle multiple inputs
+         * Find out what additional info is gonna need to be stored (I'm worried it may be a lot... sets of !UIComponent pointers for each fid)
+      * Insert !BasicInput between !UserInput and {!SDLMouseInput,!TableInput}
+      * Fix !SelectManager for multiple inputs (handle things and extra data gracefully)
+      * One !UserInput per user for !TableInput (singleton->not singleton)
+      * Create !UserInputManager to keep track of inputs (rather than in !UserInput)
 ===Wed 10/17/07===
    * Removed select from !SDLMouseInput and !TableInput
    * Modified !SelectManager::update() to interpret "selects" (clicks)
