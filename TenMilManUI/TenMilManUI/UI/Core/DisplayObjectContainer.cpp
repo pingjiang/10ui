@@ -15,7 +15,7 @@ namespace TenUI {
 	}
 	
 	void DisplayObjectContainer::preDraw(){
-		InteractiveObject::preDraw();
+		//InteractiveObject::preDraw();
 		
 		glEnable(GL_SCISSOR_TEST);
 		glScissor(0,0, w, h);
@@ -31,7 +31,7 @@ namespace TenUI {
 	void DisplayObjectContainer::postDraw(){
 		glDisable(GL_SCISSOR_TEST);
 
-		InteractiveObject::postDraw();
+		//InteractiveObject::postDraw();
 	}
 	
 	void DisplayObjectContainer::addChild(DisplayObject* child){

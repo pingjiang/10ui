@@ -31,7 +31,8 @@ namespace TenUI {
 			virtual int 		getScreenHeight() = 0;
 			virtual int 		getScreenBPP() = 0;
 			virtual TenUI::SCREEN_OPTION 	getScreenOptions() = 0;
-			virtual UserInput* 	getUserInput() = 0;
+			//virtual UserInput* 	getUserInput() = 0;
+			virtual void		initializeUserInput() = 0;
 			virtual string		getFontDirectory() =0;
 			
 			virtual ~ITenMilManUIApp(){}

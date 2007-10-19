@@ -25,6 +25,7 @@
 #include "UI/Core/DisplayObjectContainer.h"
 #include "UI/Core/UIComponent.h"
 #include "UserInputs/UserInput.h"
+#include "UserInputs/InputManager.h"
 
 #define IMPLEMENT_TENUI_APP( tenuiApp ) int main(void) {																			\
 											TenUI::ITenMilManUIApp* app = (TenUI::ITenMilManUIApp*) new TenUI::tenuiApp;			\
@@ -49,7 +50,7 @@ namespace TenUI {
 		    int screenWidth;
 		    int screenHeight;
 		    int screenBPP;
-		    UserInput* userInput;
+		    //UserInput* userInput;
 		    
 		    map<long ,DisplayObject*> rootObjs;		    
 		    ITenMilManUIApp *app;

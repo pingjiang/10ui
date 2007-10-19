@@ -7,44 +7,61 @@
 
 #include <SDL.h>
 
-#include "UserInput.h"
+//#include "UserInput.h"
+#include "BasicInput.h"
 #include "../TenMilManUI.h"
 
 namespace TenUI {
-	class TenMilManUI;
-}
 
-class SDLMouseInput : UserInput {
+//class SDLMouseInput : UserInput {
+class SDLMouseInput : public BasicInput {
 protected:
-	SDL_Event event;	
-
-	SDLMouseInput():UserInput(){}
-	virtual ~SDLMouseInput(){}
-
+	static bool isCreated;
+	static UserInput* inst;
+	
+	SDL_Event event;
+	long fid, uid; // "finger" id, user id (table side)
+	int x,y;
+	bool pressed;//, select;
+	bool quit;
+	
 public:
+	//SDLMouseInput() : UserInput() {
+	SDLMouseInput() : BasicInput() {
+		UI_type = UserInput::MOUSE_INPUT;
+		x = -1;
+		y = -1;
+		fid = 0;
+		uid = 0;
+		quit = false;
+	}
+	
 	static UserInput* createInstance();
 	static UserInput* instance();
-
-	virtual void init(){}
 	
+	virtual void init() {}
 	virtual bool update(){
 		SDL_PollEvent( &event );
-		indata.select = false;
+		
+		//select = false;
 
 		if( event.type == SDL_MOUSEMOTION )
 		{
-			indata.x = event.button.x;
-			indata.y = getTenUI()->getScreenHeight() - event.button.y;
+			x = event.button.x;
+			y = getTenUI()->getScreenHeight() - event.button.y;
 		}
-		if( event.type == SDL_MOUSEBUTTONDOWN && !indata.pressed)
+
+		if( event.type == SDL_MOUSEBUTTONDOWN && !pressed)
 		{
-			indata.pressed = true;
+			pressed = true;
 		}
+
 		if( event.type == SDL_MOUSEBUTTONUP )
 		{
-			indata.pressed = false;
-			indata.select = true;
+			pressed = false;
+			//select = true;
 		}
+
 		if( event.type == SDL_KEYDOWN )
         {
 			if( event.key.keysym.sym == SDLK_ESCAPE)
@@ -52,15 +69,22 @@ public:
                 quit = true;
 			}
 		}
-        else if( event.type == SDL_QUIT )
-        {
-            quit = true;
-        }  
+	    else if( event.type == SDL_QUIT )
+	    {
+	    	quit = true;
+	    }  
 
 		return true;
-	}	
+	}
 	
-
+	virtual int getX() { return x; }
+	virtual int getY() { return y; }
+	virtual bool isPressed() { return pressed; }
+	//virtual bool isSelect() { return select; }
+	virtual bool isQuit() { return quit; }
 };
+
+
+}
 
 #endif

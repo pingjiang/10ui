@@ -24,7 +24,8 @@ namespace TenUI {
 		screenWidth = app->getScreenWidth();		
 		screenHeight = app->getScreenHeight();
 		screenBPP = app->getScreenBPP();
-		userInput = app->getUserInput();
+		//userInput = app->getUserInput();
+		app->initializeUserInput();
 		
 		running = true;
 	    pthread_mutex_init(&runningMutex,NULL);	
@@ -47,17 +48,26 @@ namespace TenUI {
 	 * 	 		Public Methods	  	  *	 
 	 **********************************/	
 	void TenMilManUI::run() throw(int){
-		userInput->update();
+		//userInput->update();
+		//SDLMouseInput::instance()->run_update();
+		//UserInput::instance()->update();
+		//UserInput::update();
+		InputManager::update();
 		
 		app->init();
-		
-		while(isRunning() && !userInput->isQuit()){			
+		int count = 0;
+		while(isRunning() && !InputManager::isQuit()) {//!UserInput::isQuit()) { //!SDLMouseInput::instance()->isQuit()) {//!userInput->isQuit()){ //!UserInput::isQuit()){			
 			app->update_preframe();
 			app->update_frame();
 			update();
 			draw();
 
-			userInput->update();
+			InputManager::update();
+			//UserInput::update();
+			//SDLMouseInput::instance()->run_update();
+			//userInput->update();
+			//UserInput::instance()->update();
+			++count;
 		}
 		app->deinit();
 		SDL_Quit();

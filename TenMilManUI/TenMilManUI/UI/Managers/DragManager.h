@@ -1,11 +1,16 @@
 #ifndef DRAGMANAGER_H_
 #define DRAGMANAGER_H_
 
-class DragManager
+#include "Manager.h"
+
+namespace TenUI{
+
+class DragManager : public Manager
 {
 public:
 	DragManager();
 	virtual ~DragManager();
 };
 
+}
 #endif /*DRAGMANAGER_H_*/
