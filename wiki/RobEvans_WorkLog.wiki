@@ -1,6 +1,42 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Fri 10/19/07===
+   * Initial attempt
+      * Inserting BasicInput
+         * TableInput, SDLMouseInput now subclass BasicInput
+         * Data (x,y,pressed,quit) and methods moved to BasicInput
+      * Creating InputManager
+         * Since UserInput and InputManager are now differentiated, UserInput subclasses can use isQuit() and update() (instead of getQuit() and run_update())
+      * %X% Compile was unsuccessful, didn't manage changes well enough - went back to previous code
+   * Attempt #2
+      * Creating InputManager
+         * %Y% Initially in addition to UserInput
+         * %Y% Change UserInput subclasses to register with InputManager additionally
+         * %Y% Switch the application from using UserInput to InputManager
+      * Modifying UserInput
+         * %Y% Remove references to static vars from subclasses
+         * %Y% Remove static vars & methods (that are now in InputManager)
+         * %Y% Changing virtual functions back getQuit()->isQuit(), run_update()->update()
+         * %Y% Added {UI_type,UI_data,getType(),getDataFormat()} and the static vars {MOUSE_INPUT,TABLE_INPUT,BASIC_DATA,GESTURE_DATA,REALTIME_DATA}
+      * Modifying TableInput for multiple instances (one per user)
+         * %Y% Removed static vars & methods {isCreated, inst, instance()} except createInstance()
+         * %Y% Expanded createInstance()->createInstance(uid)
+      * Inserting BasicInput
+         * %Y% Subclass UserInput with BasicInput
+         * %Y% Move SDLMouseInput and TableInput from under UserInput to under BasicInput
+      * Fixing SelectManager for multiple inputs gracefully
+         * Added init() function which fills in a map of UserInput* -> Input* for last inputs of each UserInput
+         * Modified update() function to use the <UserInput,Input> map to retrieve and update the correct last_ui
+         * Added map<UserInput*,set<UIComponent*> > for hovered objects for each UserInput
+            * Tried implementing really quick - seg fault (I forgot to initialize the map's stuff in init() - TODO)
+   * TODO:
+      * Make UserInput(/InputManager now) handle multiple inputs
+         * %Y% Insert BasicInput between UserInput and {SDLMouseInput,TableInput}
+         * Fix SelectManager for multiple inputs (handle things and extra data gracefully)
+         * %Y% One UserInput per user for TableInput (singleton->not singleton)
+         * %Y% Create InputManager to keep track of inputs (rather than in UserInput)
+
 ===Thurs 10/18/07===
    * Modifying !UserInputs
       * Changed virtual bool !UserInput::update() to static bool !UserInput::update() and added virtual bool !UserInput::run_update()
