@@ -1,15 +1,27 @@
 // sdl mouse input
 
 #include "SDLMouseInput.h"
+#include "InputManager.h"
+#include <iostream>
+
+namespace TenUI {
+
+bool SDLMouseInput::isCreated = false;
+UserInput* SDLMouseInput::inst = 0;
 
 UserInput* SDLMouseInput::createInstance(){
-	if(!UserInput::isCreated){
-		UserInput::inst = new SDLMouseInput();
+	if(!SDLMouseInput::isCreated)
+	{
+		SDLMouseInput::inst = new SDLMouseInput();
+		//UserInput::inputs.insert(SDLMouseInput::inst);
+		InputManager::getInputs()->insert(SDLMouseInput::inst);
+		SDLMouseInput::isCreated = true;
 	}
-	UserInput::isCreated = true;
-	return UserInput::inst;
+	return SDLMouseInput::inst;
 }
 
 UserInput* SDLMouseInput::instance(){
-	return UserInput::inst;
+	return SDLMouseInput::inst;
+}
+
 }

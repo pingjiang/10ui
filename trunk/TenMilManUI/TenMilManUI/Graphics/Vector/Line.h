@@ -47,7 +47,7 @@ namespace TenUI {
 								float r=0.0, float g=0.0, float b=0.0, 
 								float lineWidth=0.0, 
 								double rot=0.0, double s=1.0, double o=1.0)
-			:DisplayObject(p,x,y,rot,s,o){			
+			:DisplayObject(p,x,y,0,0,rot,s,o){			
 			
 
 			setX(x);			
@@ -76,8 +76,8 @@ namespace TenUI {
 			//int gy;
 			//localToGlobalCoord(left, bottom, &gx, &gy);
 			
-			glScissor(	getGlobalX()-((x2>x)?0:w), 
-						getGlobalY()-((y2>y)?0:h), 
+			glScissor(	(GLint)(getGlobalX()-((x2>x)?0:w)), 
+						(GLint)(getGlobalY()-((y2>y)?0:h)), 
 						w, 
 						h);
 						

@@ -166,7 +166,7 @@ namespace TenUI {
 	
 		// constructor
 		Rasterable(DisplayObject *p, int x=0, int y=0, double r=0.0, double s=1.0, double o=1.0)
-			:DisplayObject(p,x,y,r,s,o){			
+			:DisplayObject(p,x,y,0,0,r,s,o){			
 			texw = -1;
 			texh = -1;					
 			textureSet = false;

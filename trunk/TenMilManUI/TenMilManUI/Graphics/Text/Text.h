@@ -40,7 +40,7 @@ namespace TenUI {
 		ColorHex color;
 		
 	public:
-		Text(DisplayObject *p, int x, int y, double rot=0.0, double s=1.0, float o=1.0):DisplayObject(p,x,y,rot,s,o){
+		Text(DisplayObject *p, int x, int y, double rot=0.0, double s=1.0, float o=1.0):DisplayObject(p,x,y,0,0,rot,s,o){
 			color.setColor("#FFF");
 		}		
 		virtual ~Text();

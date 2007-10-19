@@ -7,60 +7,42 @@
 #ifndef USERINPUT_H
 #define USERINPUT_H
 
-struct InputData{
-	int x;
-	int y;
-	int id;
-	bool pressed;
-	bool select;
-};
+#include <string>
+#include <iostream>
+//#include "InputManager.h"
 
-class UserInput {
+using namespace std;
+
+namespace TenUI {
+
+class UserInput {	
 protected:
-	static bool isCreated;
-	static UserInput* inst;
-	InputData indata;
-	bool quit;
-
-	UserInput(){
-		UserInput::isCreated = true;
-		indata.x = 0;
-		indata.y = 0;
-		indata.id = 0;
-		indata.pressed = false;
-		quit = false;
-	}
-
-	virtual ~UserInput(){
-
-	}
+	UserInput(){}
+	virtual ~UserInput() {}
+	
+	char UI_type;
+	char UI_data;
 
 public:
-	static UserInput* createInstance();
-	static UserInput* instance();
-
 	virtual void init() = 0;
-	virtual bool update()=0;	
+	virtual bool update() = 0;
 	
-	virtual int getX(){
-		return indata.x;
-	}
-	
-	virtual int getY(){
-		return indata.y;
-	}
+	char getType()			{ return UI_type; }
+	char getDataFormat()	{ return UI_data; }
 
-	virtual bool isPressed(){
-		return indata.pressed;
-	}
-	
-	virtual bool isSelect(){
-		return indata.select;
-	}
+	virtual int getX() = 0;
+	virtual int getY() = 0;
+	virtual bool isPressed() = 0;	
+	virtual bool isQuit() = 0;
 
-	virtual bool isQuit(){
-		return quit;
-	}
+	static char MOUSE_INPUT;
+	static char TABLE_INPUT;
+	
+	static char BASIC_DATA;
+	static char GESTURE_DATA;
+	static char REALTIME_DATA;
 };
+
+}
 
 #endif

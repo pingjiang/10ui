@@ -24,9 +24,11 @@
 #include <string>
 #include <list>
 
+#include "../UI/Events/EventDispatcher.h"
+
 namespace TenUI {
 	
-	class DisplayObject {
+	class DisplayObject : public EventDispatcher {
 	public: 
 	private:
 		static unsigned long nextObjectID;
@@ -85,7 +87,7 @@ namespace TenUI {
 	public:
 		
 		// constructor
-		DisplayObject(DisplayObject *p, int x, int y, double r=0.0, double s=1.0, float o=1.0){
+		DisplayObject(DisplayObject *p, int x, int y, int w, int h, double r=0.0, double s=1.0, float o=1.0) : EventDispatcher() {
 			objid = DisplayObject::nextObjectID++;
 			
 			this->parent = p;
@@ -98,8 +100,8 @@ namespace TenUI {
 			this->setY(y);
 			this->parent = 0;
 	
-			this->setW(10);
-			this->setH(10);		
+			this->setW(w);
+			this->setH(h);		
 			
 			setOpacity(o);
 			visible = true;
