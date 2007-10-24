@@ -1,6 +1,19 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Wed 10/24/07===
+   * Continuing investigation of multiple HOVER_INs and HOVER_OUTs
+      * Implemented an ltoa function (opposite of atol) to display rectangle IDs
+      * Found that multiple INs and OUTs were correct, simply entering three rectangles simultaneously for a split second before leaving them because there's a table event at a common point
+   * Table meeting
+   * Organizing tasks
+   * TODO:
+      * Move !SelectManager->update() to a better location (!TestApp::update() to...?)
+      * Add timing measures for performance
+         * For !SelectManager::update()
+         * For draw()
+      * Research drag manager implementation
+      * Improve code for !SelectManager
 ===Tues 10/23/07===
    * Removing HOVER_MOVE events
    * Investigating multiple HOVER_INs and HOVER_OUTs for single !TableInput events (there should only be one HOVER_OUT and one HOVER_IN)
