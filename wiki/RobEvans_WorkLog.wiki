@@ -1,6 +1,18 @@
 #summary Rob Evans' Work Log
 ==Work log==
 This is the work log of Rob Evans, that is all.
+===Tues 10/23/07===
+   * Removing HOVER_MOVE events
+   * Investigating multiple HOVER_INs and HOVER_OUTs for single !TableInput events (there should only be one HOVER_OUT and one HOVER_IN)
+===Mon 10/22/07===
+   * Problem: Lag, with multiple !UserInputs it gets bogged down figuring out which objects are hovered/not hovered
+      * Possible fix: Take out the HOVER_MOVE event since I can't think of any possible uses
+      * Review code; see if it can be optimized anywhere
+   * Helped Ted with a manual for demos
+      * Found rygar isn't working
+      * Walked him through necessary steps for other demo apps
+   * Problem: There seems to be way too many events being thrown by the test !TableInput ex. it'll send out 3 hover_in & hover_outs at a time
+      * Need to look through code (already will be to optimize for above problem)
 ===Fri 10/19/07===
    * Initial attempt
       * Inserting BasicInput
