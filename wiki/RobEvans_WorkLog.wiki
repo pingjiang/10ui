@@ -1,6 +1,23 @@
 #summary Rob Evans' Work Log
 ==Work log==
-This is the work log of Rob Evans, that is all.
+===Thurs 10/25/07===
+   * Researching drag managers
+      * Flash/Flex implementation
+      * Planning TenUI::!DragManager
+   * Discussed with Peter
+      * !DragManager - conflicts with !SelectManager? turn each other off (for specific user(s)) while processing?
+      * !CursorManager - already have user id (side), use specific cursors for specific users to show differentiation - save for later
+      * selectEnabled, dragEnabled properties to be added to !UIComponent to determine behavior
+      * HOVER events no longer to affect all objects at a point, only top object
+   * TODO:
+      * Move !SelectManager->update() to a better location (!TestApp::update() to...?)
+      * Make !SelectManager a singleton with static members (modeled after Flex implementation)
+      * Add timing measures for performance
+         * For !SelectManager::update()
+         * For draw()
+      * ~~Research drag manager implementation~~
+      * Improve code for !SelectManager
+      * Start work on !DragManager
 ===Wed 10/24/07===
    * Continuing investigation of multiple HOVER_INs and HOVER_OUTs
       * Implemented an ltoa function (opposite of atol) to display rectangle IDs
