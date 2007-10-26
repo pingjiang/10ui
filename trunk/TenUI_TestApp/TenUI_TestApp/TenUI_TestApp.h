@@ -50,7 +50,7 @@ namespace TenUI {
 																	  				 		string("resources/fonts")); 		}
 			virtual IGraphics* getGraphics()					{ return OpenGL_Graphics::instance(); }
 			
-			virtual UserInput* getUserInput()					{ return SDLMouseInput::instance(); }
+			virtual UserInput* getUserInput()					{ return SDLMouseInput::createInstance(); }
 	};
 	
 }
