@@ -23,7 +23,7 @@
       * Add timing measures for performance
          * For !SelectManager::update()
          * For draw()
-      * !CursorManager[low priority]
+      * !CursorManager [ low priority ]
 ===Thurs 10/25/07===
    * Researching drag managers
       * Flash/Flex implementation
