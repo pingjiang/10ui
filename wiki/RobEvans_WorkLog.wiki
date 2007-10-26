@@ -1,5 +1,29 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Fri 10/26/07===
+   * UIComponent
+      * Added selectEnabled property
+      * Added dragEnabled property
+      * Added drag constants DRAG{ENTER,MOVE,EXIT,DROP,COMPLETE} (for !DragManager eventually)
+   * !SelectManager
+      * Making update() code better
+         * Modifying implementation to only HOVER one object
+         * Bug: Modification caused possibility of multiple HOVER_OUTs for same object
+         * Objects should have states so actions can't transfer (ex. PRESS in one square should UNPRESS when HOVER_OUT)
+   * TODO:
+      * !SelectManager
+         * Improve update() code
+         * Make a singleton
+         * Move call to update() from app-side to library-side
+         * Modify so only top object is used (even for HOVER)
+      * !DragManager
+      * UIComponent
+         * ~~Add selectEnabled property~~
+         * ~~Add dragEnabled property~~
+      * Add timing measures for performance
+         * For !SelectManager::update()
+         * For draw()
+      * !CursorManager[low priority]
 ===Thurs 10/25/07===
    * Researching drag managers
       * Flash/Flex implementation
