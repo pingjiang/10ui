@@ -1,0 +1,15 @@
+#ifndef IGRAPHICS_ENUMS_H_
+#define IGRAPHICS_ENUMS_H_
+
+
+namespace TenUI{
+
+	namespace IGraphicsEnums{
+		enum IGRAPHICS_EXCEPTION { INIT_FAILED=1 };
+		enum IGRAPHICS_RENDERING_MODE { DISPLAY=1, SELECTION };
+		enum IGRAPHICS_SCREEN_MODE { WINDOWED=1, FULLSCREEN };
+	}
+	
+}
+
+#endif /*IGRAPHICS_ENUMS_H_*/

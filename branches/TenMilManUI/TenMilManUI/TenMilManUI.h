@@ -18,13 +18,16 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <vector>
 
-#include "TenMilManUI_Enums.h"
-#include "ITenMilManUIApp.h"
-#include "Graphics/Font/FontManager_FT2.h"
-#include "UI/Core/DisplayObjectContainer.h"
-#include "UI/Core/UIComponent.h"
-#include "UserInputs/UserInput.h"
+#include <TenMilManUI/Graphics/IGraphics.h>
+#include <TenMilManUI/Graphics/GraphicsOptions.h>
+#include <TenMilManUI/ITenMilManUIApp.h>
+#include <TenMilManUI/TenMilManUI_Enums.h>
+#include <TenMilManUI/UI/Core/DisplayObject.h>
+#include <TenMilManUI/UI/Core/DisplayObjectContainer.h>
+#include <TenMilManUI/UI/Core/UIComponent.h>
+#include <TenMilManUI/UserInputs/UserInput.h>
 #include "UserInputs/InputManager.h"
 
 #define IMPLEMENT_TENUI_APP( tenuiApp ) int main(void) {																			\
@@ -36,23 +39,19 @@
 
 using namespace std;
 
-namespace TenUI{
+namespace TenUI {
+
 	class ITenMilManUIApp;
-}
-
-namespace TenUI {	
-
+	
 	class TenMilManUI {		
 		
 		// Private Variables
 		private:
 		    static TenMilManUI* inst;
-		    int screenWidth;
-		    int screenHeight;
-		    int screenBPP;
-		    //UserInput* userInput;
+		    IGraphics* graphics;
+		    UserInput* userInput;
 		    
-		    map<long ,DisplayObject*> rootObjs;		    
+		    map<long ,DisplayObject*> rootObjs;
 		    ITenMilManUIApp *app;
 						
 			// Indicates whether UI should continue running
@@ -64,36 +63,29 @@ namespace TenUI {
 		private:
 			TenMilManUI(ITenMilManUIApp *) throw(int);						
 			virtual ~TenMilManUI();
-			
-			void initSDL();
-			void initOpenGL();
-			void initFontManager();
-			
+						
 			void update(); 
 			void draw();
-			bool isRunning();
-		
+			bool isRunning();	
 
 		// Public Methods
 		public:
 			static TenMilManUI* createInstance(ITenMilManUIApp *) throw(int);
 			static TenMilManUI* instance();			
-
-			int getScreenHeight(){ return screenHeight; }
-			int getScreenWidth(){ return screenWidth; }
 			
 			void run() throw(int);
 			void quit() throw(int);
+
+			IGraphics* getGraphics(){ return graphics; }
+			GraphicsOptions& getGraphicsOptions() const{
+				return graphics->getGraphicsOptions();
+			}			
+			vector<DisplayObject *> *getUIComponentsAt(int x, int y);
 			
-			void addDisplayObject(DisplayObject *obj){
-				obj->init();
-				rootObjs.insert(make_pair(obj->getObjectID(), obj));
-			}
+			void addDisplayObject(DisplayObject *obj);
 			
 	};
 
 }
-
-TenUI::TenMilManUI* getTenUI();
 
 #endif /*TENMILMANUI_H_*/
