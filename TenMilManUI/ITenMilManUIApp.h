@@ -3,9 +3,10 @@
 
 #include <string>
 
-#include "TenMilManUI.h"
-#include "TenMilManUI_Enums.h"
-#include "UserInputs/UserInput.h"
+#include <TenMilManUI/TenMilManUI.h>
+#include <TenMilManUI/TenMilManUI_Enums.h>
+#include <TenMilManUI/UserInputs/UserInput.h>
+#include <TenMilManUI/Graphics/GraphicsOptions.h>
 
 using std::string;
 
@@ -26,14 +27,10 @@ namespace TenUI {
 			virtual void update_frame() throw(APPEXCEPTIONS) = 0;
 			virtual void deinit() throw(APPEXCEPTIONS) = 0;
 			
-			virtual char* 		getName() = 0; 
-			virtual int 		getScreenWidth() = 0;
-			virtual int 		getScreenHeight() = 0;
-			virtual int 		getScreenBPP() = 0;
-			virtual TenUI::SCREEN_OPTION 	getScreenOptions() = 0;
-			//virtual UserInput* 	getUserInput() = 0;
-			virtual void		initializeUserInput() = 0;
-			virtual string		getFontDirectory() =0;
+			virtual GraphicsOptions* getGraphicsOptions() = 0;
+			virtual IGraphics* getGraphics() = 0;
+			virtual UserInput* 	getUserInput() = 0;
+			//virtual void		initializeUserInput() = 0;
 			
 			virtual ~ITenMilManUIApp(){}
 	};

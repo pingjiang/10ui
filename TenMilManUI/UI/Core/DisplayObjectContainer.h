@@ -3,12 +3,12 @@
 
 #include <vector>
 
-#include "../../Graphics/DisplayObject.h"			
-//#include "InteractiveObject.h"
+#include "DisplayObject.h"		
 
+#include <iostream>
 using namespace std;
 
-namespace TenUI {	
+namespace TenUI {
 
 	class DisplayObjectContainer : public DisplayObject {
 	protected:
@@ -16,20 +16,30 @@ namespace TenUI {
 	
 	public:	
 		// constructor
-		DisplayObjectContainer(DisplayObject *p, int x=0, int y=0, int w=0, int h=0, double rot=0.0, double s=1.0, double o=1.0)
-			:DisplayObject(p,x,y,w,h,rot,s,o){
-		}
-//			:InteractiveObject(p,x,y,w,h,rot,s,o){}
+		DisplayObjectContainer(DisplayObject *p, int x=0, int y=0, unsigned int w=0, unsigned int h=0, double rot=0.0, double s=1.0, double o=1.0)
+			:DisplayObject(p,x,y,w,h,rot,s,o){ cout << "DisplayObjectContainer(x,y):" << x << "," << y << endl; }
 		virtual ~DisplayObjectContainer();
 		
-		// game loop (and init) function
-		virtual void update();		
+		/***********************************/
+		/*     Hierarchy Getter/Setters    */
+		/***********************************/  
+		virtual void addChild(DisplayObject* child);		
+		virtual void removeChild(DisplayObject* child);
+
+		/***********************************/
+		/*        Init/Update Methods      */
+		/***********************************/
+		virtual void init();
+		virtual void update();
+		virtual void deinit();	
+
+		/***********************************/
+		/*           Draw Methods          */
+		/***********************************/
 		virtual void preDraw();		
 		virtual void draw();		
 		virtual void postDraw();
 		
-		void addChild(DisplayObject* child);		
-		void removeChild(DisplayObject* child);
 	};
 }
 
