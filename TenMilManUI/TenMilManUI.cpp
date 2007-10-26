@@ -20,25 +20,17 @@ namespace TenUI {
 	 * 	 	Constructor/Destructor	  *	 
 	 **********************************/
 	TenMilManUI::TenMilManUI(ITenMilManUIApp *app) throw(int)	{
-		this->app = app;
-		screenWidth = app->getScreenWidth();		
-		screenHeight = app->getScreenHeight();
-		screenBPP = app->getScreenBPP();
-		//userInput = app->getUserInput();
-		app->initializeUserInput();
+		this->app = app;	        
+		this->graphics = app->getGraphics();
+		this->userInput = app->getUserInput();
 		
-		running = true;
 	    pthread_mutex_init(&runningMutex,NULL);	
-	    	    
-	    
-	    initSDL();
-	    initOpenGL();
-
-	    initFontManager();
+		running = true;
 	}	
 	TenMilManUI::~TenMilManUI(){
 		map<long,DisplayObject*>::iterator it = rootObjs.begin();
 		while(it != rootObjs.end()){
+			it->second->deinit();
 			delete (it->second);
 			++it;
 		}
@@ -48,89 +40,50 @@ namespace TenUI {
 	 * 	 		Public Methods	  	  *	 
 	 **********************************/	
 	void TenMilManUI::run() throw(int){
-		//userInput->update();
-		//SDLMouseInput::instance()->run_update();
-		//UserInput::instance()->update();
-		//UserInput::update();
-		InputManager::update();
+		cout << "TenMilManUI::run()" << endl;
 		
+		graphics->init(app->getGraphicsOptions());
 		app->init();
-		int count = 0;
-		while(isRunning() && !InputManager::isQuit()) {//!UserInput::isQuit()) { //!SDLMouseInput::instance()->isQuit()) {//!userInput->isQuit()){ //!UserInput::isQuit()){			
+		
+		cout << "\tapp->init()" << endl;
+				
+		userInput->update();
+
+		cout << "\tuserInput->update()" << endl;
+		while(isRunning() && !userInput->isQuit()){
+
+			cout << "\twhile()" << endl;
 			app->update_preframe();
 			app->update_frame();
+			
 			update();
+
+			cout << "\tupdate()" << endl;
 			draw();
 
-			InputManager::update();
-			//UserInput::update();
-			//SDLMouseInput::instance()->run_update();
-			//userInput->update();
-			//UserInput::instance()->update();
-			++count;
+
+			cout << "\tdraw()" << endl;
+			userInput->update();
+
+			cout << "\tuserInput->update()" << endl;
 		}
-		app->deinit();
-		SDL_Quit();
-	}
 		
+		app->deinit();		
+		graphics->deinit();
+	}
+	
+	vector<DisplayObject *> *TenMilManUI::getUIComponentsAt(int x, int y){
+		return NULL;
+	}
+	
 	/**********************************
 	 * 	 		Private Methods	  	  *	 
-	 **********************************/
-	void TenMilManUI::initSDL(){
-		// initialize sdl video
-		if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
-			throw UIEXCEPTION_SDL_INIT_FAILED;
-			return;
-		}
-		if ( SDL_SetVideoMode(screenWidth, screenHeight, screenBPP, SDL_OPENGL | ((app->getScreenOptions() == FULLSCREEN)?SDL_FULLSCREEN:0) ) == NULL ) { 
-			SDL_Quit();
-			throw UIEXCEPTION_SDL_INIT_FAILED;
-			return;
-		}
-
-		SDL_WM_SetCaption(app->getName(), NULL);
-	}
-	
-	void TenMilManUI::initOpenGL(){		
-		// initialize OpenGL
-		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
-		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // scale linearly when image smalled than texture
-
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-		
-		glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);				// Black Background
-		glClearDepth(1.0f);									// Depth Buffer Setup
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations		
-
-		glEnable(GL_BLEND);
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0);					// Full Brightness.  50% Alpha
-		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);	// Set The Blending Function For Translucency	
-		
-		glEnable (GL_LINE_SMOOTH);
-	}
-	
-	void TenMilManUI::initFontManager(){
-		FontManager_FT2::createInstance(app->getFontDirectory());
-	}
-	
+	 **********************************/		
 	void TenMilManUI::draw(){
 		map<long,DisplayObject*>::iterator it = rootObjs.begin();
-		int vPort[4];
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glGetIntegerv(GL_VIEWPORT, vPort);
 		
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
+		graphics->beginRendering(IGraphicsEnums::DISPLAY);
 		
-		glOrtho(0, vPort[2], 0, vPort[3], -1, 1);
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-		   
 		while(it != rootObjs.end()){
 			(it->second)->preDraw();
 			(it->second)->draw();
@@ -138,12 +91,7 @@ namespace TenUI {
 			++it;
 		}
 		
-		SDL_GL_SwapBuffers();
-		
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix();   
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();	
+		graphics->endRendering();			
 	}
 	void TenMilManUI::update(){
 		map<long,DisplayObject*>::iterator it = rootObjs.begin();
@@ -161,7 +109,12 @@ namespace TenUI {
 		return temp;
 	}
 	
+	void TenMilManUI::addDisplayObject(DisplayObject *obj){
+		obj->init();
+		
+		rootObjs.insert(make_pair(obj->getObjectID(), obj));
+	}
+				
+	
 }
 
-
-TenUI::TenMilManUI* getTenUI(){ return TenUI::TenMilManUI::instance(); }
