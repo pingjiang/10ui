@@ -21,14 +21,14 @@
             * state change requires privileges
          * Move display changes from event-specific to state-specific
       * !DragSource
-         * void* data
+         * void data
          * string format { TEXT, OBJECT, ? }
       * !DraggableComponent, public !UIComponent
          * Additional state DRAGGING_STATE (here instead of in !UIComponent)
          * allowedDragActions { COPY, MOVE, LINK }; LINK may be unnecessary
          * allowedDragFormats { TEXT, OBJECT, ? } == !DragSource::format
-         * !DragSource* getDragData() { packages data based on control type }
-         * bool? receiveDragData(!DragSource* data) { handle data }
+         * !DragSource getDragData() { packages data based on control type }
+         * bool? receiveDragData(!DragSource data) { handle data }
       * Need to define groups for permissions somewhere
          * Define as rules ex. { uid | uid > 2 }
          * Define as sets ex. { 0, 2 }
