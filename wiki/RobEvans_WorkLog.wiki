@@ -1,5 +1,54 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Sat 10/27/07===
+   * !UIComponent
+      * Added !UIComponent state constants {HOVERED_STATE, PRESSED_STATE, ~~DRAGGING_STATE~~, IDLE_STATE}
+      * Added componentState(string) to keep track of control states
+      * Added getState() to return componentState
+   * !InteractiveRectangle
+      * Added statements to basic event handler (itself) to maintain internal state based on events
+   * Planning (very long TODO)
+      * Drew state diagrams for !UIComponents and !DraggableComponentz, it's pretty l337 (finally used !CmpE 210 & !ComSci 331 for something)
+         * [[http://www.vrac.iastate.edu/~robevans/UIComponent_state_diagram.png UIComponent state diagram]]
+         * [[http://www.vrac.iastate.edu/~robevans/DraggableComponent_state_diagram.png DraggableComponent state diagram]]
+      * Will need permissions for selecting and dragging, I think a simple struct should do
+         * bool all(enabled/disabled), owner, group and default
+         * string or long(as id) for owner, group id
+      * !UIComponent
+         * New subclass !DraggableComponent
+         * When changing states (in control's basic(built-in) event handling) check if:
+            * already locked
+            * state change requires privileges
+         * Move display changes from event-specific to state-specific
+      * !DragSource
+         * void* data
+         * string format { TEXT, OBJECT, ? }
+      * !DraggableComponent, public !UIComponent
+         * Additional state DRAGGING_STATE (here instead of in !UIComponent)
+         * allowedDragActions { COPY, MOVE, LINK }; LINK may be unnecessary
+         * allowedDragFormats { TEXT, OBJECT, ? } == !DragSource::format
+         * !DragSource* getDragData() { packages data based on control type }
+         * bool? receiveDragData(!DragSource* data) { handle data }
+      * Need to define groups for permissions somewhere
+         * Define as rules ex. { uid | uid > 2 }
+         * Define as sets ex. { 0, 2 }
+      * !UserInput
+         * Need to change !UserInputs so uid is universal among different !UserInput subclass
+         * Currently each type of !UserInput has it's own uid assignment
+         * Add input states { HOVERING, DRAGGING, PRESSED } so after a control is released, if other user inputs are waiting for a control they can get attention
+         * There MUST be a better way than checking all the inputs after a control is released => adding states to input is on hold 'til I figure out whether there is another way
+   * Copied !SelectManager files so I could make changes and revert if needed, but I didn't get around to it with all the planning :(
+   * TODO:
+      * !SelectManager
+         * Improve update() code
+         * Make a singleton
+         * Move call to update() from app-side to library-side
+         * Modify so only top object is used (even for HOVER)
+      * !DragManager
+      * Add timing measures for performance
+         * For !SelectManager::update()
+         * For draw()
+      * !CursorManager[ low priority ]
 ===Fri 10/26/07===
    * UIComponent
       * Added selectEnabled property
