@@ -1,5 +1,90 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Sat 11/3/07===
+   * %Y% !DragManager
+      * Modeled closely after !SelectManager
+      * last_ui, allHoveredObjects
+      * init(), update()
+   * %Y% Restructuring all Managers to singleton design
+      * Manager
+         * init() -> init(), update() -> update()
+      * !SelectManager, !DragManager
+         * virtual {init() -> init(), update() -> update()}
+         * static {inst, allHoveredObjects, last_ui}
+         * static {init(), update(), instance(), createInstance()}
+   * %Y% Moving !SelectManager, !DragManager calls library-side
+      * init() now called by !TenMilManUI::TenMilManUI()
+      * update() now called by !TenMilManUI::run()
+      * Had to move the !DragManager.h, !SelectManager.h includes from !TenMilManUI.h -> !TenMilManUI.cpp b/c it was having dependency issues
+   * %Y% {Select,Drag}Manager
+      * Added static {enable(uid), disable(uid)}
+      * Seems like there may be a better way than my approach
+      * For event packaging, added uid
+      * Move implementation from .h -> .cpp
+      * Clean update() so the order and execution is clear
+   * Event
+      * Added uid (already "id", but unused -> changed id=>uid)
+   * UIComponent
+      * Moved implementation from .h -> .cpp
+      * Moved registration (with !SelectManager) to UIComponent constructor
+      * Added bool dragAllowed(uid) which always returns false, which is overwritten by !DraggableComponent
+   * !DraggableComponent
+      * Moved implementation from .h -> .cpp
+      * Moving registration (with !DragManager) to !DraggableComponent constructor
+   * {Select,Drag}Manager
+      * Deal with ctrl state in update()
+      * Deal with switching managers {Select->Drag, Drag->Select}
+   * Changed !EventHandler::objid to evtHandlerid
+   * Started work on changing ctrl state
+   * PROBLEM: Need to share last_ui between {Select,Drag}?
+   * Removed changes to !SelectManager::update() and !DragManager::update()
+      * Noticed problems in behavior
+      * FIXED Tracked it to a change in update() where a pointer had been assigned before, but now it was just using the values (so the values didn't get saved back to last_ui)
+   * Managers need to share last_ui from inputs
+      * Attempted to put in !BasicInput, can't get data from its subclasses
+      * Put in Manager class, seems like it could cause problems later on
+      * In !InputManager class, sets Manager::last_ui during each update, cause skipping?
+      * Need a magic input class later on, to be implemented like SDL_Event using union
+      * Reason we need to share between managers, if a drag is started then finished !SelectManager get amnesia, remembering only when the drag started way back when => therefore, immediately execute {HOVER_IN,UNPRESS,CLICK} b/c the last input is from way over there
+   * TODO:
+      * Update update() to change ctrl states in {Select,Drag}Manager - IN PROGRESS
+      * Implement !DragSource class for Xfering data, implement like SDL_Event using union
+===Fri 11/2/07===
+   * !SelectManager
+      * init()
+         * Added code to get a starting point from each input
+         * Originally just started last_ui with blank Input
+      * Moved Input struct to Manager so both {Select,Drag}Manager can use it
+   * !UserInput
+      * Added static nextUID
+      * Added uid so !UserInputs will be unique across subclasses (just like !DisplayObject subclasses)
+      * Added getUID()
+   * !SDLMouseInput
+      * Looked up the info for keeping track of entering and exiting the window
+      * Added code for entering/exiting for use later, marked with a TODO
+   * !InteractiveRectangle
+      * In the constructor commented out the registration of event handlers (so I can focus on relevant outputs)
+   * !DraggableComponent %N%
+      * Subclass of UIComponent
+      * Added !DragSource getDragData()
+      * Added bool receiveDragData(!DragSource data)
+      * Added bool dragAllowed(uid) which checks permissions
+   * UIComponent
+      * Added setState() to set the componentState
+      * Added bool selectAllowed(uid) which checks permissions (should also check locked state?)
+   * !InputManager
+      * Added getInput(uid) which returns a !UserInput given a uid or NULL if uid doesn't exist
+      * Added support for groups
+         * bool isMember(uid,gid)
+         * Left adding group logic itself for later, currently just returns true
+         * Perhaps gid(0) could be all users and specify other groups later
+   * permissions
+      * Created permissions struct to handle permissions for select/drag
+      * bool {all, owner, group, default}
+      * unsigned long {owner_uid, group_gid} (no such thing as a gid yet...)
+      * void setPermissions(bool,bool,bool)
+   * Manager
+      * have bool enabled[# of !UserInputs]
 ===Sat 10/27/07===
    * !UIComponent
       * Added !UIComponent state constants {HOVERED_STATE, PRESSED_STATE, ~~DRAGGING_STATE~~, IDLE_STATE}
