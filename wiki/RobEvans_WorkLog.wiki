@@ -1,5 +1,27 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Mon 11/5/07===
+   * {Select,Drag}Manager
+      * Convert use of !UserInput as an identifier to uid as the identifier
+      * Continuing work on changing ctrl states
+         * Having an issue with dragging
+            * Test sequence
+               * (A)::!HoverIn
+               * (A)::Pressed
+               * (A)::!HoverOut [ !DragMgr enabled ]
+               * (B)::!DragEnter
+               * (A)::!DragComplete
+               * (B)::!DragDrop [ !SelectMgr enabled ]
+               * (B)::!HoverOut
+               * (A)::!HoverIn
+               * (A)::Pressed
+               * (A)::!HoverOut [ !DragMgr enabled ]
+               * (A)::!DragComplete
+               * (B)::!DragDrop [ !SelectMgr enabled ]
+               * (B)::!HoverOut
+            * Missing DRAG_ENTER event for repeated drags
+   * Event
+      * Added copy constructor
 ===Sat 11/3/07===
    * %Y% !DragManager
       * Modeled closely after !SelectManager
