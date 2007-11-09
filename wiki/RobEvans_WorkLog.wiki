@@ -1,5 +1,12 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Thurs 11/8/07===
+   * 10ui and the table
+      * Got 10ui compiling with the new table architecture plugged in (basically Peter adding necessary libraries until it worked)
+      * Didn't know which host and ports to connect to - talking to Thomas for that
+   * Talked with Peter about new classes for 10ui
+      * State Manager
+      * States
 ===Wed 11/7/07===
    * {Select,Drag}Manager
       * Debugging issue with dragging
