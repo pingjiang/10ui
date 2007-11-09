@@ -29,7 +29,7 @@
       * Possibilities
          * union like SDL_Event
          * template class like STL stuff
-         * void* data which is casted based on dragDataFormat
+         * void data which is casted based on dragDataFormat
       * Implemented basics
       * Implemented getDragData() and receiveDragData(data) for DraggableRectangle
          * Now allows for dragging of text data from one ctrl to another (overwriting it)
