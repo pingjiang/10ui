@@ -1,5 +1,42 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Fri 11/9/07===
+   * UserInput
+      * Removed debugging stuff {UI_type, UI_data}
+   * TableInput_NewArch
+      * Changed to a subclass of BasicInput (essentially the same as UserInput right now)
+   * BasicInput
+      * Moved getX(), getY(), isPressed() from UserInput to BasicInput
+      * Now uses dynamic_cast in SelectMgr::_update and DragMgr::_update to get data (since getX(),getY() etc. isn't in UserInput)
+   * UIComponent
+      * Removed all permission related stuff
+      * Removed all state data
+   * {Select,Drag}Manager
+      * Removed all state change info
+   * Subclass UIComponent with SelectableComponent
+      * Since SelectManager and DragManager will be running independently it doesn't make sense to register with both
+   * Demo
+   * {Selectable,Draggable}Components
+      * Constructed from UIComponent and DraggableComponent with Peter's conception of dragging in mind
+      * DraggableComponents will not be selectable
+      * SelectableComponents will not be draggable
+      * DraggableComponents may have children that are selectable
+      * SelectableComponents may have children that are draggable
+   * DragManager
+      * enabled[uid] = true (in init()), because SelectManager and DragManager are now independent
+      * adding code for sending DRAG_COMPLETEs
+   * DragSource
+      * Possibilities
+         * union like SDL_Event
+         * template class like STL stuff
+         * void* data which is casted based on dragDataFormat
+      * Implemented basics
+      * Implemented getDragData() and receiveDragData(data) for DraggableRectangle
+         * Now allows for dragging of text data from one ctrl to another (overwriting it)
+         * Tried both copying and moving data
+   * Children (or any overlapping ctrls of differing type (Selectable vs Draggable)
+      * Tried messing with a Selectable parent with a Draggable child
+      * PROBLEM: With {Select,Drag}Managers completely independent, they do their hovering and clicking simultaneously
 ===Thurs 11/8/07===
    * 10ui and the table
       * Got 10ui compiling with the new table architecture plugged in (basically Peter adding necessary libraries until it worked)
