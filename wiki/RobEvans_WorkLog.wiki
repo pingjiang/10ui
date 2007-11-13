@@ -1,5 +1,39 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Tues 11/13/07===
+   * Updating new architecture files
+      * Updated my workspace to include the latest DeviceCore, Touch_InputDevice and Overhead_InputDevice files
+      * Had an issue with some files that had conflicts, my changes were minor so I just reverted
+   * Troubleshooting with Thomas
+      * Found some problems with the new architecture programs
+         * Seg faults when nooverhead is used (used to seg fault when overhead was used)
+         * Having issues tracking the first hand it goes to the same point off the screen (1015,-96 or something)
+            * This explains touch problems with one hand
+         * Tracking seems to work successfully on other sides
+      * Successfully ran Thomas's test program for the new architecture
+      * Successfully ran TMMUI_TestApp with the new architecture input
+         * Only reading raw data and none is actually used, but it's a step forward
+   * TODO:
+      * Translate coordinates for the TableInput; screen(absolute) ==> window(absolute)
+      * Interpret TableInput, should behave similarly to mice
+      * PROBLEM: Current programming supports hovering over a single object (multiple hands not taken into account)
+===Mon 11/12/07===
+   * PROBLEM: Can't log in to shirley or pitfall
+   * Moved to an AMD64 machine
+      * Switched over all the libraries to their 64-bit equivalents
+      * Found that there wasn't a 64-bit library for cvHAL
+   * Moved to a 32-bit machine
+      * Switched back to the 32-bit libraries
+   * FIX: To the problem of {Select,Drag}Manager independence
+      * Put last_ui in InputManager and let it keep track of last inputs (a single last_ui per input)
+      * PROBLEM: Different types of input
+   * UserInput
+      * Moving common elements further up
+         * quit, isQuit() -> UserInput
+         * x, y, pressed, getX(), getY(), isPressed() -> BasicInput
+         * x[], y[], pressed[], getX(index), getY(index), isPressed(index) -> MultiInput
+      * Tried switching TableInput_NewArch from BasicInput to MultiInput, but it keeps complaining
+         * FIX: TableInput_NewArch was created hastily and was just a copy of MultiInput, so the #ifndef was still MULTIINPUT_H_ instead of TABLEINPUT_NEWARCH_H_
 ===Fri 11/9/07===
    * UserInput
       * Removed debugging stuff {UI_type, UI_data}
