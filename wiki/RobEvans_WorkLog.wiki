@@ -1,8 +1,30 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Mon 11/19/07===
+   * "Playing" with new architecture on !TestDeviceApp
+      * PROBLEM: Multiple hands cause issues
+         * All points are registered (ids are assigned 0-7 for example) just fine [ good ]
+         * %N% Only points associated with the first hand (whichever side that may be) are sent as events [ bad ]
+         * Unpresses (as in the old architecture) are always registered [ good ]
+         * [http://www.vrac.iastate.edu/~robevans/new_arch_debugging.txt Debugging log]
+      * Better tracking with polarized light may fix, but thumbs aren't usually registered (cross is in front of hand -> so thumb is too far away)
+      * Small issue: Points' sides don't change when a arm changes sides%BR%
+         [http://www.vrac.iastate.edu/~robevans/Side_switching.png]
+   * Interpreting data from !TableInput_NewArch
+      * PROBLEM: When registering with !InputManager, test app exits
+         * Found that when I changed !TableInput_NewArch back to !BasicInput (from !MultiInput) it works
+         * TEMPFIX: Make !TableInput_NewArch a !BasicInput again
+         * The problem appears to be that {Select,Drag}Managers use a dynamic cast to a !BasicInput to get the data
+         * FIX: Add cases for !MultiInput to {Select,Drag}Managers
+      * Modified debug output for easier analysis (uniform formatting, easier to understand the data)
+      * PROBLEM: The edge point doesn't seem to be getting sent (may just not be implemented yet)
+      * Removed debug output from !TouchRawEvent::decode() and recompiled the library
+      * IMPORTANT NOTE: When run in fullscreen-mode, table coordinates coincide w/ non-fullscreen resolution
+         * Ex. 1280x1024 (normal res), running test app 640x480 (fullscreen) -> coordinates from table are in 1280x1024
+      * Something seems amiss with the !TouchRawEvents, instead of processing multiple fingers per event, it seems to just be sending one event per finger.
 ===Tues 11/13/07===
    * Updating new architecture files
-      * Updated my workspace to include the latest DeviceCore, Touch_InputDevice and Overhead_InputDevice files
+      * Updated my workspace to include the latest !DeviceCore, !Touch_InputDevice and !Overhead_InputDevice files
       * Had an issue with some files that had conflicts, my changes were minor so I just reverted
    * Troubleshooting with Thomas
       * Found some problems with the new architecture programs
@@ -11,11 +33,11 @@
             * This explains touch problems with one hand
          * Tracking seems to work successfully on other sides
       * Successfully ran Thomas's test program for the new architecture
-      * Successfully ran TMMUI_TestApp with the new architecture input
+      * Successfully ran TMMUI{{{_}}}!TestApp with the new architecture input
          * Only reading raw data and none is actually used, but it's a step forward
    * TODO:
-      * Translate coordinates for the TableInput; screen(absolute) ==> window(absolute)
-      * Interpret TableInput, should behave similarly to mice
+      * Translate coordinates for the !TableInput; screen(absolute) ==> window(absolute)
+      * Interpret !TableInput, should behave similarly to mice
       * PROBLEM: Current programming supports hovering over a single object (multiple hands not taken into account)
 ===Mon 11/12/07===
    * PROBLEM: Can't log in to shirley or pitfall
@@ -25,15 +47,15 @@
    * Moved to a 32-bit machine
       * Switched back to the 32-bit libraries
    * FIX: To the problem of {Select,Drag}Manager independence
-      * Put last_ui in InputManager and let it keep track of last inputs (a single last_ui per input)
+      * Put last_ui in !InputManager and let it keep track of last inputs (a single last_ui per input)
       * PROBLEM: Different types of input
-   * UserInput
+   * !UserInput
       * Moving common elements further up
-         * quit, isQuit() -> UserInput
-         * x, y, pressed, getX(), getY(), isPressed() -> BasicInput
-         * x[], y[], pressed[], getX(index), getY(index), isPressed(index) -> MultiInput
-      * Tried switching TableInput_NewArch from BasicInput to MultiInput, but it keeps complaining
-         * FIX: TableInput_NewArch was created hastily and was just a copy of MultiInput, so the #ifndef was still MULTIINPUT_H_ instead of TABLEINPUT_NEWARCH_H_
+         * quit, isQuit() -> !UserInput
+         * x, y, pressed, getX(), getY(), isPressed() -> !BasicInput
+         * x[], y[], pressed[], getX(index), getY(index), isPressed(index) -> !MultiInput
+      * Tried switching !TableInput_NewArch from !BasicInput to !MultiInput, but it keeps complaining
+         * FIX: !TableInput_NewArch was created hastily and was just a copy of !MultiInput, so the #ifndef was still MULTIINPUT_H{{{_}}} instead of TABLEINPUT_NEWARCH_H{{{_}}}
 ===Fri 11/9/07===
    * UserInput
       * Removed debugging stuff {UI_type, UI_data}
