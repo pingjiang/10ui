@@ -1,5 +1,21 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Mon 11/26/07===
+   * Peter
+      * Talked to him
+         * ...about State machine design
+            * Test case - Dragging Sandtable units
+         * ...about implementation
+            * Move event handling from controls to state machine
+            * Move event creation from {Select,Drag}Managers to !InputManager
+      * Emailed him regarding 10ui coordinate stuff
+         * 10ui window coordinates
+         * Determining user's screen resolution
+         * Multiple 10ui windows in future?
+   * Emailed Thomas regarding odd behavior w/ new architecture
+      * Only one hand generating events
+      * Every point generating a !TouchRawEvent
+   * Removed {Select,Drag}Manager execution from 10ui test app
 ===Mon 11/19/07===
    * "Playing" with new architecture on !TestDeviceApp
       * PROBLEM: Multiple hands cause issues
