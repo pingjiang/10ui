@@ -1,5 +1,26 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Wed 11/28/07===
+   * Helped Ted w/ debugging
+      * Found cvHALd wasn't running
+      * Got !TestDeviceApp running for Ted so he could test his zoom listener
+   * Having issues with my own code
+      * Working from pitfall
+      * Libraries "not found" but required by libOverhead_Events.so, warning reported in TMMUI{{{_}}}!TestApp
+         * libcv.so.1
+         * libcvaux.so.1
+         * libcxcore.so.1
+         * libhighgui.so.1
+      * All "missing" libraries are in !Table_Libs_Includes/lib/opencv
+      * Commented out Draggable and Selectable controls, they were trying to register with {Select,Drag}Managers
+   * Meeting
+      * Set timetable - drag,zoom,rotate by Dec.7th
+   * Worked with Thomas to resolve issues
+      * %Y% First issue, individual events for each finger - SOLVED, error in my debugging code
+      * %N% Second issue, only one hand's events registered - UNRESOLVED
+      * %N% New issue, nan being given for points - UNRESOLVED
+   * TODO:
+      * Coordinate stuff - on hold
 ===Mon 11/26/07===
    * Peter
       * Talked to him
