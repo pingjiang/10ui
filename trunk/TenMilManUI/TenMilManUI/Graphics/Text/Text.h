@@ -33,7 +33,7 @@ namespace TenUI {
 	//@Style 	Font, string, RW
 	//@Style 	FontSize, int, RW
 	//@Style 	Color, colorhex, RW
-	class Text : DisplayObject {
+	class Text : public DisplayObject {
 		string text;
 		string fontKey;
 		int fontSize;

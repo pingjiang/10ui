@@ -4,15 +4,12 @@
 
 namespace TenUI {
 
-char UserInput::MOUSE_INPUT = 'm';
-char UserInput::TABLE_INPUT = 't';
-
-char UserInput::REALTIME_DATA = 'r';
-char UserInput::GESTURE_DATA = 'g';
-char UserInput::BASIC_DATA = 'b';
-
-
-
+unsigned long UserInput::nextUID = 0;
+unsigned long UserInput::nextUIID = 0;
+unsigned long UserInput::getNextUID()
+{
+		return nextUID++;
+}
 
 //set<UserInput*> UserInput::inputs;// = new set<UserInput*>();
 

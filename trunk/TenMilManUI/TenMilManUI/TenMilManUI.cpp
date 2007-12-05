@@ -1,4 +1,6 @@
 #include "TenMilManUI.h"
+//#include "UI/Managers/SelectManager.h"
+//#include "UI/Managers/DragManager.h"
 
 namespace TenUI {	
 
@@ -25,7 +27,15 @@ namespace TenUI {
 		screenHeight = app->getScreenHeight();
 		screenBPP = app->getScreenBPP();
 		//userInput = app->getUserInput();
+		InputManager::createInstance();
+		cout << "InputManager created...\n"; //DEBUG
 		app->initializeUserInput();
+		cout << "UserInputs initialized...\n"; //DEBUG
+		//SelectManager::init();
+		//DragManager::init();
+		//sltMgr = new SelectManager();
+		//sltMgr->init();
+		
 		
 		running = true;
 	    pthread_mutex_init(&runningMutex,NULL);	
@@ -52,17 +62,23 @@ namespace TenUI {
 		//SDLMouseInput::instance()->run_update();
 		//UserInput::instance()->update();
 		//UserInput::update();
-		InputManager::update();
-		
+		getTenUIInputManager()->update();
+		//SelectManager::update();
+		//DragManager::update();
 		app->init();
+
 		int count = 0;
-		while(isRunning() && !InputManager::isQuit()) {//!UserInput::isQuit()) { //!SDLMouseInput::instance()->isQuit()) {//!userInput->isQuit()){ //!UserInput::isQuit()){			
+		while(isRunning() && !getTenUIInputManager()->isQuit()) {//!UserInput::isQuit()) { //!SDLMouseInput::instance()->isQuit()) {//!userInput->isQuit()){ //!UserInput::isQuit()){			
 			app->update_preframe();
 			app->update_frame();
 			update();
 			draw();
-
-			InputManager::update();
+			
+			getTenUIInputManager()->update();
+			//SelectManager::update();
+			//DragManager::update();
+			//sltMgr->update();
+			
 			//UserInput::update();
 			//SDLMouseInput::instance()->run_update();
 			//userInput->update();
@@ -165,3 +181,6 @@ namespace TenUI {
 
 
 TenUI::TenMilManUI* getTenUI(){ return TenUI::TenMilManUI::instance(); }
+
+shared_ptr<TenUI::InputManager> getTenUIInputManager() { return TenUI::InputManager::instance(); }
+//TenUI::InputManager* getTenUIInputManager() { return TenUI::InputManager::instance(); }

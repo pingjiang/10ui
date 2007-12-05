@@ -2,23 +2,36 @@
 #define UICOMPONENT_H_
 
 #include "DisplayObjectContainer.h"
-#include "../Events/EventHandler.h"
+#include <TenMilManUI/UI/Events/EventHandler.h>
+#include <TenMilManUI/UI/Managers/InputManager.h>
 
-namespace TenUI {	
+using std::string;
+
+namespace TenUI {
+
 	class UIComponent : public DisplayObjectContainer, public EventHandler {
+	protected:
+
 	public:
-		UIComponent(DisplayObject *p, int x=0, int y=0, int w=0, int h=0, double rot=0.0, double s=1.0, double o=1.0)
-			:DisplayObjectContainer(p, x, y, w, h, rot,s,o){
-		}
+		UIComponent(DisplayObject *p, int x, int y, int w, int h, double rot, double s, double o);
+		virtual ~UIComponent();
 		
-		virtual ~UIComponent(){};
+		// SelectManager events
+		static string CLICK_EVENT;
+		static string PRESS_EVENT;
+		static string UNPRESS_EVENT;
+		static string HOVER_IN_EVENT;
+		static string HOVER_OUT_EVENT;
+		static string HOVER_MOVE_EVENT;
 		
-		static std::string CLICK_EVENT;
-		static std::string PRESS_EVENT;
-		static std::string UNPRESS_EVENT;
-		static std::string HOVER_IN_EVENT;
-		static std::string HOVER_OUT_EVENT;
-		static std::string HOVER_MOVE_EVENT;
+		// DragManager events
+		static string DRAG_ENTER;
+		static string DRAG_MOVE;
+		static string DRAG_START;
+		static string DRAG_EXIT;
+		static string DRAG_DROP;
+		static string DRAG_COMPLETE;
+
 	};
 }
 
