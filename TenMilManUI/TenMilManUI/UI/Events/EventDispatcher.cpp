@@ -1,48 +1,49 @@
-#include <iostream>
 #include "EventDispatcher.h"
 
-namespace TenUI{
+namespace TenUI {
 
-EventDispatcher::EventDispatcher()
-{
-}
-
-EventDispatcher::~EventDispatcher()
-{
-}
-
-bool EventDispatcher::addEvtHandler(std::string evtName, EventHandler* evtHandler)
-{
-	EventHandler* tmpHandler;
+	void EventDispatcher::addEventType( const string& eventType ){
+		handlers[eventType] = HandlerFuncMap();
+	}
 	
-	for(std::set<EventHandler*>::iterator iter = registeredEvtHandlers[evtName].begin(); iter != registeredEvtHandlers[evtName].end(); ++iter)
-	{
-		tmpHandler = *iter;
-		
-		// objID already exists in registeredEvtHandlers for evtName?
-		if(tmpHandler->getEvtHandlerID() == evtHandler->getEvtHandlerID())
-		{
-			// objID does already exist
-			//TODO: throw exception maybe?
-			return false;
+	EventDispatcher::EventDispatcher(){
+		dispatchEventFunc = bind(&EventDispatcher::_dispatchEvent, this, _1);
+	}
+	
+	EventDispatcher::~EventDispatcher(){}
+	
+	void EventDispatcher::dispatchEvent(shared_ptr<Event> const & event){
+	
+		HandlerMapType::iterator it = handlers.find(event->getType()); 
+		if( it != handlers.end() ){
+			curEvent = event;
+	
+			HandlerFuncMap::iterator begin = it->second.begin();
+			HandlerFuncMap::iterator end = it->second.end();
+			
+			// Remove dead EventHandlers
+			/*for(HandlerFuncMap::iterator iter = begin ; iter != end ; )	{
+				if(iter->first.use_count() == 2){
+					cout << "removed handler  " << event->getType() << endl;
+					it->second.erase( iter++ );				 
+				}else
+					++iter;
+			}
+			
+			begin = it->second.begin();
+			end = it->second.end();
+			*/		
+			
+			// Dispatch event to EventHandlers
+			for_each(begin, end, dispatchEventFunc);		
 		}
+	
+		for_each(allEvents_Handlers.begin(), allEvents_Handlers.end(), dispatchEventFunc);		
 		
 	}
-
-	// objID not found in registeredEvtHandlers for evtName -> add
-	registeredEvtHandlers[evtName].insert(evtHandler);	
-	return true;
-}
-
-void EventDispatcher::displayEvtHandlers()
-{
-	for(std::map<std::string,std::set<EventHandler*> >::iterator map_iter = registeredEvtHandlers.begin(); map_iter != registeredEvtHandlers.end(); ++map_iter)
-	{
-		std::cout << map_iter->first << ":\n";
-		for(std::set<EventHandler*>::iterator set_iter = (map_iter->second).begin(); set_iter != (map_iter->second).end(); ++set_iter)
-			std::cout << *set_iter << "\t" << (*set_iter)->getEvtHandlerID() << "\n";
-		std::cout << "\n";
+	
+	void EventDispatcher::_dispatchEvent( HandlerPairType const &handlerPair ){
+		handlerPair.second(curEvent);
 	}
-}
 
 }

@@ -54,7 +54,7 @@ namespace TenUI {
 			setW(image->w);
 			setH(image->h);
 			
-			//TODO What the Fuck is this?
+			// TODO Purpose of this?
 			setX(getX());
 			setY(getY());
 			

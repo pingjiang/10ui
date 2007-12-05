@@ -8,9 +8,18 @@ namespace TenUI
 
 class BasicInput : public UserInput
 {
+protected:
+	int x,y;
+	bool pressed;
+	
 public:
 	BasicInput();
 	virtual ~BasicInput();
+	
+	virtual int getX()			{ return x; }
+	virtual int getY()			{ return y; }
+	virtual bool isPressed()	{ return pressed; }	
+	
 };
 
 }

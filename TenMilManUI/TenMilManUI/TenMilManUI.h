@@ -18,6 +18,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <tr1/memory>
 
 #include "TenMilManUI_Enums.h"
 #include "ITenMilManUIApp.h"
@@ -25,7 +26,8 @@
 #include "UI/Core/DisplayObjectContainer.h"
 #include "UI/Core/UIComponent.h"
 #include "UserInputs/UserInput.h"
-#include "UserInputs/InputManager.h"
+#include <TenMilManUI/UI/Managers/InputManager.h>
+
 
 #define IMPLEMENT_TENUI_APP( tenuiApp ) int main(void) {																			\
 											TenUI::ITenMilManUIApp* app = (TenUI::ITenMilManUIApp*) new TenUI::tenuiApp;			\
@@ -35,6 +37,7 @@
 									  }
 
 using namespace std;
+using std::tr1::shared_ptr;
 
 namespace TenUI{
 	class ITenMilManUIApp;
@@ -51,7 +54,8 @@ namespace TenUI {
 		    int screenHeight;
 		    int screenBPP;
 		    //UserInput* userInput;
-		    
+		    //DragManager* drgMgr;
+		
 		    map<long ,DisplayObject*> rootObjs;		    
 		    ITenMilManUIApp *app;
 						
@@ -95,5 +99,7 @@ namespace TenUI {
 }
 
 TenUI::TenMilManUI* getTenUI();
+shared_ptr<TenUI::InputManager> getTenUIInputManager();
+//TenUI::InputManager* getTenUIInputManager();
 
 #endif /*TENMILMANUI_H_*/

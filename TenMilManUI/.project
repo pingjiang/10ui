@@ -3,6 +3,10 @@
 	<name>TenMilManUI</name>
 	<comment></comment>
 	<projects>
+		<project>DeviceCore</project>
+		<project>Overhead_InputDevice</project>
+		<project>Table_Libs_Includes</project>
+		<project>Touch_InputDevice</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
