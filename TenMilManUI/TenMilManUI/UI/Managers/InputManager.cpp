@@ -7,7 +7,6 @@ shared_ptr<InputManager> InputManager::inst;
 
 InputManager::InputManager()
 {
-	testEventHandler = shared_ptr<TestEventHandler>(new TestEventHandler());
 }
 
 InputManager::~InputManager()
