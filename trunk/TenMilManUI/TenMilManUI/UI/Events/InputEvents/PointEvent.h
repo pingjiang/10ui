@@ -25,7 +25,7 @@ public:
 	int getY(){
 		return x;
 	}
-	int getPressed(){
+	bool getPressed(){
 		return pressed;
 	}
 };
