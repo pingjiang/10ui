@@ -8,6 +8,10 @@ namespace TenUI{
 	std::string UIComponent::HOVER_OUT_EVENT = "HOVER_OUT_EVENT";
 	std::string UIComponent::HOVER_MOVE_EVENT = "HOVER_MOVE_EVENT";
 
+	const string& UIComponent::getUIComponentName(){
+		return "UIComponent";
+	}
+
 	/***********************************/
 	/*        Stylable Overrides       */
 	/***********************************/

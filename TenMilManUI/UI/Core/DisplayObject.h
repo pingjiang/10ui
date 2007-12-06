@@ -26,7 +26,6 @@
 namespace TenUI {
 		
 	class DisplayObject : public EventDispatcher {
-	public: 
 	private:
 		static unsigned long nextObjectID;
 	
@@ -103,7 +102,7 @@ namespace TenUI {
 		/***********************************/
 		/*     Hierarchy Getter/Setters    */
 		/***********************************/  
-		long 			getObjectID();
+		unsigned long 			getObjectID();
 		
 		DisplayObject*	getParent();		
 		void 			setParent(DisplayObject *p);

@@ -26,6 +26,9 @@ namespace TenUI {
 			++it;
 		}
 	}
+	vector<DisplayObject*>* DisplayObjectContainer::getChildren(){
+		return &children;
+	}
 	
 	/***********************************/
 	/*        Init/Update Methods      */
@@ -40,15 +43,11 @@ namespace TenUI {
 	}
 	void DisplayObjectContainer::deinit(){}	
 	
+
 	/***********************************/
-	/*           Draw Methods          */
+	/*      Extended Draw Methods      */
 	/***********************************/
-	void DisplayObjectContainer::preDraw(){
-		DisplayObject::preDraw();
-				
-		getTenUIGraphics()->setClipping(0,0,w,h);
-	}
-	void DisplayObjectContainer::draw(){
+	void DisplayObjectContainer::drawChildren(){
 		vector<DisplayObject *>::iterator it = children.begin();
 		while(it != children.end()){
 			(*it)->preDraw();
@@ -57,10 +56,16 @@ namespace TenUI {
 			++it;
 		}
 	}
-	void DisplayObjectContainer::postDraw(){
-		getTenUIGraphics()->resetClipping();
+	
+	/***********************************/
+	/*           Draw Methods          */
+	/***********************************/
+	void DisplayObjectContainer::draw(){
+		drawSelf();
 		
-		DisplayObject::postDraw();
+		getTenUIGraphics()->setClipping(0,0,w,h);
+			drawChildren();
+		getTenUIGraphics()->resetClipping();
 	}
 	
 	

@@ -25,38 +25,60 @@ namespace TenUI{
 	
 		// Helper Methods
 		void OpenGL_Graphics::arcVertices(int x, int y, int radius, float a1, float a2, int resolution){
-			if (a2 < a1){
-				float t = a1;
-			  	a1 = a2;
-				a2 = t;
-			}
 			float step = (a2 - a1) / ((float)resolution);
-
-			//cout << "x,y: " << x << "," << y << " radius,a1,a2,step: " << radius << ","<< a1 << ","<< a2 << ","<< step << endl; 
-			for (double d = a1; d <= a2; d += step){
-				int vx = (int) (cos(d) * radius + x + 0.5);
-				int vy = (int) (sin(d) * radius + y + 0.5);
-
-				cout << "vx,vy: " << vx << "," << vy << endl;
-				glVertex2i((int) (cos(d) * radius + x + 0.5), (int) (sin(d) * radius + y + 0.5));
+			
+			if( a2<a1 ){
+				for (double d = a1; d >= a2; d += step){
+					glVertex2i((int) (cos(d) * radius + x + 0.5), (int) (sin(d) * radius + y + 0.5));
+				}	
+			}else{
+				for (double d = a1; d <= a2; d += step){
+					glVertex2i((int) (cos(d) * radius + x + 0.5), (int) (sin(d) * radius + y + 0.5));
+				}
 			}
-
-			cout << "vx,vy: " << x << "," << y << endl;
-			glVertex2i(x,y);
-
-			int vx = (int) (cos(a1) * radius + x + 0.5);
-			int vy = (int) (sin(a1) * radius + y + 0.5);
-			cout << "vx,vy: " << vx << "," << vy << endl;
-			glVertex2i((int) (cos(a1) * radius + x + 0.5), (int) (sin(a1) * radius + y + 0.5));
-			cout << endl;
-			cout << endl;
 		}
+		char *OpenGL_Graphics::int2bin(int a){
+			 char *str,*tmp;
+			 int cnt = 31;
+			 str = (char *) malloc(33); /*32 + 1 , becoz its a 32 bit bin number*/
+			 tmp = str;
+			 while ( cnt > -1 ){
+			      str[cnt]= '0';
+			      cnt --;
+			 }
+			 cnt = 31;
+			 while (a > 0){
+			       if (a%2==1){
+			           str[cnt] = '1';
+			        }
+			      cnt--;
+			        a = a/2 ;
+			 }
+			 tmp[32] = 0;
+			 return tmp;   
+
+		} 
+		
+		char *OpenGL_Graphics::byte2bin(unsigned char a){
+			 char *str;
+			 int cnt = 7;
+			 str = (char *) malloc(9);
+			 for(int i=0; i<8; ++i){ str[i] = '0'; }
+			 while (a > 0){
+				 str[cnt] = (a%2==1)?'1':'0';
+			     
+			     cnt--;
+			     a = a/2 ;
+			 }
+			 str[8] = 0;
+			 return str;
+		} 
 		
 		
 		void OpenGL_Graphics::init(GraphicsOptions* graphicsOptions) throw(IGraphicsEnums::IGRAPHICS_EXCEPTION) {
 			this->graphicsOptions = graphicsOptions;
 			
-			cout << "OpenGL_Graphics::init { "
+			cout << "TenUI/Graphics/OpenGL_Graphics::init { "
 				 << graphicsOptions->getWidth() << ", "
 				 << graphicsOptions->getHeight() << ", "
 				 << graphicsOptions->getBPP() << ", "
@@ -69,17 +91,17 @@ namespace TenUI{
 				if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
 					throw IGraphicsEnums::INIT_FAILED;
 					return;
-				}		
-								
+				}
+				
 				if ( SDL_SetVideoMode(  graphicsOptions->getWidth(), 
 										graphicsOptions->getHeight(), 
 										graphicsOptions->getBPP(), 
-										SDL_OPENGL | ((graphicsOptions->getScreenMode() == IGraphicsEnums::FULLSCREEN)?SDL_FULLSCREEN:0) ) == NULL ) { 
+										SDL_OPENGL | SDL_HWSURFACE | ((graphicsOptions->getScreenMode() == IGraphicsEnums::FULLSCREEN)?SDL_FULLSCREEN:0) ) == NULL ) { 
 					SDL_Quit();
 					throw IGraphicsEnums::INIT_FAILED;
 					return;
 				}
-				//SDL_WM_SetCaption(app->getName(), NULL);
+				SDL_WM_SetCaption(graphicsOptions->getWindowTitle().c_str(), NULL);
 				
 			/**********************/
 			/*     INIT OpenGL    */
@@ -98,8 +120,9 @@ namespace TenUI{
 				glEnable(GL_BLEND);
 				glColor4f(1.0f, 1.0f, 1.0f, 1.0);					// Full Brightness.  50% Alpha
 				glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);	// Set The Blending Function For Translucency	
-				
-				glEnable (GL_LINE_SMOOTH);		
+
+				//glBlendFunc(GL_SRC_COLOR,GL_DST_COLOR);	
+				glEnable (GL_POLYGON_SMOOTH);		
 	
 			/**********************/
 			/*     INIT Fonts     */
@@ -110,16 +133,18 @@ namespace TenUI{
 			/**********************/
 			/*   Color Selection  */
 			/**********************/
-				int redBits, greenBits, blueBits;
+				int redBits, greenBits, blueBits, alphaBits;
 				glGetIntegerv( GL_RED_BITS, &redBits );
 				glGetIntegerv( GL_GREEN_BITS, &greenBits );
 				glGetIntegerv( GL_BLUE_BITS, &blueBits );
+				
 				redSelMask 		= bitMask(redBits)   << (greenBits + blueBits);
-				greenSelMask 	= bitMask(greenBits) << blueBits;
+				greenSelMask 	= bitMask(greenBits) << (blueBits);
 				blueSelMask 	= bitMask(blueBits);
-				redSelShift 	= 32 - (redBits+greenBits+blueBits);
-				greenSelShift 	= 32 - (greenBits+blueBits);
-				blueSelShift 	= 32 -  blueBits;	
+				
+				blueSelShift 	= 24 - (redBits+greenBits+blueBits);
+				greenSelShift 	= 24 - (redBits+greenBits);
+				redSelShift 	= 24 - (redBits);
 		}
 		void OpenGL_Graphics::deinit(){
 			delete fontMgr;
@@ -168,7 +193,7 @@ namespace TenUI{
 			/*******************************/
 				void  	OpenGL_Graphics::beginRendering(IGraphicsEnums::IGRAPHICS_RENDERING_MODE mode){
 					renderMode = mode;
-					
+									
 					int vPort[4];
 					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 					glGetIntegerv(GL_VIEWPORT, vPort);
@@ -183,7 +208,9 @@ namespace TenUI{
 					glLoadIdentity();
 				}
 				void  	OpenGL_Graphics::endRendering(){
-					SDL_GL_SwapBuffers();					
+					if( renderMode == IGraphicsEnums::DISPLAY ){
+						SDL_GL_SwapBuffers();					
+					}
 					glMatrixMode(GL_PROJECTION);
 					glPopMatrix();   
 					glMatrixMode(GL_MODELVIEW);
@@ -194,11 +221,25 @@ namespace TenUI{
 			/* Selection Rendering Methods */
 			/*******************************/
 				void  			OpenGL_Graphics::setColorID(unsigned long id){
-					glColor3ui (id & redSelMask << redSelShift, 
-								id & greenSelMask << greenSelShift, 
-								id & blueSelMask << blueSelShift);						
+					GLubyte pixel[3];
+					
+					pixel[0] = (GLubyte) ((id & redSelMask)  >> redSelShift);
+					pixel[1] = (GLubyte) ((id & greenSelMask)>> greenSelShift);
+					pixel[2] = (GLubyte) ((id & blueSelMask) >> blueSelShift);
+							
+					glColor3ub (pixel[0], 
+								pixel[1], 
+								pixel[2]);					
 				}
-				unsigned long  	OpenGL_Graphics::getColorID(int x, int y){}		
+				unsigned long  	OpenGL_Graphics::getColorID(int x, int y){					
+					GLubyte	pixel[3];
+					glReadPixels(x, y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel);
+				        				      									      
+					unsigned long id = 	(((unsigned long)pixel[0] << redSelShift) ) 	|
+										(((unsigned long)pixel[1] << greenSelShift) ) 	|
+					  					(((unsigned long)pixel[2] << blueSelShift) );
+					return id;
+				}
 											
 			/******************************/
 			/*    Geometry Draw Methods   */
@@ -278,56 +319,39 @@ namespace TenUI{
 						void  	OpenGL_Graphics::drawRoundedRectangle(	int x, int y, 
 															int width, int height, int radius, 
 															const ColorHex& color, 
-															int strokeSize, const ColorHex& strokeColor ){	
-							
-							cout << "drawRoundedRectangle" << endl;
+															int strokeSize, const ColorHex& strokeColor ){
 							float top = PI * 0.5f;
-							float right = 0.0f;
-							float bottom = PI * 1.5f;
+							float right = PI *2.0f;
+							float bottom = PI * 1.5f;														
 							float left = PI;
 
-							setColor(color);
-
-							glLineWidth(3);
-														
-							// draw rectangle
-							glBegin(GL_POLYGON);
-								/*glVertex2i( x		,y	 	  );
-								glVertex2i( x		,y+height );
-								glVertex2i( x+width	,y+height );
-								glVertex2i( x+width	,y	      );
-								glVertex2i( x		,y	 	  );*/
-
-							glVertex2i( 25,100 );
-							glVertex2i( 15,98 );
-							glVertex2i( 7,93 );
-							glVertex2i( 2,85 );
-							glVertex2i( 0,75 );
-							glVertex2i( 25,75 );
-							glVertex2i( 25,100 );
+							// draw rounded rectangle's stroke
+							setColor(strokeColor);
 							
-								//glVertex2i( x,y	);
-								//arcVertices(x+radius, y+height-radius, radius, left, top);
+							// draw rectangle
+							glBegin(GL_POLYGON);								
+								arcVertices(x+width-radius, y+radius, 			radius+strokeSize, right, bottom);
+								arcVertices(x+radius, 		y+radius, 			radius+strokeSize, bottom,left);
+								arcVertices(x+radius, 		y+height-radius, 	radius+strokeSize, left, 	top);
+								arcVertices(x+width-radius,	y+height-radius, 	radius+strokeSize, top, 0.0);
 							glEnd();
-
-							/*glBegin(GL_POLYGON);	
-								arcVertices(x+width-radius, y+height-radius, radius, top, right);
+							
+							setColor(color);
+							
+							// draw rectangle
+							glBegin(GL_POLYGON);								
+								arcVertices(x+width-radius, y+radius, 			radius, right, bottom);
+								arcVertices(x+radius, 		y+radius, 			radius, bottom,left);
+								arcVertices(x+radius, 		y+height-radius, 	radius, left, 	top);
+								arcVertices(x+width-radius,	y+height-radius, 	radius, top, 0.0);
 							glEnd();
-
-							glBegin(GL_POLYGON);	
-								arcVertices(x+width-radius, y+radius, radius, right, bottom);
-							glEnd();
-
-							glBegin(GL_POLYGON);	
-								arcVertices(x+radius, y+radius, radius, bottom, left);
-							glEnd();*/							
+							
 						}
+						//TODO Implement OpenGL_Graphics::drawGradientRoundedRect
 						void  	OpenGL_Graphics::drawGradientRoundedRect(	int x, int y, 
 																int width, int height, int radius, 
 																const ColorHex& c1, const ColorHex& c2, const ColorHex& c3, const ColorHex& c4,
-																int strokeSize, const ColorHex& strokeColor ){
-							
-						}
+																int strokeSize, const ColorHex& strokeColor ){}
 			
 					/******************************/
 					/*     Circle Draw Methods    */
@@ -336,9 +360,7 @@ namespace TenUI{
 														double a1, double a2, 
 														double radius, int resolution,
 														const ColorHex& fillColor,
-														int strokeSize, const ColorHex& strokeColor ){
-							
-						}
+														int strokeSize, const ColorHex& strokeColor ){}
 						
 				/******************************/
 				/*         Image Methods      */
@@ -354,13 +376,11 @@ namespace TenUI{
 						}
 						if(width==0){
 							width = openglImage->getImageWidth();
-						}
-									
+						}									
 						
 						glEnable(GL_TEXTURE_2D);
 						glBindTexture(GL_TEXTURE_2D, openglImage->getTextureID());
-			
-						
+									
 						// draw rectangle
 						glBegin(GL_QUADS);		                
 							glTexCoord2i(0,0); glVertex2d(x,y);
@@ -389,7 +409,7 @@ namespace TenUI{
 					}	
 					void 	OpenGL_Graphics::setColor(const ColorHex& ch){
 						if(renderMode == IGraphicsEnums::DISPLAY) { 
-							glColor4f(ch.getRed(),ch.getBlue(),ch.getGreen(),ch.getAlpha()); 
+							glColor4f(ch.getRed(),ch.getBlue(),ch.getGreen(),ch.getAlpha());
 						}
 					}
 			

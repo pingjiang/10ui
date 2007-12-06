@@ -17,7 +17,7 @@ namespace TenUI {
 	public:	
 		// constructor
 		DisplayObjectContainer(DisplayObject *p, int x=0, int y=0, unsigned int w=0, unsigned int h=0, double rot=0.0, double s=1.0, double o=1.0)
-			:DisplayObject(p,x,y,w,h,rot,s,o){ cout << "DisplayObjectContainer(x,y):" << x << "," << y << endl; }
+			:DisplayObject(p,x,y,w,h,rot,s,o){ }
 		virtual ~DisplayObjectContainer();
 		
 		/***********************************/
@@ -25,6 +25,7 @@ namespace TenUI {
 		/***********************************/  
 		virtual void addChild(DisplayObject* child);		
 		virtual void removeChild(DisplayObject* child);
+		virtual vector<DisplayObject*>* getChildren();
 
 		/***********************************/
 		/*        Init/Update Methods      */
@@ -33,12 +34,20 @@ namespace TenUI {
 		virtual void update();
 		virtual void deinit();	
 
+
+		/***********************************/
+		/*      Extended Draw Methods      */
+		/***********************************/
+		// Self is always drawn before the Children
+		// This makes it so children appear ontop of their Parent
+		virtual void drawSelf() = 0;
+		virtual void drawChildren();
+		
 		/***********************************/
 		/*           Draw Methods          */
 		/***********************************/
-		virtual void preDraw();		
-		virtual void draw();		
-		virtual void postDraw();
+		virtual void draw();
+		
 		
 	};
 }
