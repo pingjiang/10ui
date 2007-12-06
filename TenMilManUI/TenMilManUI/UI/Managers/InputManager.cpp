@@ -1,12 +1,9 @@
 #include "InputManager.h"
 //#include "../UI/Managers/Manager.h"
 
-namespace TenUI
-{
+namespace TenUI {
 
-//set<UserInput*> InputManager::inputs;
 shared_ptr<InputManager> InputManager::inst;
-//InputManager* InputManager::inst;
 
 InputManager::InputManager()
 {
@@ -58,26 +55,12 @@ shared_ptr<InputManager> InputManager::instance(){
 	return shared_ptr<InputManager>();
 }
 
-/*InputManager* InputManager::instance(){
-	if(InputManager::inst)
-		return InputManager::inst;
-	inst = new InputManager;
-	return inst;
-}*/
-
 shared_ptr<InputManager> InputManager::createInstance(){
 	if(!InputManager::inst){
 		InputManager::inst = shared_ptr<InputManager>(new InputManager());
 	}
 	return InputManager::inst;
 }
-
-/*InputManager* InputManager::createInstance() {
-	if(!InputManager::inst) {
-		InputManager::inst = new InputManager;
-	}
-	return InputManager::inst;
-}*/
 
 
 set<UserInput*>* InputManager::getInputs() {
@@ -107,7 +90,6 @@ void InputManager::registerInput(UserInput *ui)
 	inputs.insert(ui);
 	
 	ui->registerAllEventsHandler(&InputManager::handleInputEvent,InputManager::inst);
-	//ui->registerAllEventsHandler(&TestEventHandler::handleInputEvent,testEventHandler);
 }
 
 }
