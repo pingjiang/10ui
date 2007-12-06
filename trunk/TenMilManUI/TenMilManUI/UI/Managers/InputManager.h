@@ -6,22 +6,23 @@
 #include <iostream>
 #include <TenMilManUI/UserInputs/UserInput.h>
 #include <TenMilManUI/UI/Events/InputEvents/UserInputEvent.h>
+#include <TenMilManUI/UI/Events/InputEvents/PointEvent.h>
 #include <TenMilManUI/UI/Events/Event.h>
+
+#include "TestEventHandler.h"
 
 #include <tr1/memory>
 
 using std::tr1::shared_ptr;
 using std::tr1::dynamic_pointer_cast;
 
-namespace TenUI
-{
+namespace TenUI {
 
-class InputManager : public EventDispatcher, public EventHandler 
-{
+class InputManager : public EventDispatcher, public EventHandler {
 	set<UserInput*> inputs;
 	static shared_ptr<InputManager> inst;
-	//static InputManager* inst;
-
+	shared_ptr<TestEventHandler> testEventHandler;
+	
 public:
 	InputManager();
 	virtual ~InputManager();
@@ -30,9 +31,7 @@ public:
 	bool update();
 
 	static shared_ptr<InputManager> instance();
-	//static InputManager* instance(); 
 	static shared_ptr<InputManager> createInstance();
-	//static InputManager* createInstance();
 	
 	set<UserInput*>* getInputs();
 	

@@ -10,6 +10,7 @@ shared_ptr<InputManager> InputManager::inst;
 
 InputManager::InputManager()
 {
+	testEventHandler = shared_ptr<TestEventHandler>(new TestEventHandler());
 }
 
 InputManager::~InputManager()
@@ -95,9 +96,10 @@ UserInput* InputManager::getInput(unsigned long uiid)
 
 // TR
 void InputManager::handleInputEvent(const shared_ptr<Event> &evt){
-	/*cout << evt->getType() << '\n';
-	shared_ptr<UserInputEvent> inputEvent = dynamic_pointer_cast<UserInputEvent>(evt);*/
-	//cout << inputEvent->getUID() << "\n";
+	shared_ptr<PointEvent> pointEvent = dynamic_pointer_cast<PointEvent>(evt);
+	if( pointEvent ){
+		cout << "PointEvent: "<< pointEvent->getType() << " (" << pointEvent->getX()<< "," <<  pointEvent->getY()<<  ")" << endl;	
+	}
 }
 
 void InputManager::registerInput(UserInput *ui)
@@ -105,6 +107,7 @@ void InputManager::registerInput(UserInput *ui)
 	inputs.insert(ui);
 	
 	ui->registerAllEventsHandler(&InputManager::handleInputEvent,InputManager::inst);
+	//ui->registerAllEventsHandler(&TestEventHandler::handleInputEvent,testEventHandler);
 }
 
 }

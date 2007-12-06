@@ -16,8 +16,7 @@
 namespace TenUI {
 
 class SDLMouseInput : public UserInput {
-protected:
-	
+protected:	
 	SDL_Event event;
 	int x,y;
 	bool pressed;
@@ -26,8 +25,9 @@ protected:
 	
 public:
 	SDLMouseInput() : UserInput(),x(-1),y(-1),uid(UserInput::getNextUID()) {
-		/*x = -1;
-		y = -1;*/
+		addEventType(PointEvent::DOWN_EVENT_TYPE);
+		addEventType(PointEvent::MOVE_EVENT_TYPE);
+		addEventType(PointEvent::UP_EVENT_TYPE);
 	}
 	
 	virtual void init() {}
@@ -71,24 +71,18 @@ public:
 	    	quit = true;
 	    }  
 		
-		/*if( event.type == SDL_NOEVENT ){
-			cout << "SDL NO EVENT" << endl;
-		}else{*/
-			if( quit ){
-				
-				cout << "one" << endl;
-				//dispatchEvent(shared_ptr<UserInputEvent>(new UserInputEvent(UserInputEvent::QUIT_EVENT_TYPE, uid)));
-				//dispatchEvent(shared_ptr<Event>(new Event("sdlfjk")));
-			}else{
-				cout << "which" << endl;
-				//dispatchEvent(shared_ptr<PointEvent>(new PointEvent(PointEvent::MOVE_EVENT_TYPE, uid, x,y,pressed)));
-				dispatchEvent(shared_ptr<Event>());
-			}
-			
-		//}
-
+		
+		if( quit ){				
+			dispatchEvent(shared_ptr<UserInputEvent>(new UserInputEvent(UserInputEvent::QUIT_EVENT_TYPE, uid)));
+		}else{
+			dispatchEvent(shared_ptr<PointEvent>(new PointEvent(PointEvent::MOVE_EVENT_TYPE, uid, x,y,pressed)));
+		}	
+		
 		return true;
 	}
+	
+	//virtual bool isQuit() { return quit; }
+
 	
 	/*virtual int getX() { return x; }
 	virtual int getY() { return y; }

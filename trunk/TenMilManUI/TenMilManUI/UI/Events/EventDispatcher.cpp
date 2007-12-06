@@ -21,24 +21,12 @@ namespace TenUI {
 			HandlerFuncMap::iterator begin = it->second.begin();
 			HandlerFuncMap::iterator end = it->second.end();
 			
-			// Remove dead EventHandlers
-			/*for(HandlerFuncMap::iterator iter = begin ; iter != end ; )	{
-				if(iter->first.use_count() == 2){
-					cout << "removed handler  " << event->getType() << endl;
-					it->second.erase( iter++ );				 
-				}else
-					++iter;
-			}
-			
-			begin = it->second.begin();
-			end = it->second.end();
-			*/		
-			
 			// Dispatch event to EventHandlers
-			for_each(begin, end, dispatchEventFunc);		
+			for_each(begin, end, dispatchEventFunc);	
+			
+			// Dispatch event to All Event Handlers
+			for_each(allEvents_Handlers.begin(), allEvents_Handlers.end(), dispatchEventFunc);	
 		}
-	
-		for_each(allEvents_Handlers.begin(), allEvents_Handlers.end(), dispatchEventFunc);		
 		
 	}
 	
