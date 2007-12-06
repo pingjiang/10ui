@@ -11,7 +11,7 @@ namespace TenUI {
 	/////////////////////////////////////
 	//          Private Methods        //
 	/////////////////////////////////////
-	unsigned long DisplayObject::nextObjectID = 0;
+	unsigned long DisplayObject::nextObjectID = 256;
 	
 	// recalc centerx, centery
 	void DisplayObject::calcCenterX() {
@@ -20,8 +20,6 @@ namespace TenUI {
 	void DisplayObject::calcCenterY() {
 		centery = (int) ((double)y+scaley*(double)h/2.0);
 	}
-	
-	
 	
 
 	/////////////////////////////////////
@@ -62,7 +60,7 @@ namespace TenUI {
 	/***********************************/
 	/*     Hierarchy Getter/Setters    */
 	/***********************************/
-		long 			DisplayObject::getObjectID()				{ return objid; }
+		unsigned long 	DisplayObject::getObjectID()				{ return objid; }
 		DisplayObject*	DisplayObject::getParent()					{ return this->parent; }
 		void 			DisplayObject::setParent(DisplayObject *p)	{ this->parent = p; }
 		bool 			DisplayObject::getEnabled()					{ return enabled; }

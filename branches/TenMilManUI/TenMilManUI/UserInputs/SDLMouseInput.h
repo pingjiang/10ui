@@ -46,10 +46,8 @@ public:
 	
 	virtual void init() {}
 	virtual bool update(){
-		cout << "SDLMouseInput::update()" << endl;
 		SDL_PollEvent( &event );
 
-		cout << "\tSDL_PollEvent()" << endl;
 		//select = false;
 
 		if( event.type == SDL_MOUSEMOTION )

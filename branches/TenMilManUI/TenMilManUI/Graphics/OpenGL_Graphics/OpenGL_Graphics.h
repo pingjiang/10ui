@@ -60,15 +60,19 @@ namespace TenUI{
 		GLuint redSelMask;
 		GLuint greenSelMask;
 		GLuint blueSelMask;
+		GLuint alphaSelMask;
 		
-		int redSelShift;
-		int greenSelShift;
-		int blueSelShift;
+		unsigned int redSelShift;
+		unsigned int greenSelShift;
+		unsigned int blueSelShift;
+		unsigned int alphaSelShift;
 		
 	// Helper Methods
 	private:
-		void arcVertices(int x, int y, int radius, float a1, float a2, int resolution=4);
-
+		void arcVertices(int x, int y, int radius, float a1, float a2, int resolution=20);
+		char *int2bin(int a);
+		char *byte2bin(unsigned char a);
+		
 	public:
 		virtual ~OpenGL_Graphics(){
 			//TODO Free Images

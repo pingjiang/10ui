@@ -5,16 +5,24 @@
 
 #include <TenMilManUI/UI/Core/UIComponent.h>
 
-#include <TenMilManUI/UI/Styles/Style.h>
-#include <TenMilManUI/UI/Styles/ColorStyle.h>
-#include <TenMilManUI/UI/Styles/GradientStyle.h>
-#include <TenMilManUI/UI/Styles/HorizontalAlignStyle.h>
-#include <TenMilManUI/UI/Styles/IntStyle.h>
+#include <TenMilManUI/UI/Styles/StyleData/ColorStyleData.h>
+#include <TenMilManUI/UI/Styles/StyleData/EnumStyleData/HorizontalAlignStyleData.h>
+#include <TenMilManUI/UI/Styles/StyleData/IntStyleData.h>
 
 #include <iostream>
 using namespace std;
 
 namespace TenUI{
+
+	namespace ButtonStyles { 
+		static const string FILL_COLORS("fillColors");
+		static const string BORDER_COLORS("borderColors");
+		static const string BORDER_SIZE("borderColors");
+		static const string LABEL_COLOR("labelColor");
+		static const string LABEL_ALIGN("labelAlign");
+		static const string CORNER_RADIUS("cornerRadius");
+	}
+
 	class Button : public UIComponent {
 		
 	/*##################################/
@@ -26,13 +34,31 @@ namespace TenUI{
 	/#        	    STYLES             #/
 	/##################################*/
 	protected:
-		GradientStyle* 			fillColors_style;
-		GradientStyle* 			borderColors_style;
+		/*ColorStyleData* 			fillColor1_style;
+		ColorStyleData* 			fillColor2_style;
 		
-		ColorStyle* 			labelColor_style;
-		HorizontalAlignStyle*	labelAlign_style;
+		ColorStyleData* 			borderColor1_style;
+		ColorStyleData* 			borderColor2_style;
+				
+		IntStyleData*				borderSize_style;
 		
-		IntStyle*				cornerRadius_style;
+		ColorStyleData* 			labelColor_style;
+		HorizontalAlignStyleData*	labelAlign_style;
+		
+		IntStyleData*				cornerRadius_style;*/
+		
+		ColorHex	fillColor1_style;
+		ColorHex 	fillColor2_style;
+		
+		ColorHex 	borderColor1_style;
+		ColorHex 	borderColor2_style;
+				
+		int			borderSize_style;
+		
+		ColorHex 	labelColor_style;
+		int			labelAlign_style;
+		
+		int			cornerRadius_style;
 	
 	/*##################################/
 	/#        	  ATTRIBUTES           #/
@@ -49,6 +75,14 @@ namespace TenUI{
 		/***********************************/
 		virtual void initStyles();
 
+		/************************************/
+		/* DisplayObjectContainer Overrides */
+		/************************************/
+			/***********************************/
+			/*           Draw Methods          */
+			/***********************************/	
+			virtual void drawSelf();
+		
 		/***********************************/
 		/*     DisplayObject Overrides     */
 		/***********************************/
@@ -57,10 +91,6 @@ namespace TenUI{
 			/***********************************/
 			virtual void update(){}
 					
-			/***********************************/
-			/*           Draw Methods          */
-			/***********************************/	
-			virtual void draw();
 	};
 }
 

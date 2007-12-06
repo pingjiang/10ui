@@ -36,14 +36,13 @@
 											tui->run();																				\
 											return 0;																				\
 									  }
-
 using namespace std;
 
 namespace TenUI {
 
 	class ITenMilManUIApp;
 	
-	class TenMilManUI {		
+	class TenMilManUI {
 		
 		// Private Variables
 		private:
@@ -51,14 +50,18 @@ namespace TenUI {
 		    IGraphics* graphics;
 		    UserInput* userInput;
 		    
-		    map<long ,DisplayObject*> rootObjs;
+		    map<unsigned long ,DisplayObject*> rootObjs;
+		    map<unsigned long ,UIComponent*> allUIComps;
 		    ITenMilManUIApp *app;
 						
 			// Indicates whether UI should continue running
 			// Made for Multi-Threading
 		    pthread_mutex_t runningMutex;
 			bool running;
-
+			
+			// getUIComponentsAt
+			bool runSelectionRendering; 
+			
 		// Private Methods
 		private:
 			TenMilManUI(ITenMilManUIApp *) throw(int);						
@@ -77,13 +80,12 @@ namespace TenUI {
 			void quit() throw(int);
 
 			IGraphics* getGraphics(){ return graphics; }
-			GraphicsOptions& getGraphicsOptions() const{
-				return graphics->getGraphicsOptions();
-			}			
-			vector<DisplayObject *> *getUIComponentsAt(int x, int y);
+			GraphicsOptions& getGraphicsOptions() const { return graphics->getGraphicsOptions(); }			
+			UIComponent* getUIComponentsAt(int x, int y);
 			
-			void addDisplayObject(DisplayObject *obj);
+			void addUIComponent(UIComponent* uicomp);
 			
+			UserInput* getUserInput(){ 	return userInput;    }
 	};
 
 }

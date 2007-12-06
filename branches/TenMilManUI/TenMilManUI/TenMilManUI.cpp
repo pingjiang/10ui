@@ -26,9 +26,10 @@ namespace TenUI {
 		
 	    pthread_mutex_init(&runningMutex,NULL);	
 		running = true;
+		runSelectionRendering = true;
 	}	
 	TenMilManUI::~TenMilManUI(){
-		map<long,DisplayObject*>::iterator it = rootObjs.begin();
+		map<unsigned long,DisplayObject*>::iterator it = rootObjs.begin();
 		while(it != rootObjs.end()){
 			it->second->deinit();
 			delete (it->second);
@@ -39,48 +40,58 @@ namespace TenUI {
 	/**********************************
 	 * 	 		Public Methods	  	  *	 
 	 **********************************/	
-	void TenMilManUI::run() throw(int){
-		cout << "TenMilManUI::run()" << endl;
-		
+	void TenMilManUI::run() throw(int){		
 		graphics->init(app->getGraphicsOptions());
 		app->init();
-		
-		cout << "\tapp->init()" << endl;
-				
+						
 		userInput->update();
 
-		cout << "\tuserInput->update()" << endl;
 		while(isRunning() && !userInput->isQuit()){
-
-			cout << "\twhile()" << endl;
 			app->update_preframe();
 			app->update_frame();
 			
 			update();
-
-			cout << "\tupdate()" << endl;
 			draw();
 
-
-			cout << "\tdraw()" << endl;
+			runSelectionRendering = true;
+			
 			userInput->update();
-
-			cout << "\tuserInput->update()" << endl;
 		}
 		
 		app->deinit();		
 		graphics->deinit();
 	}
-	
-	vector<DisplayObject *> *TenMilManUI::getUIComponentsAt(int x, int y){
-		return NULL;
+
+	void TenMilManUI::quit() throw(int){
+		pthread_mutex_lock(&runningMutex);
+		running = false;
+		pthread_mutex_unlock(&runningMutex);
+		
+	}
+	UIComponent* TenMilManUI::getUIComponentsAt(int x, int y){
+		if( runSelectionRendering ){
+			map<unsigned long,DisplayObject*>::iterator it = rootObjs.begin();
+			
+			graphics->beginRendering(IGraphicsEnums::SELECTION);
+			while(it != rootObjs.end()){
+				graphics->setColorID((it->second)->getObjectID());
+				(it->second)->preDraw();
+				(it->second)->draw();
+				(it->second)->postDraw();
+				++it;
+			}
+			graphics->endRendering();
+			
+			runSelectionRendering = true;
+		}
+		return allUIComps[graphics->getColorID(x,y)];
 	}
 	
 	/**********************************
 	 * 	 		Private Methods	  	  *	 
 	 **********************************/		
 	void TenMilManUI::draw(){
-		map<long,DisplayObject*>::iterator it = rootObjs.begin();
+		map<unsigned long,DisplayObject*>::iterator it = rootObjs.begin();
 		
 		graphics->beginRendering(IGraphicsEnums::DISPLAY);
 		
@@ -94,7 +105,7 @@ namespace TenUI {
 		graphics->endRendering();			
 	}
 	void TenMilManUI::update(){
-		map<long,DisplayObject*>::iterator it = rootObjs.begin();
+		map<unsigned long,DisplayObject*>::iterator it = rootObjs.begin();
 		while(it != rootObjs.end()){
 			(it->second)->update();
 			++it;
@@ -108,11 +119,21 @@ namespace TenUI {
 		pthread_mutex_unlock(&runningMutex);
 		return temp;
 	}
-	
-	void TenMilManUI::addDisplayObject(DisplayObject *obj){
-		obj->init();
 		
-		rootObjs.insert(make_pair(obj->getObjectID(), obj));
+	void TenMilManUI::addUIComponent(UIComponent* uicomp){
+		uicomp->init();
+		allUIComps[uicomp->getObjectID()] = uicomp;
+		rootObjs[uicomp->getObjectID()] = uicomp;
+		
+		vector<DisplayObject*>::iterator end = uicomp->getChildren()->end();
+		vector<DisplayObject*>::iterator it = uicomp->getChildren()->begin();
+		while(it != end){
+			UIComponent* child = dynamic_cast<UIComponent*>(*it);
+			if(child != NULL){
+				addUIComponent(child);
+			}
+			++it;
+		}		
 	}
 				
 	
