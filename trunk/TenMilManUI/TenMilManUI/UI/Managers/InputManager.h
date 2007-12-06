@@ -9,7 +9,6 @@
 #include <TenMilManUI/UI/Events/InputEvents/PointEvent.h>
 #include <TenMilManUI/UI/Events/Event.h>
 
-#include "TestEventHandler.h"
 
 #include <tr1/memory>
 
@@ -21,7 +20,6 @@ namespace TenUI {
 class InputManager : public EventDispatcher, public EventHandler {
 	set<UserInput*> inputs;
 	static shared_ptr<InputManager> inst;
-	shared_ptr<TestEventHandler> testEventHandler;
 	
 public:
 	InputManager();

@@ -538,12 +538,8 @@
 <tool id="cdt.managedbuild.tool.gnu.archiver.base.247952692" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1652573762" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 <option id="gnu.cpp.compiler.option.include.paths.383342637" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI/include/SDL}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Table_Libs_Includes/include}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DeviceCore}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Overhead_InputDevice}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Touch_InputDevice}&quot;"/>
 <listOptionValue builtIn="false" value="/usr/include/freetype2"/>
+<listOptionValue builtIn="false" value="/usr/include/SDL"/>
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI}&quot;"/>
 </option>
 <option id="gnu.cpp.compiler.option.other.other.412468453" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -fPIC" valueType="string"/>
@@ -558,10 +554,6 @@
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.1473711241" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">
 <option id="gnu.cpp.link.option.libs.2098185022" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="freetype"/>
-<listOptionValue builtIn="false" value="socketcpp"/>
-<listOptionValue builtIn="false" value="DeviceCore"/>
-<listOptionValue builtIn="false" value="Touch_Events"/>
-<listOptionValue builtIn="false" value="Overhead_Events"/>
 <listOptionValue builtIn="false" value="SDL"/>
 <listOptionValue builtIn="false" value="SDL_image"/>
 <listOptionValue builtIn="false" value="GL"/>
@@ -569,14 +561,8 @@
 </option>
 <option defaultValue="true" id="gnu.cpp.link.option.shared.623709661" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" valueType="boolean"/>
 <option id="gnu.cpp.link.option.paths.16854425" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-<listOptionValue builtIn="false" value="/home/users/robevans/lib64"/>
 <listOptionValue builtIn="false" value="/usr/lib64"/>
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/TenMilManUI/libraries64/SDL}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Table_Libs_Includes/lib64/libsocketcpp}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Table_Libs_Includes/lib/libsocketcpp}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DeviceCore/SharedLibrary}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Overhead_InputDevice/SharedLibrary}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Touch_InputDevice/SharedLibrary}&quot;"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1110613212" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
