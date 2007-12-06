@@ -5,8 +5,7 @@
 
 namespace TenUI {
 
-class PointEvent : public UserInputEvent
-{
+class PointEvent : public UserInputEvent{
 public:
 	static const string MOVE_EVENT_TYPE;
 	static const string UP_EVENT_TYPE;
@@ -19,6 +18,16 @@ protected:
 public:
 	PointEvent(string _type, unsigned long _uid, int _x, int _y, bool _pressed);
 	virtual ~PointEvent();
+
+	int getX(){
+		return x;
+	}
+	int getY(){
+		return x;
+	}
+	int getPressed(){
+		return pressed;
+	}
 };
 
 }
