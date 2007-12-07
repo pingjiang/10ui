@@ -21,11 +21,16 @@
 #include <math.h>
 #include <string>
 
+#include <tr1/memory>
+
 #include <TenMilManUI/UI/Events/EventDispatcher.h>
+
+using std::tr1::shared_ptr;
+using std::tr1::enable_shared_from_this;
 
 namespace TenUI {
 		
-	class DisplayObject : public EventDispatcher {
+	class DisplayObject : public EventDispatcher, public enable_shared_from_this<DisplayObject>  {
 	private:
 		static unsigned long nextObjectID;
 	
@@ -36,7 +41,7 @@ namespace TenUI {
 		/*         Member Variables        */
 		/***********************************/
 			// Hierarchy
-			DisplayObject *parent;
+			shared_ptr<DisplayObject> parent;
 			
 			// Enable/Disable
 			bool enabled;
@@ -78,7 +83,7 @@ namespace TenUI {
 	public:
 		
 		// constructor
-		DisplayObject(DisplayObject *p, int x, int y, unsigned int w, unsigned int h, double r=0.0, double s=1.0, float o=1.0);	
+		DisplayObject( const shared_ptr<DisplayObject>& p, int x, int y, unsigned int w, unsigned int h, double r=0.0, double s=1.0, float o=1.0);	
 		virtual ~DisplayObject(){}
 			
 		/***********************************/
@@ -104,8 +109,8 @@ namespace TenUI {
 		/***********************************/  
 		unsigned long 			getObjectID();
 		
-		DisplayObject*	getParent();		
-		void 			setParent(DisplayObject *p);
+		shared_ptr<DisplayObject>	getParent();		
+		void 						setParent(const shared_ptr<DisplayObject>& p);
 	
 		bool 			getEnabled();
 		void 			setEnabled(bool e);

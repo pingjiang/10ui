@@ -11,12 +11,12 @@ namespace TenUI {
 	/***********************************/
 	/*     Hierarchy Getter/Setters    */
 	/***********************************/  
-	void DisplayObjectContainer::addChild(DisplayObject* child){
-		child->setParent(this);
+	void DisplayObjectContainer::addChild(shared_ptr<DisplayObject> child){
+		child->setParent( shared_from_this() );
 		children.push_back(child);
 	}	
-	void DisplayObjectContainer::removeChild(DisplayObject* child){
-		vector<DisplayObject *>::iterator it = children.begin();
+	void DisplayObjectContainer::removeChild(shared_ptr<DisplayObject> child){
+		vector< shared_ptr<DisplayObject> >::iterator it = children.begin();
 		int objid = child->getObjectID();
 		while(it != children.end()){
 			if((*it)->getObjectID() == objid){
@@ -26,8 +26,8 @@ namespace TenUI {
 			++it;
 		}
 	}
-	vector<DisplayObject*>* DisplayObjectContainer::getChildren(){
-		return &children;
+	const vector< shared_ptr<DisplayObject> >& DisplayObjectContainer::getChildren(){
+		return children;
 	}
 	
 	/***********************************/
@@ -35,7 +35,7 @@ namespace TenUI {
 	/***********************************/
 	void DisplayObjectContainer::init(){}
 	void DisplayObjectContainer::update(){
-		vector<DisplayObject *>::iterator it = children.begin();
+		vector< shared_ptr<DisplayObject> >::iterator it = children.begin();
 		while(it != children.end()){
 			(*it)->update();
 			++it;
@@ -48,7 +48,7 @@ namespace TenUI {
 	/*      Extended Draw Methods      */
 	/***********************************/
 	void DisplayObjectContainer::drawChildren(){
-		vector<DisplayObject *>::iterator it = children.begin();
+		vector< shared_ptr<DisplayObject> >::iterator it = children.begin();
 		while(it != children.end()){
 			(*it)->preDraw();
 			(*it)->draw();

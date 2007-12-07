@@ -8,14 +8,22 @@ namespace TenUI{
 	std::string UIComponent::HOVER_OUT_EVENT = "HOVER_OUT_EVENT";
 	std::string UIComponent::HOVER_MOVE_EVENT = "HOVER_MOVE_EVENT";
 
-	const string& UIComponent::getUIComponentName(){
+	string UIComponent::getUIComponentName(){
 		return "UIComponent";
 	}
 
 	/***********************************/
 	/*        Stylable Overrides       */
 	/***********************************/
-	void UIComponent::initStyles(){}
+	void UIComponent::initStyles(){
+		StyleManager::instance()->registerUIComponent( dynamic_pointer_cast<UIComponent>(shared_from_this()), UIComponent::getUIComponentName(), "" );
+		
+	}
+
+	void UIComponent::loadStyleSetMap(){
+		stateStyleSetMap = StyleManager::instance()->getStateStyleSetMap( getUIComponentName() );
+		curStyleSet = (*stateStyleSetMap)[StyleManager::DefaultStyleSetName];
+	}
 
 	/***********************************/
 	/*        Init/Update Methods      */
@@ -23,6 +31,7 @@ namespace TenUI{
 	void UIComponent::init(){
 		DisplayObjectContainer::init();
 		initStyles();
+		loadStyleSetMap();
 	}
 	
 }
