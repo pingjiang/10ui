@@ -4,10 +4,7 @@
 #include <string>
 
 #include <TenMilManUI/UI/Core/UIComponent.h>
-
-#include <TenMilManUI/UI/Styles/StyleData/ColorStyleData.h>
-#include <TenMilManUI/UI/Styles/StyleData/EnumStyleData/HorizontalAlignStyleData.h>
-#include <TenMilManUI/UI/Styles/StyleData/IntStyleData.h>
+#include <TenMilManUI/Graphics/Util/ColorHex.h>
 
 #include <iostream>
 using namespace std;
