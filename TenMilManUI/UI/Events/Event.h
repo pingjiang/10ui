@@ -14,7 +14,9 @@ namespace TenUI {
 		Event(string _type);
 		virtual ~Event();
 		
-		const string& getType(); 
+		const string& getType(){
+			return type;
+		}
 	};
 
 }
