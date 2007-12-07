@@ -1,5 +1,34 @@
 #summary Rob Evans' Work Log
 ==Work log==
+===Thurs 12/6/07===
+   * Get latest code from svn (fixed event system)
+   * Modified !SDLMouseInput to generate !PointEvent !InputEvents
+   * Registered !InputManager with !SDLMouseInput to receive events
+===Wed 12/5/07===
+   * Tracking down problems with new event system
+      * Found the problem was in !InputManager::handleInputEvent
+         * Trying to access any info from the event appears to crash it
+         * Trying to output a simple string in the function (not a member of the event)
+      * Peter was able to debug it and find the problem
+         * !SDLMouseInput wasn't declaring what events it'd be throwing which caused it to die
+         * Though the mistake could have been avoided on my part, in debugging Peter found a different error
+===Mon 12/3/07===
+   * Something's wrong - TMMUI !TestApp immediately terminates on startup, despite debug outputs no output is output
+      * Last change before error, implementing new event system
+         * Tried commenting out new material w/o success
+===Sat 12/1/07===
+   * New event system
+      * %Y% !UserInputEvent, !PointEvent created
+      * %Y% !InputManager -> !EventDispatcher and !EventHandler
+   * Remove intermediate !BasicInput or !MultiInput
+      * From...
+         * !SDLMouseInput - DONE
+         * !TableInput_NewArch - DONE
+   * !TenUI app function registerInput(new !UserInput) will call !InputManager::registerInput(!UserInput ui) to register itself
+      * Move initialization code for !UserInputs from init() to constructor - DONE
+      * Remove self-registration to !InputManager, will be done through the app - DONE
+   * TODO:
+      * !UserInputs will dispatch !UserInputEvents which !InputManager will handle
 ===Wed 11/28/07===
    * Helped Ted w/ debugging
       * Found cvHALd wasn't running
