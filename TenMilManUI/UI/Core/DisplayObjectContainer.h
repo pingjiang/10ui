@@ -12,20 +12,20 @@ namespace TenUI {
 
 	class DisplayObjectContainer : public DisplayObject {
 	protected:
-		vector<DisplayObject *> children;
+		vector< shared_ptr<DisplayObject> > children;
 	
 	public:	
 		// constructor
-		DisplayObjectContainer(DisplayObject *p, int x=0, int y=0, unsigned int w=0, unsigned int h=0, double rot=0.0, double s=1.0, double o=1.0)
+		DisplayObjectContainer( const shared_ptr<DisplayObject>& p, int x=0, int y=0, unsigned int w=0, unsigned int h=0, double rot=0.0, double s=1.0, double o=1.0)
 			:DisplayObject(p,x,y,w,h,rot,s,o){ }
 		virtual ~DisplayObjectContainer();
 		
 		/***********************************/
 		/*     Hierarchy Getter/Setters    */
 		/***********************************/  
-		virtual void addChild(DisplayObject* child);		
-		virtual void removeChild(DisplayObject* child);
-		virtual vector<DisplayObject*>* getChildren();
+		virtual void addChild( shared_ptr<DisplayObject> child );		
+		virtual void removeChild( shared_ptr<DisplayObject> child );
+		virtual const vector< shared_ptr<DisplayObject> >& getChildren();
 
 		/***********************************/
 		/*        Init/Update Methods      */

@@ -6,15 +6,20 @@
 #include <TenMilManUI/UI/Core/UIComponent.h>
 #include <TenMilManUI/Graphics/Util/ColorHex.h>
 
+#include <TenMilManUI/UI/Managers/StyleManager.h>
+
 #include <iostream>
 using namespace std;
 
 namespace TenUI{
 
+	/*##################################/
+	/#        	    STYLES             #/
+	/##################################*/
 	namespace ButtonStyles { 
 		static const string FILL_COLORS("fillColors");
 		static const string BORDER_COLORS("borderColors");
-		static const string BORDER_SIZE("borderColors");
+		static const string BORDER_SIZE("borderSize");
 		static const string LABEL_COLOR("labelColor");
 		static const string LABEL_ALIGN("labelAlign");
 		static const string CORNER_RADIUS("cornerRadius");
@@ -27,46 +32,22 @@ namespace TenUI{
 	/##################################*/
 	protected:
 		
+		
 	/*##################################/
-	/#        	    STYLES             #/
+	/#        	  PROPERTIES           #/
 	/##################################*/
 	protected:
-		/*ColorStyleData* 			fillColor1_style;
-		ColorStyleData* 			fillColor2_style;
-		
-		ColorStyleData* 			borderColor1_style;
-		ColorStyleData* 			borderColor2_style;
-				
-		IntStyleData*				borderSize_style;
-		
-		ColorStyleData* 			labelColor_style;
-		HorizontalAlignStyleData*	labelAlign_style;
-		
-		IntStyleData*				cornerRadius_style;*/
-		
-		ColorHex	fillColor1_style;
-		ColorHex 	fillColor2_style;
-		
-		ColorHex 	borderColor1_style;
-		ColorHex 	borderColor2_style;
-				
-		int			borderSize_style;
-		
-		ColorHex 	labelColor_style;
-		int			labelAlign_style;
-		
-		int			cornerRadius_style;
-	
-	/*##################################/
-	/#        	  ATTRIBUTES           #/
-	/##################################*/
-	protected:
-		string labelText;
+		string label;
 		
 	public:
 		Button(int x, int y, unsigned int w=500, unsigned int h=500):UIComponent(x,y,w,h){}
 		virtual ~Button();
-
+		
+		// UIComponent Identification
+		virtual string getUIComponentName(){
+			return "Button";
+		}
+		
 		/***********************************/
 		/*        Stylable Overrides       */
 		/***********************************/
