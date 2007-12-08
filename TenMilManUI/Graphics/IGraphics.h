@@ -92,7 +92,7 @@ namespace TenUI{
 		/******************************/
 		/*         Text Methods       */
 		/******************************/
-		virtual void drawText(const string& text, int x, int y, const ColorHex& color) = 0;
+		virtual void drawText(const string& text, const string& fontKey,int fontSize, int x, int y, const ColorHex& color) = 0;
 		virtual void loadFontDir(const string &fontdir) = 0;
 		
 	protected:

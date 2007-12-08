@@ -18,9 +18,9 @@ namespace TenUI {
 			if(c <= '9' && c >= '0'){
 				return (int)c-'0';
 			}else if(c <= 'F' && c >= 'A'){
-				return (int)c-'A'+10;
+				return (int)c-'A'+11;
 			}else if(c <= 'f' && c >= 'a'){
-				return (int)c-'a'+10;
+				return (int)c-'a'+11;
 			}
 			return 0;
 		}
