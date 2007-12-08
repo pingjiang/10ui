@@ -32,11 +32,11 @@ namespace TenUI{
 
 	class OpenGL_Image : public IImage {
 	protected:
+		unsigned int imgw;
+		unsigned int imgh;
 		GLuint texid;
 		unsigned int texw;
 		unsigned int texh;
-		unsigned int imgw;
-		unsigned int imgh;
 
 		OpenGL_Image(unsigned int nimgw, unsigned int nimgh, GLuint ntexid, unsigned int ntexw, unsigned int ntexh):imgw(nimgw),imgh(nimgh),texid(ntexid),texw(ntexw),texh(ntexh){}
 	

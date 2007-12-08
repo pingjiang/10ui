@@ -133,7 +133,7 @@ namespace TenUI{
 			/**********************/
 			/*   Color Selection  */
 			/**********************/
-				int redBits, greenBits, blueBits, alphaBits;
+				int redBits, greenBits, blueBits;
 				glGetIntegerv( GL_RED_BITS, &redBits );
 				glGetIntegerv( GL_GREEN_BITS, &greenBits );
 				glGetIntegerv( GL_BLUE_BITS, &blueBits );
@@ -350,8 +350,36 @@ namespace TenUI{
 						//TODO Implement OpenGL_Graphics::drawGradientRoundedRect
 						void  	OpenGL_Graphics::drawGradientRoundedRect(	int x, int y, 
 																int width, int height, int radius, 
-																const ColorHex& c1, const ColorHex& c2, const ColorHex& c3, const ColorHex& c4,
-																int strokeSize, const ColorHex& strokeColor ){}
+																const ColorHex& lb, const ColorHex& lt, const ColorHex& rt, const ColorHex& rb,
+																int strokeSize, const ColorHex& strokeColor ){
+							float top = PI * 0.5f;
+							float right = PI *2.0f;
+							float bottom = PI * 1.5f;														
+							float left = PI;
+
+							// draw rounded rectangle's stroke
+							setColor(strokeColor);
+							
+							// draw rectangle
+							glBegin(GL_POLYGON);								
+								arcVertices(x+width-radius, y+radius, 			radius+strokeSize, right, bottom);
+								arcVertices(x+radius, 		y+radius, 			radius+strokeSize, bottom,left);
+								arcVertices(x+radius, 		y+height-radius, 	radius+strokeSize, left, 	top);
+								arcVertices(x+width-radius,	y+height-radius, 	radius+strokeSize, top, 0.0);
+							glEnd();
+														
+							// draw rectangle
+							glBegin(GL_POLYGON);
+								setColor(rb);
+								arcVertices(x+width-radius, y+radius, 			radius, right, bottom);
+								setColor(lb);
+								arcVertices(x+radius, 		y+radius, 			radius, bottom,left);
+								setColor(lt);
+								arcVertices(x+radius, 		y+height-radius, 	radius, left, 	top);
+								setColor(rt);
+								arcVertices(x+width-radius,	y+height-radius, 	radius, top, 0.0);
+							glEnd();
+						}
 			
 					/******************************/
 					/*     Circle Draw Methods    */
@@ -399,7 +427,10 @@ namespace TenUI{
 				/******************************/
 				/*         Text Methods       */
 				/******************************/
-					void  	OpenGL_Graphics::drawText(const string& text, int x, int y, const ColorHex& color){}
+					void  	OpenGL_Graphics::drawText(const string& text, const string& fontKey,int fontSize, int x, int y, const ColorHex& color){
+						glColor4d(color.getRed(),color.getGreen(),color.getBlue(),color.getAlpha());
+						fontMgr->render(fontKey,FontFamilyData::DEFAULT, fontSize, "%s",text.c_str());
+					}
 					void  	OpenGL_Graphics::loadFontDir(const string &fontdir){}
 										
 					void 	OpenGL_Graphics::setColor(float red, float green, float blue, float alpha){
