@@ -28,6 +28,7 @@ namespace TenUI {
 			addEventType(PointEvent::DOWN_EVENT_TYPE);
 			addEventType(PointEvent::MOVE_EVENT_TYPE);
 			addEventType(PointEvent::UP_EVENT_TYPE);
+			pressed = false;
 		}
 		
 		virtual void init() {
