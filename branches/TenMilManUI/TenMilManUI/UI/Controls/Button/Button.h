@@ -9,36 +9,13 @@
 #include <TenMilManUI/UI/Managers/StyleManager.h>
 
 #include <iostream>
-using namespace std;
+
+using std::cout;
+using std::endl;
 
 namespace TenUI{
 
-	/*##################################/
-	/#        	    STYLES             #/
-	/##################################*/
-	namespace ButtonStyles { 
-		static const string FILL_COLORS("fillColors");
-		static const string BORDER_COLORS("borderColors");
-		static const string BORDER_SIZE("borderSize");
-		static const string LABEL_COLOR("labelColor");
-		static const string LABEL_ALIGN("labelAlign");
-		static const string CORNER_RADIUS("cornerRadius");
-	}
-
 	class Button : public UIComponent {
-		
-	/*##################################/
-	/#        	    STATES             #/
-	/##################################*/
-	protected:
-		
-		
-	/*##################################/
-	/#        	  PROPERTIES           #/
-	/##################################*/
-	protected:
-		string label;
-		
 	public:
 		Button(int x, int y, unsigned int w=500, unsigned int h=500):UIComponent(x,y,w,h){}
 		virtual ~Button();
@@ -47,27 +24,40 @@ namespace TenUI{
 		virtual string getUIComponentName(){
 			return "Button";
 		}
+
+	/***********************************/
+	/*        	  Properties           */
+	/***********************************/
+	protected:
+		string label;
+		const string& 	getLabel(){return label;}
+		void 			setLabel(const string& newLabel){label=newLabel;}
+			
+	/***********************************/
+	/*          State Machine  		   */
+	/***********************************/
+	protected:
+		virtual void 	initStates();
 		
-		/***********************************/
-		/*        Stylable Overrides       */
-		/***********************************/
+	/***********************************/
+	/*        	    Style  			   */
+	/***********************************/
+	public:
+		static const string FILL_COLORS_STYLE;
+		static const string BORDER_COLORS_STYLE;
+		static const string BORDER_SIZE_STYLE;
+		static const string LABEL_COLOR_STYLE;
+		static const string LABEL_ALIGN_STYLE;
+		static const string CORNER_RADIUS_STYLE;
+		
+	protected:
 		virtual void initStyles();
 
-		/************************************/
-		/* DisplayObjectContainer Overrides */
-		/************************************/
-			/***********************************/
-			/*           Draw Methods          */
-			/***********************************/	
-			virtual void drawSelf();
-		
-		/***********************************/
-		/*     DisplayObject Overrides     */
-		/***********************************/
-			/***********************************/
-			/*       Init/Update Methods       */
-			/***********************************/
-			virtual void update(){}
+	/***********************************/
+	/*        Game Loop Methods        */
+	/***********************************/
+	public:
+		virtual void drawSelf();
 					
 	};
 }

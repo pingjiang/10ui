@@ -21,8 +21,11 @@ namespace TenUI{
 		StyleSetDeclaration(const string& _name)
 			:name(_name){}
 		virtual ~StyleSetDeclaration(){}
-	
+
 		void addStyleDeclaration(const shared_ptr<StyleDeclaration>& decls){
+			set[decls->getName()] = decls;
+		}
+		void setStyleDeclaration(const shared_ptr<StyleDeclaration>& decls){
 			set[decls->getName()] = decls;
 		}
 		void removeStyleDeclaration(const string& name){

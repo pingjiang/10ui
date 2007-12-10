@@ -9,39 +9,34 @@
 
 #include <string>
 #include <iostream>
-//#include "InputManager.h"
+#include <TenMilManUI/UI/Events/EventDispatcher.h>
 
 using namespace std;
 
 namespace TenUI {
-
-class UserInput {	
-protected:
-	UserInput(){}
-	virtual ~UserInput() {}
 	
-	char UI_type;
-	char UI_data;
-
-public:
-	virtual void init() = 0;
-	virtual bool update() = 0;
+	class UserInput : public EventDispatcher {
+	private:
+		static unsigned long nextUIID;
+		static unsigned long nextUID;		
+				
+	protected:
+		UserInput() : uiid(UserInput::nextUIID++), quit(false) {}
+		virtual ~UserInput() {}
+		
+		// common across all UserInputs
+		unsigned long uiid;
+		bool quit;
 	
-	char getType()			{ return UI_type; }
-	char getDataFormat()	{ return UI_data; }
-
-	virtual int getX() = 0;
-	virtual int getY() = 0;
-	virtual bool isPressed() = 0;	
-	virtual bool isQuit() = 0;
-
-	static char MOUSE_INPUT;
-	static char TABLE_INPUT;
+		static unsigned long getNextUID();
+	public:
+		virtual void init() = 0;
+		virtual bool update() = 0;
+		
+		unsigned long getUIID()	{ return uiid; }
+		virtual bool isQuit() { return quit; }
 	
-	static char BASIC_DATA;
-	static char GESTURE_DATA;
-	static char REALTIME_DATA;
-};
+	};
 
 }
 

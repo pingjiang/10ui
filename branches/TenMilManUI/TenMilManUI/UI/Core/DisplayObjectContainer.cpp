@@ -17,7 +17,7 @@ namespace TenUI {
 	}	
 	void DisplayObjectContainer::removeChild(shared_ptr<DisplayObject> child){
 		vector< shared_ptr<DisplayObject> >::iterator it = children.begin();
-		int objid = child->getObjectID();
+		unsigned int objid = child->getObjectID();
 		while(it != children.end()){
 			if((*it)->getObjectID() == objid){
 				children.erase(it);
@@ -33,7 +33,13 @@ namespace TenUI {
 	/***********************************/
 	/*        Init/Update Methods      */
 	/***********************************/
-	void DisplayObjectContainer::init(){}
+	void DisplayObjectContainer::init(){
+		// Create the id for the list
+		displayListID = glGenLists(1);
+		selection_displayListID = glGenLists(1);
+		_redraw 	= true;
+		_redraw_sel = true;
+	}
 	void DisplayObjectContainer::update(){
 		vector< shared_ptr<DisplayObject> >::iterator it = children.begin();
 		while(it != children.end()){
@@ -56,12 +62,37 @@ namespace TenUI {
 			++it;
 		}
 	}
+	void DisplayObjectContainer::redraw(){
+		_redraw = true;
+		_redraw_sel = true;
+	}
 	
 	/***********************************/
 	/*           Draw Methods          */
 	/***********************************/
 	void DisplayObjectContainer::draw(){
-		drawSelf();
+
+		if( getTenUIGraphics()->getRenderingMode() == IGraphicsEnums::DISPLAY ){
+			if( _redraw ){
+				glNewList(displayListID,GL_COMPILE_AND_EXECUTE);
+				drawSelf();
+				glEndList();
+				
+				_redraw = false;
+			}else{
+				glCallList(displayListID);				
+			}
+		}else{
+			if( _redraw_sel ){
+				glNewList(selection_displayListID, GL_COMPILE_AND_EXECUTE);
+				drawSelf();
+				glEndList();
+				
+				_redraw_sel = false;
+			}else{
+				glCallList(selection_displayListID);				
+			}
+		}
 		
 		getTenUIGraphics()->setClipping(0,0,w,h);
 			drawChildren();

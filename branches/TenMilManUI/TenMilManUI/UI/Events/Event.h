@@ -7,16 +7,14 @@ using std::string;
 namespace TenUI {
 
 	class Event {
-	private:
+	protected:
 		string type;
 		
 	public:
 		Event(string _type);
 		virtual ~Event();
 		
-		const string& getType(){
-			return type;
-		}
+		const string& getType();
 	};
 
 }

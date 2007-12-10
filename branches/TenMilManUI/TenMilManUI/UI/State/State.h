@@ -14,51 +14,52 @@ using std::tr1::function;
 using std::tr1::shared_ptr;
 using std::tr1::weak_ptr;
 using std::tr1::enable_shared_from_this;
-
-class StateMachine;
-
-class State : public enable_shared_from_this<State> {
-	/***************************************
-	 *       Public Types Definitions      *
-	 ***************************************/ 
-public:
-	static const StateIDType 					ANY_STATE;
-
-	/***************************************
-	 *       	  Public Methods           *
-	 ***************************************/
-public:
-	State(const shared_ptr<StateMachine>& , const string&);
-	virtual ~State(){}
-
-	string getID(){
-		return id;
-	}
+namespace TenUI {
+	class StateMachine;
 	
-	virtual void onEnter(const StateIDType& prevState) = 0;
-	virtual void update() = 0;
-	virtual void onExit(const StateIDType& nextState) = 0;
-
+	class State : public enable_shared_from_this<State> {
+		/***************************************
+		 *       Public Types Definitions      *
+		 ***************************************/ 
+	public:
+		static const StateIDType 					ANY_STATE;
 	
-	/***************************************
-	*            Helper Functions          *
-	****************************************/
-protected:
-	bool exitState(const StateIDType& nextState);
+		/***************************************
+		 *       	  Public Methods           *
+		 ***************************************/
+	public:
+		State(const shared_ptr<StateMachine>& , const string&);
+		virtual ~State(){}
+	
+		const string& getID(){
+			return id;
+		}
 		
+		virtual void onEnter(const StateIDType& prevState) = 0;
+		virtual void update() = 0;
+		virtual void onExit(const StateIDType& nextState) = 0;
 	
-	/***************************************
-	*           Private Variables          *
-	****************************************/
-private:
-	weak_ptr<StateMachine> stateMachine;  
-	StateIDType id;	
 		
-	/***************************************
-	 *       	 Private Methods           *
-	 ***************************************/
-private:
-	
-};
+		/***************************************
+		*            Helper Functions          *
+		****************************************/
+	protected:
+		bool exitState(const StateIDType& nextState);
+			
+		
+		/***************************************
+		*           Private Variables          *
+		****************************************/
+	private:
+		weak_ptr<StateMachine> stateMachine;  
+		StateIDType id;	
+			
+		/***************************************
+		 *       	 Private Methods           *
+		 ***************************************/
+	private:
+		
+	};
+}
 
 #endif /*STATE_H_*/

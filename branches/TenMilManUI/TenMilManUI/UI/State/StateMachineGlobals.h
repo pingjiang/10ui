@@ -5,6 +5,7 @@
 
 using std::string;
 
-typedef string 									StateIDType;
-
+namespace TenUI {
+	typedef string 									StateIDType;
+}
 #endif /*STATEMACHINEGLOBALS_H_*/

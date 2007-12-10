@@ -6,6 +6,7 @@
 namespace TenUI{
 	TenMilManUI* getTenUI();
 	IGraphics* getTenUIGraphics();
+	shared_ptr<TenUI::InputManager> getTenUIInputManager();
 }
 
 #endif /*TENUI_GLOBALS_H_*/

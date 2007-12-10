@@ -7,4 +7,7 @@ namespace TenUI{
 	IGraphics* getTenUIGraphics(){
 		return TenMilManUI::instance()->getGraphics();
 	}
+	shared_ptr<TenUI::InputManager> getTenUIInputManager() { 
+		return TenUI::InputManager::instance(); 
+	}
 }

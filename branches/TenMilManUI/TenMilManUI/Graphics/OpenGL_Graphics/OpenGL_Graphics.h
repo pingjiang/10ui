@@ -69,7 +69,7 @@ namespace TenUI{
 		
 	// Helper Methods
 	private:
-		void arcVertices(int x, int y, int radius, float a1, float a2, int resolution=20);
+		void arcVertices(int x, int y, int radius, float a1, float a2, int resolution=10);
 		char *int2bin(int a);
 		char *byte2bin(unsigned char a);
 		
@@ -100,6 +100,7 @@ namespace TenUI{
 		/*******************************/
 		virtual void beginRendering(IGraphicsEnums::IGRAPHICS_RENDERING_MODE mode);
 		virtual void endRendering();
+		virtual IGraphicsEnums::IGRAPHICS_RENDERING_MODE getRenderingMode();
 		
 		/*******************************/
 		/* Selection Rendering Methods */

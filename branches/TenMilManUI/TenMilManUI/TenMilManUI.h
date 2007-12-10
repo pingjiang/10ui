@@ -19,6 +19,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <tr1/memory>
 
 #include <TenMilManUI/Graphics/IGraphics.h>
 #include <TenMilManUI/Graphics/GraphicsOptions.h>
@@ -28,7 +29,7 @@
 #include <TenMilManUI/UI/Core/DisplayObjectContainer.h>
 #include <TenMilManUI/UI/Core/UIComponent.h>
 #include <TenMilManUI/UserInputs/UserInput.h>
-#include "UserInputs/InputManager.h"
+#include <TenMilManUI/UI/Managers/InputManager.h>
 
 #define IMPLEMENT_TENUI_APP( tenuiApp ) int main(void) {																			\
 											TenUI::ITenMilManUIApp* app = (TenUI::ITenMilManUIApp*) new TenUI::tenuiApp;			\
@@ -37,6 +38,7 @@
 											return 0;																				\
 									  }
 using namespace std;
+using std::tr1::shared_ptr;
 
 namespace TenUI {
 
@@ -48,10 +50,9 @@ namespace TenUI {
 		private:
 		    static TenMilManUI* inst;
 		    IGraphics* graphics;
-		    UserInput* userInput;
 		    
-		    map<unsigned long ,DisplayObject*> rootObjs;
-		    map<unsigned long ,UIComponent*> allUIComps;
+		    map<unsigned long , shared_ptr<DisplayObject> > rootObjs;
+		    map<unsigned long , shared_ptr<UIComponent> > allUIComps;
 		    ITenMilManUIApp *app;
 						
 			// Indicates whether UI should continue running
@@ -70,6 +71,8 @@ namespace TenUI {
 			void update(); 
 			void draw();
 			bool isRunning();	
+			
+			void addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp);
 
 		// Public Methods
 		public:
@@ -81,11 +84,10 @@ namespace TenUI {
 
 			IGraphics* getGraphics(){ return graphics; }
 			GraphicsOptions& getGraphicsOptions() const { return graphics->getGraphicsOptions(); }			
-			UIComponent* getUIComponentsAt(int x, int y);
+			shared_ptr<UIComponent> getUIComponentsAt(int x, int y);
 			
-			void addUIComponent(UIComponent* uicomp);
-			
-			UserInput* getUserInput(){ 	return userInput;    }
+			void 							addUIComponent(const shared_ptr<UIComponent>& uicomp);
+			const shared_ptr<UIComponent>& 	getUIComponent(unsigned long uicompid);
 	};
 
 }
