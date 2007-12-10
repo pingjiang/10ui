@@ -11,7 +11,7 @@ namespace TenUI {
 	/////////////////////////////////////
 	//          Private Methods        //
 	/////////////////////////////////////
-	unsigned long DisplayObject::nextObjectID = 256;
+	unsigned long DisplayObject::nextObjectID = 1;
 	
 	// recalc centerx, centery
 	void DisplayObject::calcCenterX() {
@@ -26,7 +26,7 @@ namespace TenUI {
 	//          Public Methods         //
 	/////////////////////////////////////
 	DisplayObject::DisplayObject(const shared_ptr<DisplayObject>& p, int x, int y, unsigned int w, unsigned int h, double r, double s, float o){
-		objid = DisplayObject::nextObjectID++;
+		objid = ++DisplayObject::nextObjectID;
 		
 		this->parent = p;
 		this->enabled = true;

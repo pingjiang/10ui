@@ -1,5 +1,9 @@
 #include "EventDispatcher.h"
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
 namespace TenUI {
 
 	void EventDispatcher::addEventType( const string& eventType ){
@@ -25,9 +29,7 @@ namespace TenUI {
 			for_each(begin, end, dispatchEventFunc);
 			
 			for_each(allEvents_Handlers.begin(), allEvents_Handlers.end(), dispatchEventFunc);	
-		}
-	
-		
+		}	
 	}
 	
 	void EventDispatcher::_dispatchEvent( HandlerPairType const &handlerPair ){

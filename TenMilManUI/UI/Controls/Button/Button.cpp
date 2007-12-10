@@ -1,4 +1,8 @@
 #include "Button.h"
+#include "States/UpState.h"
+#include "States/DownState.h"
+#include "States/HoverState.h"
+
 #include <TenMilManUI/TenUI_Globals.h>
 #include <TenMilManUI/Graphics/Util/ColorHex.h>
 
@@ -6,13 +10,57 @@
 #include <TenMilManUI/UI/Style/Styles/ColorStyle.h>
 #include <TenMilManUI/UI/Style/StyleDeclaration.h>
 
+
+#include <tr1/memory>
+
+using std::tr1::dynamic_pointer_cast;
+
 namespace TenUI{
 
 	Button::~Button(){}
 	
 	/***********************************/
-	/*        Stylable Overrides       */
+	/*          State Machine  		   */
 	/***********************************/
+	void Button::initStates(){
+		UIComponent::initStates();
+		
+		stateMachine->registerState(
+				shared_ptr<ButtonStates::UpState>(
+						new ButtonStates::UpState(
+								dynamic_pointer_cast<UIComponent>(shared_from_this())
+						)
+				), 
+				true);
+		
+		stateMachine->registerState(
+				shared_ptr<ButtonStates::HoverState>(
+						new ButtonStates::HoverState(
+								dynamic_pointer_cast<UIComponent>(shared_from_this())
+						)
+				), 
+				false);
+		
+		stateMachine->registerState(
+				shared_ptr<ButtonStates::DownState>(
+						new ButtonStates::DownState(
+								dynamic_pointer_cast<UIComponent>(shared_from_this())
+						)
+				), 
+				false);
+	}
+	
+	/***********************************/
+	/*              Style              */
+	/***********************************/
+
+	const string Button::FILL_COLORS_STYLE("fillColors");
+	const string Button::BORDER_COLORS_STYLE("borderColors");
+	const string Button::BORDER_SIZE_STYLE("borderSize");
+	const string Button::LABEL_COLOR_STYLE("labelColor");
+	const string Button::LABEL_ALIGN_STYLE("labelAlign");
+	const string Button::CORNER_RADIUS_STYLE("cornerRadius");
+		
 	void Button::initStyles(){
 		UIComponent::initStyles();
 		StyleManager::instance()->registerUIComponent( dynamic_pointer_cast<UIComponent>(shared_from_this()), Button::getUIComponentName(), UIComponent::getUIComponentName() );
@@ -20,15 +68,47 @@ namespace TenUI{
 		StyleManager::instance()->addStyleDeclaration(
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
-						ButtonStyles::CORNER_RADIUS,
+						CORNER_RADIUS_STYLE,
 						shared_ptr<IntStyle>(new IntStyle(20))
+				)
+		);
+		StyleManager::instance()->setStateStyleDeclaration(
+				Button::getUIComponentName(),
+				ButtonStates::HoverState::STATE_NAME,
+				StyleDeclaration::create(
+						CORNER_RADIUS_STYLE,
+						shared_ptr<IntStyle>(new IntStyle(10))
+				)
+		);
+		StyleManager::instance()->setStateStyleDeclaration(
+				Button::getUIComponentName(),
+				ButtonStates::DownState::STATE_NAME,
+				StyleDeclaration::create(
+						CORNER_RADIUS_STYLE,
+						shared_ptr<IntStyle>(new IntStyle(0))
 				)
 		);
 
 		StyleManager::instance()->addStyleDeclaration(
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
-						ButtonStyles::FILL_COLORS,
+						FILL_COLORS_STYLE,
+						shared_ptr<ColorStyle>(new ColorStyle("#800"))
+				)
+		);
+		StyleManager::instance()->setStateStyleDeclaration(
+				Button::getUIComponentName(),
+				ButtonStates::HoverState::STATE_NAME,
+				StyleDeclaration::create(
+						FILL_COLORS_STYLE,
+						shared_ptr<ColorStyle>(new ColorStyle("#B00"))
+				)
+		);
+		StyleManager::instance()->setStateStyleDeclaration(
+				Button::getUIComponentName(),
+				ButtonStates::DownState::STATE_NAME,
+				StyleDeclaration::create(
+						FILL_COLORS_STYLE,
 						shared_ptr<ColorStyle>(new ColorStyle("#F00"))
 				)
 		);
@@ -36,23 +116,23 @@ namespace TenUI{
 		StyleManager::instance()->addStyleDeclaration(
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
-						ButtonStyles::BORDER_COLORS,
-						shared_ptr<ColorStyle>(new ColorStyle("#00F"))
+						BORDER_COLORS_STYLE,
+						shared_ptr<ColorStyle>(new ColorStyle("#D00"))
 				)
 		);
 		
 		StyleManager::instance()->addStyleDeclaration(
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
-						ButtonStyles::BORDER_SIZE,
-						shared_ptr<IntStyle>(new IntStyle(5))
+						BORDER_SIZE_STYLE,
+						shared_ptr<IntStyle>(new IntStyle(2))
 				)
 		);
 		
 		StyleManager::instance()->addStyleDeclaration(
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
-						ButtonStyles::LABEL_COLOR,
+						LABEL_COLOR_STYLE,
 						shared_ptr<ColorStyle>(new ColorStyle("#000"))
 				)
 		);
@@ -65,10 +145,10 @@ namespace TenUI{
 	void Button::drawSelf(){
 		getTenUIGraphics()->drawRoundedRectangle(	left,bottom, 
 													w,h,
-													any_cast<int>(curStyleSet->getValue(ButtonStyles::CORNER_RADIUS)),
-													any_cast<ColorHex>(curStyleSet->getValue(ButtonStyles::FILL_COLORS)), 
-													any_cast<int>(curStyleSet->getValue(ButtonStyles::BORDER_SIZE)),
-													any_cast<ColorHex>(curStyleSet->getValue(ButtonStyles::BORDER_COLORS)) 
+													any_cast<int>(curStyleSet->getValue(CORNER_RADIUS_STYLE)),
+													any_cast<ColorHex>(curStyleSet->getValue(FILL_COLORS_STYLE)), 
+													any_cast<int>(curStyleSet->getValue(BORDER_SIZE_STYLE)),
+													any_cast<ColorHex>(curStyleSet->getValue(BORDER_COLORS_STYLE)) 
 												);
 		
 	}

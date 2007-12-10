@@ -10,9 +10,10 @@
 
 using std::string;
 
-class TenMilManUI;
 
 namespace TenUI {
+
+	class TenMilManUI;
 
 	enum APPEXCEPTIONS { APPEXCEPTION_TENMILMANUIAPP_INIT_FAILED };
 
@@ -22,15 +23,14 @@ namespace TenUI {
 		public:
 			ITenMilManUIApp();
 			
+			virtual void initInput() = 0;
 			virtual void init() throw(int) = 0;
 			virtual void update_preframe() throw(APPEXCEPTIONS) = 0;
 			virtual void update_frame() throw(APPEXCEPTIONS) = 0;
 			virtual void deinit() throw(APPEXCEPTIONS) = 0;
 			
 			virtual GraphicsOptions* getGraphicsOptions() = 0;
-			virtual IGraphics* getGraphics() = 0;
-			virtual UserInput* 	getUserInput() = 0;
-			//virtual void		initializeUserInput() = 0;
+			virtual IGraphics* 		 getGraphics() = 0;
 			
 			virtual ~ITenMilManUIApp(){}
 	};

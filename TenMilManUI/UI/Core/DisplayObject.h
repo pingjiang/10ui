@@ -35,7 +35,7 @@ namespace TenUI {
 		static unsigned long nextObjectID;
 	
 	protected:
-		long objid;	
+		unsigned long objid;	
 
 		/***********************************/
 		/*         Member Variables        */

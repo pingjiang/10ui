@@ -39,6 +39,7 @@ namespace TenUI{
 		/*******************************/
 		virtual void beginRendering(IGraphicsEnums::IGRAPHICS_RENDERING_MODE mode) = 0;
 		virtual void endRendering() = 0;
+		virtual IGraphicsEnums::IGRAPHICS_RENDERING_MODE getRenderingMode() = 0;
 		
 		/*******************************/
 		/* Selection Rendering Methods */

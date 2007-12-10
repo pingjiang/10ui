@@ -216,6 +216,9 @@ namespace TenUI{
 					glMatrixMode(GL_MODELVIEW);
 					glPopMatrix();	
 				}
+				IGraphicsEnums::IGRAPHICS_RENDERING_MODE OpenGL_Graphics::getRenderingMode(){
+					return renderMode;
+				}
 			
 			/*******************************/
 			/* Selection Rendering Methods */
