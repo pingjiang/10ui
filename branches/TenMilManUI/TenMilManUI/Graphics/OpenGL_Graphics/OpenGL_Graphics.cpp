@@ -407,16 +407,17 @@ namespace TenUI{
 								height = (renderMode == IGraphicsEnums::DISPLAY)?openglImage->getTextureHeight():openglImage->getImageHeight();
 							}else{
 								if(renderMode == IGraphicsEnums::DISPLAY){
-									height = (height/openglImage->getImageHeight())*openglImage->getTextureHeight();
+									height = ((double)height/(double)openglImage->getImageHeight())*(double)openglImage->getTextureHeight();
 								}
 							}
 							if(width==0){
 								width = (renderMode == IGraphicsEnums::DISPLAY)?openglImage->getTextureWidth():openglImage->getImageWidth();
 							}else{
 								if(renderMode == IGraphicsEnums::DISPLAY){
-									width = (width/openglImage->getImageWidth())*openglImage->getTextureWidth();
+									width = ((double)width/(double)openglImage->getImageWidth())*(double)openglImage->getTextureWidth();
 								}
 							}
+							cout << "width, height" << width << ", " << height << endl;
 							
 							setColor(1.0,1.0,1.0,opacity);
 							
