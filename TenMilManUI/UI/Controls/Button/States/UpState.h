@@ -17,13 +17,17 @@ namespace TenUI{
 namespace ButtonStates{
 	
 	class UpState : public UIComponentState, public EventHandler {
+	private:
+		StateIDType theNextState;
+		
 	public:
 		static const string STATE_NAME;
 		
 	public:
 		UpState(const shared_ptr<UIComponent>& _uiComp);
 		virtual ~UpState();
-		
+
+		void handleMultiPointEvent(const shared_ptr<Event>& uievent );
 		void handlePointIn(const shared_ptr<Event>& uievent );
 		
 		virtual void onEnter(const StateIDType& prevState);

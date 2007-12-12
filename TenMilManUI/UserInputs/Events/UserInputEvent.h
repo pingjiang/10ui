@@ -2,6 +2,7 @@
 #define USERINPUTEVENT_H_
 
 #include <TenMilManUI/UI/Events/Event.h>
+#include "../UserInput_Globals.h"
 
 namespace TenUI {
 
@@ -12,8 +13,8 @@ namespace TenUI {
 		static const string QUIT_EVENT_TYPE;
 	
 	private: 
-		unsigned long uid;
-		unsigned long uiid;
+		UserID_Type 		uid;
+		UserInputID_Type 	uiid;
 		
 	public:
 		UserInputEvent(string _type, unsigned long _uid, unsigned long _uiid);

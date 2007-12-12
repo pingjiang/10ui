@@ -96,7 +96,8 @@ namespace TenUI{
 			for(State_StyleDeclaration_MapType::iterator it=ssDecl->second->begin();
 				it != ssDecl->second->end();
 				++it){
-				cout << "State Name: " << it->first << endl;
+				
+				//cout << "State Name: " << it->first << endl;
 				(*stateStyleMap)[it->first] = it->second->createStyleSet(); 
 			}
 			

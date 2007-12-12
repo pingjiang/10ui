@@ -24,6 +24,7 @@ namespace ButtonStates{
 		HoverState(const shared_ptr<UIComponent>& _uiComp );
 		virtual ~HoverState();
 
+		void handleMultiPointEvent(const shared_ptr<Event>& uievent );
 		void handlePointDown(const shared_ptr<Event>& uievent );
 		void handlePointOut(const shared_ptr<Event>& uievent );
 		

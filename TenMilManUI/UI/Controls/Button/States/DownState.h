@@ -23,7 +23,8 @@ namespace ButtonStates{
 	public:
 		DownState(const shared_ptr<UIComponent>& _uiComp);
 		virtual ~DownState();
-		
+
+		void handleMultiPointEvent(const shared_ptr<Event>& uievent );
 		void handlePointUp(const shared_ptr<Event>& uievent );
 		void handlePointOut(const shared_ptr<Event>& uievent );
 		

@@ -11,6 +11,7 @@
 #include "UserInput.h"
 #include <TenMilManUI/TenUI_Globals.h>
 #include <TenMilManUI/UserInputs/Events/PointEvent.h>
+#include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
 #include <TenMilManUI/UI/Core/UIComponent.h>
 
 namespace TenUI {
@@ -24,15 +25,17 @@ namespace TenUI {
 		unsigned long uid;
 		
 	public:
-		SDLMouseInput() : UserInput(),x(-1),y(-1),uid(UserInput::getNextUID()) {
+		SDLMouseInput() : UserInput(),x(-1),y(-1),uid(UserInput::getNextUserID()) {
 			addEventType(PointEvent::DOWN_EVENT_TYPE);
 			addEventType(PointEvent::MOVE_EVENT_TYPE);
 			addEventType(PointEvent::UP_EVENT_TYPE);
+			addEventType(MultiPointEvent::MULTIPOINT_EVENT_TYPE);
+			
 			pressed = false;
 		}
 		
 		virtual void init() {
-			uid = getNextUID();
+			uid = getNextUserID();
 		}
 		
 		virtual bool update(){
@@ -77,8 +80,10 @@ namespace TenUI {
 			
 			if( quit ){		
 				dispatchEvent(shared_ptr<UserInputEvent>(new UserInputEvent(UserInputEvent::QUIT_EVENT_TYPE, uid, uiid)));
-			}else if(evtType != "" && (dx != 0 || dy != 0 || dp)){ 
-				dispatchEvent(shared_ptr<PointEvent>(new PointEvent(evtType, uid, uiid,0,x,y,pressed, shared_ptr<UIComponent>() )));
+			}else if(evtType != "" && (dx != 0 || dy != 0 || dp)){
+				shared_ptr<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
+				mpe->addPointEvent(shared_ptr<PointEvent>(new PointEvent(evtType, uid, uiid,0,x,y,pressed, shared_ptr<UIComponent>() )));
+				dispatchEvent(mpe);
 			}	
 			
 			return true;

@@ -8,6 +8,7 @@
 #include <TenMilManUI/UI/Style/StyleSet.h>
 
 #include <TenMilManUI/UserInputs/Events/UserInputEvent.h>
+#include <TenMilManUI/UserInputs/UserInput_Globals.h>
 
 #include <iostream>
 #include <map>
@@ -32,7 +33,7 @@ namespace TenUI {
 								 	:DisplayObjectContainer(shared_ptr<DisplayObject>(), x,y ,w,h, 0.0,1.0,1.0){
 									 stateMachine = shared_ptr<StateMachine>(new StateMachine());
 								 }
-		virtual 				 ~UIComponent(){};	
+		virtual 				 ~UIComponent(){};
 
 		// UIComponent Identification
 		virtual string 			 getUIComponentName();
@@ -40,6 +41,14 @@ namespace TenUI {
 	/***********************************/
 	/*              Input  		       */
 	/***********************************/
+	private:
+		UserID_Type			 	 ownerUserID;
+	public:
+		UserID_Type			 	 getOwnerUserID();
+		void 					 setOwnerUserID(UserID_Type newOwner);
+		UserID_Type			 	 clearOwnerUserID();
+		
+	public:
 		virtual void 			 handleUserInputEvent(const shared_ptr<UserInputEvent>& uievent);
 		
 	/***********************************/

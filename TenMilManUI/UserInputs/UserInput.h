@@ -11,14 +11,16 @@
 #include <iostream>
 #include <TenMilManUI/UI/Events/EventDispatcher.h>
 
+#include "UserInput_Globals.h"
+
 using namespace std;
 
 namespace TenUI {
 	
 	class UserInput : public EventDispatcher {
 	private:
-		static unsigned long nextUIID;
-		static unsigned long nextUID;		
+		static UserInputID_Type nextUIID;
+		static UserID_Type 		nextUID;		
 				
 	protected:
 		UserInput() : uiid(UserInput::nextUIID++), quit(false) {}
@@ -28,12 +30,12 @@ namespace TenUI {
 		unsigned long uiid;
 		bool quit;
 	
-		static unsigned long getNextUID();
+		static UserID_Type getNextUserID();
 	public:
 		virtual void init() = 0;
 		virtual bool update() = 0;
 		
-		unsigned long getUIID()	{ return uiid; }
+		UserInputID_Type getUserInputID()	{ return uiid; }
 		virtual bool isQuit() { return quit; }
 	
 	};

@@ -6,7 +6,7 @@ namespace TenUI {
 
 	unsigned long UserInput::nextUID = 0;
 	unsigned long UserInput::nextUIID = 0;
-	unsigned long UserInput::getNextUID()
+	unsigned long UserInput::getNextUserID()
 	{
 			return nextUID++;
 	}
