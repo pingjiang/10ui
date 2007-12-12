@@ -86,8 +86,8 @@ namespace TenUI {
 			GraphicsOptions& getGraphicsOptions() const { return graphics->getGraphicsOptions(); }			
 			shared_ptr<UIComponent> getUIComponentsAt(int x, int y);
 			
-			void 							addUIComponent(const shared_ptr<UIComponent>& uicomp);
-			const shared_ptr<UIComponent>& 	getUIComponent(unsigned long uicompid);
+			void 						addUIComponent(const shared_ptr<UIComponent>& uicomp);
+			shared_ptr<UIComponent> 	getUIComponent(unsigned long uicompid);
 	};
 
 }

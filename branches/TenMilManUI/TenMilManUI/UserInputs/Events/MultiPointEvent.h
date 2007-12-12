@@ -16,8 +16,12 @@ namespace TenUI {
 
 	class UIComponent;
 		
-	class MultiPointEvent : public UserInputEvent {		
+	class MultiPointEvent : public UserInputEvent {
+	public:
+		typedef vector< shared_ptr<PointEvent> >  PointEventSetType;
+		
 	protected:
+		
 		shared_ptr< vector< shared_ptr<PointEvent> > > ptEvents;
 		
 	public:

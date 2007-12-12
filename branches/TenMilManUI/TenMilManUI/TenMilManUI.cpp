@@ -78,7 +78,7 @@ namespace TenUI {
 		return allUIComps[graphics->getColorID(x,y)];
 	}
 	
-	const shared_ptr<UIComponent>& TenMilManUI::getUIComponent(unsigned long uicompid){
+	shared_ptr<UIComponent> TenMilManUI::getUIComponent(unsigned long uicompid){
 		map<unsigned long , shared_ptr<UIComponent> >::iterator it = allUIComps.find(uicompid);
 		return ( it != allUIComps.end() ) ? it->second : shared_ptr<UIComponent>(); 
 	}

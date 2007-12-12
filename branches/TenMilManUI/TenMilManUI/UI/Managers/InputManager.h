@@ -4,9 +4,11 @@
 #include <set>
 #include <map>
 #include <iostream>
+
 #include <TenMilManUI/UserInputs/UserInput.h>
 #include <TenMilManUI/UserInputs/Events/UserInputEvent.h>
 #include <TenMilManUI/UserInputs/Events/PointEvent.h>
+#include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
 #include <TenMilManUI/UI/Events/Event.h>
 
 #include <TenMilManUI/UI/Core/UIComponent.h>
@@ -53,6 +55,8 @@ public:
 	
 	void registerInput( const shared_ptr<UserInput>& ui);
 	
+
+	shared_ptr< vector< shared_ptr<PointEvent> > > handlePointEvent(const shared_ptr<PointEvent> &pointEvent);
 	void handleInputEvent(const shared_ptr<Event> &evt);
 };
 

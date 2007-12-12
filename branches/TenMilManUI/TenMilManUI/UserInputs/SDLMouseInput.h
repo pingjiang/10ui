@@ -78,7 +78,7 @@ namespace TenUI {
 			if( quit ){		
 				dispatchEvent(shared_ptr<UserInputEvent>(new UserInputEvent(UserInputEvent::QUIT_EVENT_TYPE, uid, uiid)));
 			}else if(evtType != "" && (dx != 0 || dy != 0 || dp)){ 
-				dispatchEvent(shared_ptr<PointEvent>(new PointEvent(evtType, uid, uiid,0,x,y,pressed)));
+				dispatchEvent(shared_ptr<PointEvent>(new PointEvent(evtType, uid, uiid,0,x,y,pressed, shared_ptr<UIComponent>() )));
 			}	
 			
 			return true;
