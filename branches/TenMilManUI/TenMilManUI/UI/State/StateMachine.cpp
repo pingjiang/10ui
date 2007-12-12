@@ -187,17 +187,23 @@ namespace TenUI {
 	}
 	
 	void StateMachine::changeState(const shared_ptr<State>& newState, const shared_ptr<Transition>& newTransition){	
+
+		
 		curState->onExit(newState->getID());
+
+		
 		shared_ptr<State> prevState = curState;
 		curState = newState;
 		curState->onEnter(prevState->getID());
+
 		
 		if( curTransition ){
 			curTransition->end();
 		}
 		curTransition = newTransition;
 		curTransition->init(prevState->getID(), curState->getID());
-		
-		dispatchEvent(shared_ptr<StateMachineEvent>(new StateMachineEvent(prevState->getID(), curState->getID(), StateMachineEvent::CHANGESTATE_EVENTTYPE)));	
+
+		dispatchEvent(shared_ptr<StateMachineEvent>(new StateMachineEvent(prevState->getID(), curState->getID(), StateMachineEvent::CHANGESTATE_EVENTTYPE)));
+
 	}
 }

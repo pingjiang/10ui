@@ -3,6 +3,8 @@
 #include "HoverState.h"
 #include "UpState.h"
 
+#include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
+
 namespace TenUI{
 namespace ButtonStates{
 
@@ -12,6 +14,24 @@ namespace ButtonStates{
 		:UIComponentState(_uiComp,DownState::STATE_NAME){}
 	DownState::~DownState(){}
 
+	void DownState::handleMultiPointEvent(const shared_ptr<Event>& uievent ){
+		shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
+		if(mpe){
+			for(MultiPointEvent::PointEventSetType::iterator it = mpe->getPointEvents()->begin();
+			it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == STATE_NAME;
+				++it){
+
+				// Only worry about the User that owns the UIComponent 
+				if(getUIComponent()->getOwnerUserID() == (*it)->getUserID()){
+					if((*it)->getType() == PointEvent::UP_EVENT_TYPE){
+						handlePointUp((*it));
+					}else if((*it)->getType() == PointEvent::OUT_EVENT_TYPE){
+						handlePointOut((*it));
+					}
+				}
+			}
+		}
+	}
 	void DownState::handlePointUp(const shared_ptr<Event>& uievent ){
 		exitState(HoverState::STATE_NAME);
 	}
@@ -30,6 +50,12 @@ namespace ButtonStates{
 				&DownState::handlePointOut , 
 				dynamic_pointer_cast<DownState>(shared_from_this())
 		);
+
+		getUIComponent()->registerHandler(
+				MultiPointEvent::MULTIPOINT_EVENT_TYPE, 
+				&DownState::handleMultiPointEvent , 
+				dynamic_pointer_cast<DownState>(shared_from_this())
+		);
 	}
 	
 	void DownState::onExit(const StateIDType& nextState){
@@ -39,6 +65,10 @@ namespace ButtonStates{
 		);
 		getUIComponent()->unregisterHandler(
 				PointEvent::UP_EVENT_TYPE, 
+				dynamic_pointer_cast<DownState>(shared_from_this())
+		);
+		getUIComponent()->unregisterHandler(
+				MultiPointEvent::MULTIPOINT_EVENT_TYPE, 
 				dynamic_pointer_cast<DownState>(shared_from_this())
 		);
 	}

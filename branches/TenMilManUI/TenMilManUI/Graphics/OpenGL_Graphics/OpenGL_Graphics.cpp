@@ -122,7 +122,7 @@ namespace TenUI{
 				glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);	// Set The Blending Function For Translucency	
 
 				//glBlendFunc(GL_SRC_COLOR,GL_DST_COLOR);	
-				glEnable (GL_POLYGON_SMOOTH);		
+				//glEnable (GL_POLYGON_SMOOTH);		
 	
 			/**********************/
 			/*     INIT Fonts     */

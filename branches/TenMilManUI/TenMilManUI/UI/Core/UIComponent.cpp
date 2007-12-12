@@ -3,6 +3,7 @@
 
 #include <tr1/memory>
 #include <TenMilManUI/UserInputs/Events/PointEvent.h>
+#include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
 
 #include "Transitions/UIComponentTransition.h"
 
@@ -17,10 +18,23 @@ namespace TenUI{
 	/***********************************/
 	/*              Input  		       */
 	/***********************************/
+	UserID_Type	UIComponent::getOwnerUserID(){
+		return ownerUserID;
+	}
+	void UIComponent::setOwnerUserID(UserID_Type newOwner){
+		ownerUserID = newOwner;
+	}
+	UserID_Type UIComponent::clearOwnerUserID(){
+		ownerUserID = 0;
+	}
+	
 	void UIComponent::handleUserInputEvent(const shared_ptr<UserInputEvent>& uievent){
 		shared_ptr<PointEvent>pte = dynamic_pointer_cast<PointEvent>(uievent);
 		if(pte){		
 			dispatchEvent(pte);
+		}else{
+			shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
+			dispatchEvent(mpe);
 		}
 	}
 
@@ -28,6 +42,7 @@ namespace TenUI{
 	/*              Event  		       */
 	/***********************************/
 	void UIComponent::initEvents(){
+		addEventType(MultiPointEvent::MULTIPOINT_EVENT_TYPE);
 		addEventType(PointEvent::DOWN_EVENT_TYPE);
 		addEventType(PointEvent::UP_EVENT_TYPE);
 		addEventType(PointEvent::MOVE_EVENT_TYPE);
@@ -114,6 +129,8 @@ namespace TenUI{
 	}
 	void UIComponent::init(){
 		DisplayObjectContainer::init();
+		
+		clearOwnerUserID();
 		
 		initEvents();
 		initStates();

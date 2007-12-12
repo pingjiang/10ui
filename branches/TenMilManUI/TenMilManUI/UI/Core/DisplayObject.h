@@ -29,13 +29,15 @@ using std::tr1::shared_ptr;
 using std::tr1::enable_shared_from_this;
 
 namespace TenUI {
-		
+	
+	typedef unsigned long DisplayObjectIDType;
+
 	class DisplayObject : public EventDispatcher, public enable_shared_from_this<DisplayObject>  {
 	private:
-		static unsigned long nextObjectID;
+		static DisplayObjectIDType nextObjectID;
 	
 	protected:
-		unsigned long objid;	
+		DisplayObjectIDType objid;
 
 		/***********************************/
 		/*         Member Variables        */

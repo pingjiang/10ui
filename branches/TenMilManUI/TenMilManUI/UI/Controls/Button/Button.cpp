@@ -142,7 +142,6 @@ namespace TenUI{
 							shared_ptr<ColorStyle>(new ColorStyle("#F00"))
 					)
 			);
-		
 	}
 	
 	/***********************************/
