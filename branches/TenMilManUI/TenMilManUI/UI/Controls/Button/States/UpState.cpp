@@ -18,8 +18,8 @@ namespace ButtonStates{
 
 	const string UpState::STATE_NAME = "Start";
 
-	UpState::UpState(const shared_ptr<UIComponent>& _uiComp )
-		:UIComponentState(_uiComp,STATE_NAME){}
+	UpState::UpState(const shared_ptr<UIComponent>& _uiComp, const string& _stateName)
+		:UIComponentState(_uiComp,_stateName){}
 	UpState::~UpState(){}
 	
 	void UpState::handleMultiPointEvent(const shared_ptr<Event>& uievent ){

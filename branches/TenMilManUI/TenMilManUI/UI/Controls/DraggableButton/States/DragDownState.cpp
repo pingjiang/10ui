@@ -1,6 +1,7 @@
 #include "DragDownState.h"
 
 #include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
+#include <TenMilManUI/TenUI_Globals.h>
 
 namespace TenUI{
 namespace ButtonStates{
@@ -29,6 +30,8 @@ namespace ButtonStates{
 						handlePointOut((*it));
 					}else if((*it)->getType() == PointEvent::MOVE_EVENT_TYPE){
 						handlePointMove((*it));
+					}else if((*it)->getType() == ZoomPointEvent::ZOOM_EVENT_TYPE){
+						handleZoom((*it));
 					}
 				}
 			}
@@ -45,6 +48,9 @@ namespace ButtonStates{
 	void DragDownState::onEnter(const StateIDType& prevState){
 		DownState::onEnter(prevState);
 
+		getTenUI()->bringUIComponentFront(getUIComponent());
+		
+		// Get rid of the old one
 		getUIComponent()->unregisterHandler(
 				MultiPointEvent::MULTIPOINT_EVENT_TYPE, 
 				dynamic_pointer_cast<DownState>(shared_from_this())
@@ -60,13 +66,49 @@ namespace ButtonStates{
 				&DragDownState::handlePointMove, 
 				dynamic_pointer_cast<DragDownState>(shared_from_this())
 		);
+		
+
+		getUIComponent()->registerHandler(
+				ZoomPointEvent::ZOOM_EVENT_TYPE, 
+				&DragDownState::handleZoom, 
+				dynamic_pointer_cast<DragDownState>(shared_from_this())
+		);
+	}
+	
+
+	void DragDownState::handleZoom(const shared_ptr<Event>& uievent ){
+		shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
+		if(zpe){
+			shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
+			if(zpe){			
+				int cx = getUIComponent()->getCenterX();
+				int cy = getUIComponent()->getCenterY();
+				
+				getUIComponent()->setW( getUIComponent()->getW() + zpe->getZoomAmount() );
+				getUIComponent()->setH( getUIComponent()->getH() + zpe->getZoomAmount() );
+
+				getUIComponent()->setCenterX(cx);
+				getUIComponent()->setCenterY(cy);
+				
+				getUIComponent()->redraw();
+			}		
+		}
 	}
 	
 	
 	void DragDownState::onExit(const StateIDType& nextState){
 		DownState::onExit(nextState);
+		/*getUIComponent()->unregisterHandler(
+				MultiPointEvent::MULTIPOINT_EVENT_TYPE,
+				dynamic_pointer_cast<DragDownState>(shared_from_this())
+		);*/		
 		getUIComponent()->unregisterHandler(
 				PointEvent::MOVE_EVENT_TYPE, 
+				dynamic_pointer_cast<DragDownState>(shared_from_this())
+		);
+
+		getUIComponent()->unregisterHandler(
+				ZoomPointEvent::ZOOM_EVENT_TYPE, 
 				dynamic_pointer_cast<DragDownState>(shared_from_this())
 		);
 	}

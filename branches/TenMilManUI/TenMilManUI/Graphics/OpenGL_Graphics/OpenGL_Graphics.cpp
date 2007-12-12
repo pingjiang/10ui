@@ -417,7 +417,6 @@ namespace TenUI{
 									width = ((double)width/(double)openglImage->getImageWidth())*(double)openglImage->getTextureWidth();
 								}
 							}
-							cout << "width, height" << width << ", " << height << endl;
 							
 							setColor(1.0,1.0,1.0,opacity);
 							

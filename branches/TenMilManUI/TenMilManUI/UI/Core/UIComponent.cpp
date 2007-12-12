@@ -29,13 +29,14 @@ namespace TenUI{
 	}
 	
 	void UIComponent::handleUserInputEvent(const shared_ptr<UserInputEvent>& uievent){
-		shared_ptr<PointEvent>pte = dynamic_pointer_cast<PointEvent>(uievent);
+		/*shared_ptr<PointEvent>pte = dynamic_pointer_cast<PointEvent>(uievent);
 		if(pte){		
 			dispatchEvent(pte);
 		}else{
 			shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
 			dispatchEvent(mpe);
-		}
+		}*/
+		dispatchEvent(uievent);
 	}
 
 	/***********************************/

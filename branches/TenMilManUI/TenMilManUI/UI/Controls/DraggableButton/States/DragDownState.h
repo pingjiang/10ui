@@ -11,6 +11,8 @@
 
 #include <TenMilManUI/UI/Controls/Button/States/DownState.h>
 
+#include <TenMilManUI/UserInputs/Events/ZoomPointEvent.h>
+
 using std::string;
 using std::tr1::shared_ptr;
 using std::tr1::dynamic_pointer_cast;
@@ -28,6 +30,7 @@ namespace ButtonStates{
 
 		void handleMultiPointEvent(const shared_ptr<Event>& uievent );
 		void handlePointMove(const shared_ptr<Event>& uievent );
+		void handleZoom(const shared_ptr<Event>& uievent );
 		
 		virtual void onEnter(const StateIDType& prevState);
 		virtual void onExit(const StateIDType& nextState);

@@ -5,6 +5,7 @@
 #include "DownState.h"
 
 #include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
+#include <TenMilManUI/UserInputs/Events/ZoomPointEvent.h>
 
 #include <iostream>
 using std::cout;
@@ -32,7 +33,9 @@ namespace ButtonStates{
 						handlePointOut((*it));
 					}else if((*it)->getType() == PointEvent::DOWN_EVENT_TYPE){
 						handlePointDown((*it));
-					}	
+					}else if((*it)->getType() == ZoomPointEvent::ZOOM_EVENT_TYPE){
+						handleZoom((*it));
+					}
 				}				
 			}
 		}
@@ -43,8 +46,30 @@ namespace ButtonStates{
 	void HoverState::handlePointOut(const shared_ptr<Event>& uievent ){
 		exitState(UpState::STATE_NAME);
 	}
+	void HoverState::handleZoom(const shared_ptr<Event>& uievent ){
+		shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
+		if(zpe){			
+			int cx = getUIComponent()->getCenterX();
+			int cy = getUIComponent()->getCenterY();
+			
+			getUIComponent()->setW( getUIComponent()->getW() + zpe->getZoomAmount() );
+			getUIComponent()->setH( getUIComponent()->getH() + zpe->getZoomAmount() );
+
+			getUIComponent()->setCenterX(cx);
+			getUIComponent()->setCenterY(cy);
+			
+			getUIComponent()->redraw();
+		}
+	}
 	
 	void HoverState::onEnter(const StateIDType& prevState){
+
+		getUIComponent()->registerHandler(
+				ZoomPointEvent::ZOOM_EVENT_TYPE, 
+				&HoverState::handleZoom , 
+				dynamic_pointer_cast<HoverState>(shared_from_this())
+		);
+		
 		getUIComponent()->registerHandler(
 				PointEvent::OUT_EVENT_TYPE, 
 				&HoverState::handlePointOut , 
@@ -64,6 +89,13 @@ namespace ButtonStates{
 	}
 	
 	void HoverState::onExit(const StateIDType& nextState){
+
+		getUIComponent()->unregisterHandler(
+				ZoomPointEvent::ZOOM_EVENT_TYPE, 
+				dynamic_pointer_cast<HoverState>(shared_from_this())
+		);
+		
+		
 		getUIComponent()->unregisterHandler(
 				PointEvent::OUT_EVENT_TYPE, 
 				dynamic_pointer_cast<HoverState>(shared_from_this())
