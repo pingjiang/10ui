@@ -76,7 +76,7 @@ namespace TenUI {
 		any  					 getStateStyleValue(const StateIDType& stateid, const string& name);
 		void 					 setStateStyleValue(const StateIDType& stateid, const string& name, const any& newvalue);
 		any 					 getStyleValue(const string& name );
-		void 					 setStylevalue(const string& name, const any& newvalue);
+		void 					 setStyleValue(const string& name, const any& newvalue);
 		
 	protected:
 		shared_ptr< StyleSet > 											curStyleSet;

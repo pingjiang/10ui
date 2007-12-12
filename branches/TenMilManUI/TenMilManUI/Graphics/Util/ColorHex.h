@@ -144,6 +144,10 @@ namespace TenUI {
 		void setAlpha(float a){
 			colorv[3] = a;
 		}
+		const ColorHex& multModifyAlpha(float a){
+			colorv[3] *= a;
+			return (*this);
+		}
 		
 		virtual ~ColorHex(){};
 
