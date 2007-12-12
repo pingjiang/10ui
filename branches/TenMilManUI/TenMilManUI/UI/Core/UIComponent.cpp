@@ -84,6 +84,13 @@ namespace TenUI{
 	/***********************************/
 	/*              Style              */
 	/***********************************/
+	void UIComponent::setAllStateStyleValue(const string& name, const any& newvalue){
+		for(unordered_map< string, shared_ptr<StyleSet> >::iterator it = stateStyleSetMap->begin();
+			it != stateStyleSetMap->end();
+			++it){
+			it->second->setValue(name, newvalue);	
+		}
+	}
 	any UIComponent::getStateStyleValue(const StateIDType& stateid, const string& name){
 		unordered_map< string, shared_ptr<StyleSet> >::iterator it = stateStyleSetMap->find(stateid);
 		if( it!=stateStyleSetMap->end() ){

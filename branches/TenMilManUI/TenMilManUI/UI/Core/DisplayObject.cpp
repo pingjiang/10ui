@@ -104,6 +104,14 @@ namespace TenUI {
 		/*****************/
 		/*  Translation  */
 		/*****************/
+			void 	DisplayObject::setCenterX(int cx){
+				x = (2.0*(double)cx)/(scalex*(double)w);
+				centerx = cx;
+			}
+			void 	DisplayObject::setCenterY(int cy){
+				y = (2.0*(double)cy)/(scaley*(double)h);
+				centery = cy;
+			}
 			void 	DisplayObject::setX(int nx){
 				x = nx;
 				calcCenterX();

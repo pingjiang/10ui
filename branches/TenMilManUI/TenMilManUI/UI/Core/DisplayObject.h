@@ -142,6 +142,9 @@ namespace TenUI {
 			/*****************/
 			/*  Translation  */
 			/*****************/
+			virtual void 	setCenterX(int nx);			
+			virtual void 	setCenterY(int ny);
+			
 			virtual void 	setX(int nx);
 			virtual int 	getX();			
 			virtual void 	setY(int ny);

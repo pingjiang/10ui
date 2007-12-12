@@ -1,5 +1,5 @@
-#ifndef BUTTON_H_
-#define BUTTON_H_
+#ifndef DRAGGABLEBUTTON_H_
+#define DRAGGABLEBUTTON_H_
 
 #include <string>
 
@@ -7,6 +7,7 @@
 #include <TenMilManUI/Graphics/Util/ColorHex.h>
 
 #include <TenMilManUI/UI/Managers/StyleManager.h>
+#include <TenMilManUI/UI/Controls/Button/Button.h>
 
 #include <iostream>
 
@@ -15,42 +16,30 @@ using std::endl;
 
 namespace TenUI{
 
-	class Button : public UIComponent {
+	class DraggableButton : public Button {
 	public:
-		Button(int x, int y, unsigned int w=500, unsigned int h=500):UIComponent(x,y,w,h){}
-		virtual ~Button();
+		DraggableButton(int x, int y, unsigned int w=500, unsigned int h=500):Button(x,y,w,h){}
+		virtual ~DraggableButton();
 		
 		// UIComponent Identification
 		virtual string getUIComponentName(){
-			return "Button";
+			return "DraggableButton";
 		}
 
 	/***********************************/
 	/*        	  Properties           */
 	/***********************************/
 	protected:
-		string label;
-		const string& 	getLabel(){return label;}
-		void 			setLabel(const string& newLabel){label=newLabel;}
 			
 	/***********************************/
 	/*          State Machine  		   */
 	/***********************************/
 	protected:
-		virtual void 	initStates();
+		virtual void initStates();
 		
 	/***********************************/
 	/*        	    Style  			   */
 	/***********************************/
-	public:
-		static const string BACKGROUND_IMAGE;
-		static const string FILL_COLORS_STYLE;
-		static const string BORDER_COLORS_STYLE;
-		static const string BORDER_SIZE_STYLE;
-		static const string LABEL_COLOR_STYLE;
-		static const string LABEL_ALIGN_STYLE;
-		static const string CORNER_RADIUS_STYLE;
-		
 	protected:
 		virtual void initStyles();
 
@@ -58,9 +47,8 @@ namespace TenUI{
 	/*        Game Loop Methods        */
 	/***********************************/
 	public:
-		virtual void drawSelf();
 					
 	};
 }
 
-#endif /*BUTTON_H_*/
+#endif /*DRAGGABLEBUTTON_H_*/
