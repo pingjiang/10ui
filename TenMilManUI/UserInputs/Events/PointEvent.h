@@ -28,7 +28,7 @@ namespace TenUI {
 		shared_ptr<UIComponent> target;
 		
 	public:
-		PointEvent(const string& _type, unsigned long _uid, unsigned long _uiid, unsigned long _pointid, int _x, int _y, bool _pressed, const shared_ptr<UIComponent>& _target);
+		PointEvent(const string& _type, unsigned long _uid, unsigned long _uiid, unsigned long _pointid, int _x, int _y, bool _pressed, const shared_ptr<UIComponent>& _target = shared_ptr<UIComponent>());
 		virtual ~PointEvent();
 	
 		int getX(){

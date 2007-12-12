@@ -71,7 +71,6 @@ namespace TenUI {
 	/*           Draw Methods          */
 	/***********************************/
 	void DisplayObjectContainer::draw(){
-
 		if( getTenUIGraphics()->getRenderingMode() == IGraphicsEnums::DISPLAY ){
 			if( _redraw ){
 				glNewList(displayListID,GL_COMPILE_AND_EXECUTE);
