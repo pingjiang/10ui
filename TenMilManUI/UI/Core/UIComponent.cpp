@@ -100,7 +100,7 @@ namespace TenUI{
 	any UIComponent::getStyleValue(const string& name){
 		return curStyleSet->getValue(name);
 	}
-	void UIComponent::setStylevalue(const string& name, const any& newvalue){
+	void UIComponent::setStyleValue(const string& name, const any& newvalue){
 		return curStyleSet->setValue(name, newvalue);
 	}	
 	void UIComponent::initStyles(){

@@ -88,7 +88,7 @@ namespace TenUI{
 								int x, int y, 
 								float opacity = 1.0,
 								unsigned int width=0, unsigned int height=0) = 0;
-		virtual const IImage* loadImage(const string& imageFile) = 0;
+		virtual IImage* loadImage(const string& imageFile) = 0;
 
 		/******************************/
 		/*         Text Methods       */

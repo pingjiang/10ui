@@ -401,29 +401,44 @@ namespace TenUI{
 													int x, int y, 
 													float opacity,
 													unsigned int width, unsigned int height){
-						OpenGL_Image* openglImage = (OpenGL_Image*) img;
-						if(height==0){
-							height = openglImage->getImageHeight();
+						if(img != 0){
+							OpenGL_Image* openglImage = (OpenGL_Image*) img;
+							if(height==0){
+								height = (renderMode == IGraphicsEnums::DISPLAY)?openglImage->getTextureHeight():openglImage->getImageHeight();
+							}else{
+								if(renderMode == IGraphicsEnums::DISPLAY){
+									height = (height/openglImage->getImageHeight())*openglImage->getTextureHeight();
+								}
+							}
+							if(width==0){
+								width = (renderMode == IGraphicsEnums::DISPLAY)?openglImage->getTextureWidth():openglImage->getImageWidth();
+							}else{
+								if(renderMode == IGraphicsEnums::DISPLAY){
+									width = (width/openglImage->getImageWidth())*openglImage->getTextureWidth();
+								}
+							}
+							
+							setColor(1.0,1.0,1.0,opacity);
+							
+							if(renderMode == IGraphicsEnums::DISPLAY) { 
+								glEnable(GL_TEXTURE_2D);
+								glBindTexture(GL_TEXTURE_2D, openglImage->getTextureID());
+							}
+								// draw rectangle
+								glBegin(GL_QUADS);		                
+									glTexCoord2i(0,0); glVertex2d(x,y);
+									glTexCoord2i(0,1); glVertex2d(x,y+height);
+									glTexCoord2i(1,1); glVertex2d(x+width,y+height);
+									glTexCoord2i(1,0); glVertex2d(x+width,y);
+								glEnd();
+	
+							if(renderMode == IGraphicsEnums::DISPLAY) { 
+								glBindTexture(GL_TEXTURE_2D, 0);
+								glDisable(GL_TEXTURE_2D);		
+							}
 						}
-						if(width==0){
-							width = openglImage->getImageWidth();
-						}									
-						
-						glEnable(GL_TEXTURE_2D);
-						glBindTexture(GL_TEXTURE_2D, openglImage->getTextureID());
-									
-						// draw rectangle
-						glBegin(GL_QUADS);		                
-							glTexCoord2i(0,0); glVertex2d(x,y);
-							glTexCoord2i(0,1); glVertex2d(x,y+height);
-							glTexCoord2i(1,1); glVertex2d(x+width,y+height);
-							glTexCoord2i(1,0); glVertex2d(x+width,y);
-						glEnd();
-						
-						glBindTexture(GL_TEXTURE_2D, 0);
-						glDisable(GL_TEXTURE_2D);			
 					}
-					const IImage* OpenGL_Graphics::loadImage(const string& imageFile){
+					IImage* OpenGL_Graphics::loadImage(const string& imageFile){
 						return OpenGL_Image::loadFromFile(imageFile);
 					}
 			

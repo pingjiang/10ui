@@ -1,12 +1,11 @@
-#include "Button.h"
-#include "States/UpState.h"
-#include "States/DownState.h"
-#include "States/HoverState.h"
+#include "Canvas.h"
 
 #include <TenMilManUI/TenUI_Globals.h>
 #include <TenMilManUI/Graphics/Util/ColorHex.h>
 
 #include <TenMilManUI/UI/Style/Styles/IntStyle.h>
+#include <TenMilManUI/UI/Style/Styles/ImageStyle.h>
+#include <TenMilManUI/UI/Style/Styles/StringStyle.h>
 #include <TenMilManUI/UI/Style/Styles/ColorStyle.h>
 #include <TenMilManUI/UI/Style/StyleDeclaration.h>
 
@@ -17,12 +16,12 @@ using std::tr1::dynamic_pointer_cast;
 
 namespace TenUI{
 
-	Button::~Button(){}
+	Canvas::~Canvas(){}
 	
 	/***********************************/
 	/*          State Machine  		   */
 	/***********************************/
-	void Button::initStates(){
+	/*void Canvas::initStates(){
 		UIComponent::initStates();
 		
 		stateMachine->registerState(
@@ -48,23 +47,34 @@ namespace TenUI{
 						)
 				), 
 				false);
-	}
+	}*/
 	
 	/***********************************/
 	/*              Style              */
 	/***********************************/
-
-	const string Button::FILL_COLORS_STYLE("fillColors");
-	const string Button::BORDER_COLORS_STYLE("borderColors");
-	const string Button::BORDER_SIZE_STYLE("borderSize");
-	const string Button::LABEL_COLOR_STYLE("labelColor");
-	const string Button::LABEL_ALIGN_STYLE("labelAlign");
-	const string Button::CORNER_RADIUS_STYLE("cornerRadius");
+	const string Canvas::BACKGROUND_IMAGE("bgImage");
+	const string Canvas::BACKGROUND_COLOR("bgColor");
 		
-	void Button::initStyles(){
+	void Canvas::initStyles(){
 		UIComponent::initStyles();
-		StyleManager::instance()->registerUIComponent( dynamic_pointer_cast<UIComponent>(shared_from_this()), Button::getUIComponentName(), UIComponent::getUIComponentName() );
+		StyleManager::instance()->registerUIComponent( dynamic_pointer_cast<UIComponent>(shared_from_this()), Canvas::getUIComponentName(), UIComponent::getUIComponentName() );
+				
+		StyleManager::instance()->addStyleDeclaration(
+						Canvas::getUIComponentName(), 
+						StyleDeclaration::create(
+								BACKGROUND_IMAGE,
+								shared_ptr<ImageStyle>(new ImageStyle(""))
+						)
+		);
 
+		StyleManager::instance()->addStyleDeclaration(
+						Canvas::getUIComponentName(), 
+						StyleDeclaration::create(
+								BACKGROUND_COLOR,
+								shared_ptr<ColorStyle>(new ColorStyle("#800"))
+						)
+		);
+/*
 		StyleManager::instance()->addStyleDeclaration(
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
@@ -103,12 +113,12 @@ namespace TenUI{
 						LABEL_COLOR_STYLE,
 						shared_ptr<ColorStyle>(new ColorStyle("#000"))
 				)
-		);
+		);*/
 			
 		
 
 		/** Hover State Styling **/
-			StyleManager::instance()->setStateStyleDeclaration(
+			/*StyleManager::instance()->setStateStyleDeclaration(
 					Button::getUIComponentName(),
 					ButtonStates::HoverState::STATE_NAME,
 					StyleDeclaration::create(
@@ -123,10 +133,10 @@ namespace TenUI{
 							FILL_COLORS_STYLE,
 							shared_ptr<ColorStyle>(new ColorStyle("#B00"))
 					)
-			);
+			);*/
 
 		/** Down State Styling **/
-			StyleManager::instance()->setStateStyleDeclaration(
+			/*StyleManager::instance()->setStateStyleDeclaration(
 					Button::getUIComponentName(),
 					ButtonStates::DownState::STATE_NAME,
 					StyleDeclaration::create(
@@ -141,21 +151,31 @@ namespace TenUI{
 							FILL_COLORS_STYLE,
 							shared_ptr<ColorStyle>(new ColorStyle("#F00"))
 					)
-			);
+			);*/
+		
 	}
 	
 	/***********************************/
 	/*           Draw Methods          */
 	/***********************************/
-	void Button::drawSelf(){
-		getTenUIGraphics()->drawRoundedRectangle(	left,bottom, 
-													w,h,
-													any_cast<int>(curStyleSet->getValue(CORNER_RADIUS_STYLE)),
-													(any_cast<ColorHex>(curStyleSet->getValue(FILL_COLORS_STYLE))).multModifyAlpha(opacity), 
-													any_cast<int>(curStyleSet->getValue(BORDER_SIZE_STYLE)),
-													(any_cast<ColorHex>(curStyleSet->getValue(BORDER_COLORS_STYLE)).multModifyAlpha(opacity)) 
+	void Canvas::drawSelf(){
+		getTenUIGraphics()->drawRoundedRectangle(	-50,-50, 
+													100,100,
+													any_cast<int>(5),
+													ColorHex("#FFFFFF"), 
+													any_cast<int>(2),
+													ColorHex("#00FF00")
 												);
-		
+
+		IImage* bgimage = any_cast<IImage*>(curStyleSet->getValue(BACKGROUND_IMAGE));
+		if(bgimage != 0){
+			getTenUIGraphics()->drawImage(bgimage,0,0,opacity,0,0);
+		}
+	}
+	
+	void Canvas::init(){
+		UIComponent::init();
+		//image = getTenUIGraphics()->loadImage("resources/images/myScreenShot.png");
 	}
 
 
