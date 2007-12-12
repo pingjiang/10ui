@@ -3,6 +3,7 @@
 
 #include <TenMilManUI/UI/Core/UIComponent.h>
 #include <TenMilManUI/UI/Controls/Button/Button.h>
+#include <TenMilManUI/UI/Controls/DraggableButton/DraggableButton.h>
 #include <TenMilManUI/UI/Containers/Canvas/Canvas.h>
 
 #include <TenMilManUI/UserInputs/SDLMouseInput.h>
@@ -22,7 +23,7 @@ namespace TenUI {
 	void UIControls_TestApp::init() throw(int){
 		//prevObjID = 0;
 		
-		int strokeSize = 3;
+		/*int strokeSize = 3;
 		int buttonSize = 128;
 		for(unsigned int i = 0; i < 1024; i+=buttonSize){
             for(unsigned int j = 0; j < 768; j+=buttonSize){
@@ -40,7 +41,22 @@ namespace TenUI {
 		shared_ptr<Canvas> newCanvas(new Canvas(0,0,0,0));
 		newCanvas->setOpacity(.25);
     	getTenUI()->addUIComponent( newCanvas );
-		newCanvas->setStyleValue(Canvas::BACKGROUND_IMAGE, string("resources/images/myScreenShot.png"));
+		newCanvas->setStyleValue(Canvas::BACKGROUND_IMAGE, string("resources/images/myScreenShot.png"));*/
+
+		shared_ptr<DraggableButton> newButton(
+				new DraggableButton(100,100, 128,128)
+		);
+		getTenUI()->addUIComponent( 
+    			newButton
+    	);
+		newButton->setAllStateStyleValue(DraggableButton::BACKGROUND_IMAGE, string("resources/images/myScreenShot.png"));
+		
+
+		newButton = shared_ptr<DraggableButton> (new DraggableButton(100,100, 128,128));
+		getTenUI()->addUIComponent( 
+    			newButton
+    	);
+		//newButton->setAllStateStyleValue(DraggableButton::BACKGROUND_IMAGE, string("resources/images/myScreenShot.png"));
 	}
 	
 	void UIControls_TestApp::update_frame() throw(APPEXCEPTIONS) {		
