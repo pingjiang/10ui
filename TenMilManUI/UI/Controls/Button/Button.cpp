@@ -6,6 +6,7 @@
 #include <TenMilManUI/TenUI_Globals.h>
 #include <TenMilManUI/Graphics/Util/ColorHex.h>
 
+#include <TenMilManUI/UI/Style/Styles/ImageStyle.h>
 #include <TenMilManUI/UI/Style/Styles/IntStyle.h>
 #include <TenMilManUI/UI/Style/Styles/ColorStyle.h>
 #include <TenMilManUI/UI/Style/StyleDeclaration.h>
@@ -53,7 +54,7 @@ namespace TenUI{
 	/***********************************/
 	/*              Style              */
 	/***********************************/
-
+	const string Button::BACKGROUND_IMAGE("bgImage");
 	const string Button::FILL_COLORS_STYLE("fillColors");
 	const string Button::BORDER_COLORS_STYLE("borderColors");
 	const string Button::BORDER_SIZE_STYLE("borderSize");
@@ -69,9 +70,18 @@ namespace TenUI{
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
 						CORNER_RADIUS_STYLE,
-						shared_ptr<IntStyle>(new IntStyle(20))
+						shared_ptr<IntStyle>(new IntStyle(5))
 				)
 		);
+		
+		StyleManager::instance()->addStyleDeclaration(
+						Button::getUIComponentName(), 
+						StyleDeclaration::create(
+								BACKGROUND_IMAGE,
+								shared_ptr<ImageStyle>(new ImageStyle(""))
+						)
+		);
+
 		
 		StyleManager::instance()->addStyleDeclaration(
 				Button::getUIComponentName(), 
@@ -85,7 +95,7 @@ namespace TenUI{
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
 						BORDER_COLORS_STYLE,
-						shared_ptr<ColorStyle>(new ColorStyle("#D00"))
+						shared_ptr<ColorStyle>(new ColorStyle(ColorHex(1.0,0.0,0.0,0.0)))
 				)
 		);
 		
@@ -93,7 +103,7 @@ namespace TenUI{
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
 						BORDER_SIZE_STYLE,
-						shared_ptr<IntStyle>(new IntStyle(2))
+						shared_ptr<IntStyle>(new IntStyle(6))
 				)
 		);
 		
@@ -112,16 +122,16 @@ namespace TenUI{
 					Button::getUIComponentName(),
 					ButtonStates::HoverState::STATE_NAME,
 					StyleDeclaration::create(
-							CORNER_RADIUS_STYLE,
-							shared_ptr<IntStyle>(new IntStyle(10))
+							FILL_COLORS_STYLE,
+							shared_ptr<ColorStyle>(new ColorStyle(ColorHex(1.0,0,0,.5)))
 					)
 			);
 			StyleManager::instance()->setStateStyleDeclaration(
 					Button::getUIComponentName(),
 					ButtonStates::HoverState::STATE_NAME,
 					StyleDeclaration::create(
-							FILL_COLORS_STYLE,
-							shared_ptr<ColorStyle>(new ColorStyle("#B00"))
+							BORDER_COLORS_STYLE,
+							shared_ptr<ColorStyle>(new ColorStyle(ColorHex(1.0,0,0,.5)))
 					)
 			);
 
@@ -130,32 +140,39 @@ namespace TenUI{
 					Button::getUIComponentName(),
 					ButtonStates::DownState::STATE_NAME,
 					StyleDeclaration::create(
-							CORNER_RADIUS_STYLE,
-							shared_ptr<IntStyle>(new IntStyle(0))
+							FILL_COLORS_STYLE,
+							shared_ptr<ColorStyle>(new ColorStyle(ColorHex(1.0,0,0,1)))
 					)
 			);
+
 			StyleManager::instance()->setStateStyleDeclaration(
 					Button::getUIComponentName(),
 					ButtonStates::DownState::STATE_NAME,
 					StyleDeclaration::create(
-							FILL_COLORS_STYLE,
-							shared_ptr<ColorStyle>(new ColorStyle("#F00"))
+							BORDER_COLORS_STYLE,
+							shared_ptr<ColorStyle>(new ColorStyle(ColorHex(1.0,0,0,1)))
 					)
 			);
+
 	}
 	
 	/***********************************/
 	/*           Draw Methods          */
 	/***********************************/
 	void Button::drawSelf(){
+		int strokeSize = any_cast<int>(curStyleSet->getValue(BORDER_SIZE_STYLE));
 		getTenUIGraphics()->drawRoundedRectangle(	left,bottom, 
 													w,h,
 													any_cast<int>(curStyleSet->getValue(CORNER_RADIUS_STYLE)),
 													(any_cast<ColorHex>(curStyleSet->getValue(FILL_COLORS_STYLE))).multModifyAlpha(opacity), 
-													any_cast<int>(curStyleSet->getValue(BORDER_SIZE_STYLE)),
+													strokeSize,
 													(any_cast<ColorHex>(curStyleSet->getValue(BORDER_COLORS_STYLE)).multModifyAlpha(opacity)) 
 												);
 		
+		IImage* bgimage = any_cast<IImage*>(curStyleSet->getValue(BACKGROUND_IMAGE));
+		if(bgimage != 0){
+			getTenUIGraphics()->drawImage(bgimage,left+1,bottom+1,.9,w,h);
+		}
 	}
 
 

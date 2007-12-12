@@ -73,6 +73,7 @@ namespace TenUI {
 	/*        	    Style  			   */
 	/***********************************/
 	public:
+		void 					 setAllStateStyleValue(const string& name, const any& newvalue);
 		any  					 getStateStyleValue(const StateIDType& stateid, const string& name);
 		void 					 setStateStyleValue(const StateIDType& stateid, const string& name, const any& newvalue);
 		any 					 getStyleValue(const string& name );
