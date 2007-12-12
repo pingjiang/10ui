@@ -22,13 +22,13 @@ namespace TenUI {
 		static const string DOWN_EVENT_TYPE;
 		
 	protected:	
-		shared_ptr<UIComponent> target;
 		unsigned long pointid;
 		int x,y;
 		bool pressed;
+		shared_ptr<UIComponent> target;
 		
 	public:
-		PointEvent(const string& _type, unsigned long _uid, unsigned long _uiid, unsigned long _pointid, int _x, int _y, bool _pressed);
+		PointEvent(const string& _type, unsigned long _uid, unsigned long _uiid, unsigned long _pointid, int _x, int _y, bool _pressed, const shared_ptr<UIComponent>& _target);
 		virtual ~PointEvent();
 	
 		int getX(){
@@ -44,9 +44,12 @@ namespace TenUI {
 		unsigned long getPointID(){
 			return pointid;
 		}
-		
+
 		const shared_ptr<UIComponent>& getTarget(){
 			return target;
+		}
+		void setTarget(const shared_ptr<UIComponent>& newTarget){
+			target = newTarget;
 		}
 	};
 

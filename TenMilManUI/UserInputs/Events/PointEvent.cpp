@@ -8,8 +8,15 @@ namespace TenUI{
 	const string PointEvent::UP_EVENT_TYPE =		"PointUp";
 	const string PointEvent::DOWN_EVENT_TYPE =		"PointDown";
 	
-	PointEvent::PointEvent(const string& _type, unsigned long _uid, unsigned long _uiid, unsigned long _pointid, int _x, int _y, bool _pressed) 
-		: UserInputEvent(_type,_uid, _uiid), pointid(_pointid),x(_x), y(_y), pressed(_pressed){}
+	PointEvent::PointEvent(	const string& _type, 
+				unsigned long _uid, 
+				unsigned long _uiid, 
+				unsigned long _pointid, 
+				int _x, 
+				int _y, 
+				bool _pressed, 
+				const shared_ptr<UIComponent>& _target)
+		: UserInputEvent(_type,_uid, _uiid), pointid(_pointid),x(_x), y(_y), pressed(_pressed), target(_target){}
 	
 	PointEvent::~PointEvent(){}
 

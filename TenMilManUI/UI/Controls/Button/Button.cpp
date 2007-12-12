@@ -72,44 +72,12 @@ namespace TenUI{
 						shared_ptr<IntStyle>(new IntStyle(20))
 				)
 		);
-		StyleManager::instance()->setStateStyleDeclaration(
-				Button::getUIComponentName(),
-				ButtonStates::HoverState::STATE_NAME,
-				StyleDeclaration::create(
-						CORNER_RADIUS_STYLE,
-						shared_ptr<IntStyle>(new IntStyle(10))
-				)
-		);
-		StyleManager::instance()->setStateStyleDeclaration(
-				Button::getUIComponentName(),
-				ButtonStates::DownState::STATE_NAME,
-				StyleDeclaration::create(
-						CORNER_RADIUS_STYLE,
-						shared_ptr<IntStyle>(new IntStyle(0))
-				)
-		);
-
+		
 		StyleManager::instance()->addStyleDeclaration(
 				Button::getUIComponentName(), 
 				StyleDeclaration::create(
 						FILL_COLORS_STYLE,
 						shared_ptr<ColorStyle>(new ColorStyle("#800"))
-				)
-		);
-		StyleManager::instance()->setStateStyleDeclaration(
-				Button::getUIComponentName(),
-				ButtonStates::HoverState::STATE_NAME,
-				StyleDeclaration::create(
-						FILL_COLORS_STYLE,
-						shared_ptr<ColorStyle>(new ColorStyle("#B00"))
-				)
-		);
-		StyleManager::instance()->setStateStyleDeclaration(
-				Button::getUIComponentName(),
-				ButtonStates::DownState::STATE_NAME,
-				StyleDeclaration::create(
-						FILL_COLORS_STYLE,
-						shared_ptr<ColorStyle>(new ColorStyle("#F00"))
 				)
 		);
 		
@@ -137,6 +105,44 @@ namespace TenUI{
 				)
 		);
 			
+		
+
+		/** Hover State Styling **/
+			StyleManager::instance()->setStateStyleDeclaration(
+					Button::getUIComponentName(),
+					ButtonStates::HoverState::STATE_NAME,
+					StyleDeclaration::create(
+							CORNER_RADIUS_STYLE,
+							shared_ptr<IntStyle>(new IntStyle(10))
+					)
+			);
+			StyleManager::instance()->setStateStyleDeclaration(
+					Button::getUIComponentName(),
+					ButtonStates::HoverState::STATE_NAME,
+					StyleDeclaration::create(
+							FILL_COLORS_STYLE,
+							shared_ptr<ColorStyle>(new ColorStyle("#B00"))
+					)
+			);
+
+		/** Down State Styling **/
+			StyleManager::instance()->setStateStyleDeclaration(
+					Button::getUIComponentName(),
+					ButtonStates::DownState::STATE_NAME,
+					StyleDeclaration::create(
+							CORNER_RADIUS_STYLE,
+							shared_ptr<IntStyle>(new IntStyle(0))
+					)
+			);
+			StyleManager::instance()->setStateStyleDeclaration(
+					Button::getUIComponentName(),
+					ButtonStates::DownState::STATE_NAME,
+					StyleDeclaration::create(
+							FILL_COLORS_STYLE,
+							shared_ptr<ColorStyle>(new ColorStyle("#F00"))
+					)
+			);
+		
 	}
 	
 	/***********************************/

@@ -60,66 +60,129 @@ namespace TenUI {
 		return shared_ptr<UserInput>();
 	}
 	
+	shared_ptr< vector< shared_ptr<PointEvent> > > InputManager::handlePointEvent(const shared_ptr<PointEvent> &pointEvent){
+		shared_ptr< vector< shared_ptr<PointEvent> > > pointEvents(new vector< shared_ptr<PointEvent> >());
+		{
+		shared_ptr<UIComponent> curTarget = getTenUI()->getUIComponentsAt(pointEvent->getX(), pointEvent->getY());
+					
+		// Send In and Out Events
+		if( pointEvent->getType() == PointEvent::MOVE_EVENT_TYPE ){
+			
+			unordered_map< unsigned long, unsigned long >::iterator testPrevit = (UID_PointID_UIComp_Map[pointEvent->getUserID()]).find(pointEvent->getPointID());
+			
+			
+			unsigned long prevTargetID = (testPrevit != (UID_PointID_UIComp_Map[pointEvent->getUserID()]).end())?testPrevit->second:0;
+			if( ((prevTargetID == 0) ^ (!curTarget)) 	||
+				((curTarget) && (prevTargetID != curTarget->getObjectID())) ){
+				
+				// Send Out Event
+				if(prevTargetID != 0){
+					
+					if( getTenUI()->getUIComponent(prevTargetID) ){
+						pointEvents->push_back(
+								shared_ptr<PointEvent>(
+										new PointEvent(	PointEvent::OUT_EVENT_TYPE,
+														pointEvent->getUserID(), 
+														pointEvent->getUserInputID(), 
+														pointEvent->getPointID(),
+														pointEvent->getX(),
+														pointEvent->getY(),
+														pointEvent->getPressed(),
+														getTenUI()->getUIComponent(prevTargetID)
+										)
+								)
+						);
+					}
+
+				}
+				
+				// Send In Event
+				if( curTarget && curTarget->getObjectID() != 0 ){
+
+					pointEvents->push_back(
+							shared_ptr<PointEvent>(
+									new PointEvent(	PointEvent::IN_EVENT_TYPE,
+													pointEvent->getUserID(), 
+													pointEvent->getUserInputID(), 
+													pointEvent->getPointID(),
+													pointEvent->getX(),
+													pointEvent->getY(),
+													pointEvent->getPressed(),
+													curTarget
+									)
+							)
+					);
+					
+									
+				}
+				
+				(UID_PointID_UIComp_Map[pointEvent->getUserID()])[pointEvent->getPointID()] = (curTarget)?curTarget->getObjectID():0;
+				
+			}
+			
+			
+		}
+		if( curTarget ){
+			pointEvent->setTarget(curTarget);
+			pointEvents->push_back(pointEvent);
+		}
+							
+	}
+		
+		
+						
+		
+		return pointEvents;
+	}
+	
 	void InputManager::handleInputEvent(const shared_ptr<Event> &evt){
 		shared_ptr<PointEvent> pointEvent = dynamic_pointer_cast<PointEvent>(evt);
 		if( pointEvent ){
-			shared_ptr<UIComponent> curTarget = getTenUI()->getUIComponentsAt(pointEvent->getX(), pointEvent->getY());
-						
-			// Send In and Out Events
-			if( pointEvent->getType() == PointEvent::MOVE_EVENT_TYPE ){
-				
-				unsigned long prevTargetID = (UID_PointID_UIComp_Map[pointEvent->getUserID()])[pointEvent->getPointID()];
-				if( ((prevTargetID == 0) ^ (!curTarget)) 	||
-					((curTarget) && (prevTargetID != curTarget->getObjectID())) ){
-					
-					// Send Out Event
-					if(prevTargetID != 0){
-
-						//cout << "Send Out Event" << endl;
-						getTenUI()->getUIComponent(prevTargetID)->handleUserInputEvent(
-								shared_ptr<PointEvent>(new PointEvent(	PointEvent::OUT_EVENT_TYPE,
-																		pointEvent->getUserID(), 
-																		pointEvent->getUserInputID(), 
-																		pointEvent->getPointID(),
-																		pointEvent->getX(),
-																		pointEvent->getY(),
-																		pointEvent->getPressed()
-																     )
-								)
-						);	
-					}
-					
-					// Send In Event
-					if( curTarget && curTarget->getObjectID() != 0 ){
-
-						//cout << "Send In Event" << endl;
-						curTarget->handleUserInputEvent(
-								shared_ptr<PointEvent>(new PointEvent(	PointEvent::IN_EVENT_TYPE,
-																		pointEvent->getUserID(), 
-																		pointEvent->getUserInputID(), 
-																		pointEvent->getPointID(),
-																		pointEvent->getX(),
-																		pointEvent->getY(),
-																		pointEvent->getPressed()
-																     )
-								)
-						);	
-					}
-					
-					(UID_PointID_UIComp_Map[pointEvent->getUserID()])[pointEvent->getPointID()] = (curTarget)?curTarget->getObjectID():0;
-				}
-				
-			}		
-			
-			if(curTarget){
-				curTarget->handleUserInputEvent(pointEvent);
-			}
-			
+			shared_ptr< vector< shared_ptr<PointEvent> > > eventsToDispatch = handlePointEvent(pointEvent);
+			for( vector< shared_ptr<PointEvent> >::iterator it = eventsToDispatch->begin();
+				 it != eventsToDispatch->end();
+				 ++it){
+				(*it)->getTarget()->handleUserInputEvent((*it));
+			}			
 		}else{
 			/*shared_ptr<MultiPointEvent> multiEvent = dynamic_pointer_cast<MultiPointEvent>(evt);
 			if( multiEvent ){
+				unordered_map<unsigned long, unordered_map<unsigned long, shared_ptr<MultiPointEvent> > > userCompEvMap;
+				
+				for(MultiPointEvent::PointEventSetType::iterator it = multiEvent->getPointEvents()->begin();
+					 it != multiEvent->getPointEvents()->end();
+					 ++it){
+					
+					shared_ptr< vector< shared_ptr<PointEvent> > > pointEvents = handlePointEvent( (*it) );
+					
+					for(vector< shared_ptr<PointEvent> >::iterator pit = pointEvents->begin();
+						pit != pointEvents->end();
+						++pit){
+						
+						shared_ptr<MultiPointEvent> mpe;
+						if( !userCompEvMap[(*pit)->getUserID()][(*pit)->getTarget()->getObjectID()] ){
+							mpe = shared_ptr<MultiPointEvent>(new MultiPointEvent(multiEvent->getUserID(), multiEvent->getUserInputID()));
+							userCompEvMap[(*pit)->getUserID()][(*pit)->getTarget()->getObjectID()] = mpe;
+						}else{
+							mpe = userCompEvMap[(*pit)->getUserID()][(*pit)->getTarget()->getObjectID()];
+						}
+						mpe->addPointEvent((*pit)); 
+					}
+				}
+				
+				for(unordered_map<unsigned long, unordered_map<unsigned long, MultiPointEvent > >::iterator it = userCompEvMap.begin();
+					it != userCompEvMap.end();
+					++it){
+					//unsigned long userid = it->first;
+					
+					for(unordered_map<unsigned long, shared_ptr<MultiPointEvent> >::iterator mit = it.second.begin();
+						mit != it.second.end();
+						++mit){
+						it->second->getTarget().handleUserInputEvent(it->second);
+					}
+				}
+					
 			}*/
-			cout << "TODO: Handle MultiPointEvent" << endl; //TODO Handle MultiPointEvent
 		}
 	}
 	
