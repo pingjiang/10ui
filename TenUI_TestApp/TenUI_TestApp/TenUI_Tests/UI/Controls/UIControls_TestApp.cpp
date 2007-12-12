@@ -28,14 +28,13 @@ namespace TenUI {
             	getTenUI()->addUIComponent( 
             			shared_ptr<Button>(
             					new Button(i+strokeSize, j+strokeSize, buttonSize-strokeSize, buttonSize-strokeSize)
-            			) 
+            			)
             	);
             }
         }
 	}
 	
-	void UIControls_TestApp::update_frame() throw(APPEXCEPTIONS) {
-		
+	void UIControls_TestApp::update_frame() throw(APPEXCEPTIONS) {		
 		/*shared_ptr< UIComponent > uicomp = getTenUI()->getUIComponentsAt(getTenUI()->getUserInput()->getX(),getTenUI()->getUserInput()->getY());
 		if( uicomp != NULL ){
 			if(prevObjID != uicomp->getObjectID()){
