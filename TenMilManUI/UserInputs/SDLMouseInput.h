@@ -11,6 +11,7 @@
 #include "UserInput.h"
 #include <TenMilManUI/TenUI_Globals.h>
 #include <TenMilManUI/UserInputs/Events/PointEvent.h>
+#include <TenMilManUI/UserInputs/Events/ZoomPointEvent.h>
 #include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
 #include <TenMilManUI/UI/Core/UIComponent.h>
 
@@ -29,6 +30,7 @@ namespace TenUI {
 			addEventType(PointEvent::DOWN_EVENT_TYPE);
 			addEventType(PointEvent::MOVE_EVENT_TYPE);
 			addEventType(PointEvent::UP_EVENT_TYPE);
+			addEventType(ZoomPointEvent::ZOOM_EVENT_TYPE);
 			addEventType(MultiPointEvent::MULTIPOINT_EVENT_TYPE);
 			
 			pressed = false;
@@ -39,6 +41,9 @@ namespace TenUI {
 		}
 		
 		virtual bool update(){
+			bool zoomin = false;
+			bool zoomout = false;
+			
 			string evtType = "";
 			dx = 0; dy = 0; dp = false;
 			
@@ -50,7 +55,7 @@ namespace TenUI {
 				//cout << (event.active.gain == 0 ? "EXITING" : "ENTERING") << " WINDOW\n";
 			}
 			
-			// Handle Mouse
+			
 			if( event.type == SDL_MOUSEMOTION )	{
 				dx = event.button.x - x;
 				x = x + dx;
@@ -59,15 +64,23 @@ namespace TenUI {
 				y = y + dy;
 				
 				evtType = PointEvent::MOVE_EVENT_TYPE;
-			}else if( event.type == SDL_MOUSEBUTTONDOWN && !pressed) {
-				dp = true;
-				pressed = true;
-				evtType = PointEvent::DOWN_EVENT_TYPE;
-			}else if( event.type == SDL_MOUSEBUTTONUP && pressed) {
-				dp = true;
-				pressed = false;
-				evtType = PointEvent::UP_EVENT_TYPE;
-			
+			}else if( event.type == SDL_MOUSEBUTTONDOWN ) {
+				if(event.button.button == 1 && !pressed){
+					dp = true;
+					pressed = true;
+					evtType = PointEvent::DOWN_EVENT_TYPE;
+
+				}else if(event.button.button == 4){
+					zoomin = true;
+				}else if(event.button.button == 5){
+					zoomout = true;
+				}
+			}else if( event.type == SDL_MOUSEBUTTONUP ) {
+				if(event.button.button == 1 && pressed){
+					dp = true;
+					pressed = false;
+					evtType = PointEvent::UP_EVENT_TYPE;
+				}
 			// Test For Quit
 			}else if( event.type == SDL_KEYDOWN ){
 				if( event.key.keysym.sym == SDLK_ESCAPE)
@@ -78,12 +91,23 @@ namespace TenUI {
 		    	quit = true;
 		    }  
 			
-			if( quit ){		
-				dispatchEvent(shared_ptr<UserInputEvent>(new UserInputEvent(UserInputEvent::QUIT_EVENT_TYPE, uid, uiid)));
+			if(zoomin){
+
+				shared_ptr<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
+				mpe->addPointEvent(shared_ptr<ZoomPointEvent>(new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , uid, uiid,0,5, x,y,shared_ptr<UIComponent>() )));
+				dispatchEvent(mpe);
+			}else if(zoomout){
+
+				shared_ptr<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
+				mpe->addPointEvent(shared_ptr<ZoomPointEvent>(new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , uid, uiid,0,-5, x,y,shared_ptr<UIComponent>() )));
+				dispatchEvent(mpe);
+				//dispatchEvent(shared_ptr<ZoomPointEvent>(new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , uid, uiid,0,-5, x,y,shared_ptr<UIComponent>() )));
 			}else if(evtType != "" && (dx != 0 || dy != 0 || dp)){
 				shared_ptr<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
 				mpe->addPointEvent(shared_ptr<PointEvent>(new PointEvent(evtType, uid, uiid,0,x,y,pressed, shared_ptr<UIComponent>() )));
 				dispatchEvent(mpe);
+			}else if( quit ){		
+				dispatchEvent(shared_ptr<UserInputEvent>(new UserInputEvent(UserInputEvent::QUIT_EVENT_TYPE, uid, uiid)));
 			}	
 			
 			return true;

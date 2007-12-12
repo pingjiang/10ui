@@ -25,7 +25,7 @@ namespace ButtonStates{
 		static const string STATE_NAME;
 		
 	public:
-		UpState(const shared_ptr<UIComponent>& _uiComp);
+		UpState(const shared_ptr<UIComponent>& _uiComp, const string& _stateName = STATE_NAME);
 		virtual ~UpState();
 
 		void handleMultiPointEvent(const shared_ptr<Event>& uievent );

@@ -118,6 +118,7 @@ namespace TenUI {
 		}
 		if( curTarget ){
 			pointEvent->setTarget(curTarget);
+
 			pointEvents->push_back(pointEvent);
 		}
 			
@@ -128,10 +129,12 @@ namespace TenUI {
 
 		shared_ptr<PointEvent> pointEvent = dynamic_pointer_cast<PointEvent>(evt);
 		if( pointEvent ){
+
 			shared_ptr< vector< shared_ptr<PointEvent> > > eventsToDispatch = handlePointEvent(pointEvent);
 			for( vector< shared_ptr<PointEvent> >::iterator it = eventsToDispatch->begin();
 				 it != eventsToDispatch->end();
 				 ++it){
+				
 				(*it)->getTarget()->handleUserInputEvent((*it));
 			}			
 		}else{
@@ -151,6 +154,7 @@ namespace TenUI {
 					for(vector< shared_ptr<PointEvent> >::iterator pit = pointEvents->begin();
 						pit != pointEvents->end();
 						++pit){
+						
 						
 						shared_ptr<MultiPointEvent> mpe;
 						if( !userCompEvMap[(*pit)->getUserID()][(*pit)->getTarget()->getObjectID()] ){

@@ -61,14 +61,14 @@ namespace TenUI {
 	}
 	shared_ptr<UIComponent> TenMilManUI::getUIComponentsAt(int x, int y){
 		if( runSelectionRendering ){
-			map<unsigned long, shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
+			vector<shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
 			
 			graphics->beginRendering(IGraphicsEnums::SELECTION);
 			while(it != rootObjs.end()){
-				graphics->setColorID((it->second)->getObjectID());
-				(it->second)->preDraw();
-				(it->second)->draw();
-				(it->second)->postDraw();
+				graphics->setColorID((*it)->getObjectID());
+				(*it)->preDraw();
+				(*it)->draw();
+				(*it)->postDraw();
 				++it;
 			}
 			graphics->endRendering();
@@ -83,27 +83,46 @@ namespace TenUI {
 		return ( it != allUIComps.end() ) ? it->second : shared_ptr<UIComponent>(); 
 	}
 	
+
+	void TenMilManUI::bringUIComponentFront(const shared_ptr<UIComponent>& uicomp){
+		bringUIComponentFront(uicomp->getObjectID());
+	}
+	void TenMilManUI::bringUIComponentFront(unsigned long uicompid){
+		vector< shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
+		
+		vector< shared_ptr<DisplayObject> >::iterator rootObjit = rootObjs.end(); 
+		while(it != rootObjs.end()){
+			if( (*it)->getObjectID() == uicompid ){
+				rootObjit = it;
+			}
+			++it;
+		}
+		shared_ptr<DisplayObject> rootObj = (*rootObjit);
+		rootObjs.erase(rootObjit);
+		rootObjs.push_back(rootObj);
+	}
+	
 	/**********************************
 	 * 	 		Private Methods	  	  *	 
 	 **********************************/		
 	void TenMilManUI::draw(){
-		map<unsigned long, shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
+		vector< shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
 		
 		graphics->beginRendering(IGraphicsEnums::DISPLAY);
 		
 		while(it != rootObjs.end()){
-			(it->second)->preDraw();
-			(it->second)->draw();
-			(it->second)->postDraw();
+			(*it)->preDraw();
+			(*it)->draw();
+			(*it)->postDraw();
 			++it;
 		}
 		
 		graphics->endRendering();			
 	}
 	void TenMilManUI::update(){
-		map<unsigned long, shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
+		vector< shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
 		while(it != rootObjs.end()){			
-			(it->second)->update();
+			(*it)->update();
 			++it;
 		}
 	}
@@ -117,7 +136,7 @@ namespace TenUI {
 	}
 		
 	void TenMilManUI::addUIComponent(const shared_ptr<UIComponent>& uicomp){
-		rootObjs[uicomp->getObjectID()] = uicomp;
+		rootObjs.insert(rootObjs.begin(), uicomp);
 		addUIComponent_Recursive(uicomp);
 				
 	}

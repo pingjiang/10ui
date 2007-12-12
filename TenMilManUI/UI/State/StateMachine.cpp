@@ -20,6 +20,9 @@ namespace TenUI {
 		//}
 		
 		if(isStartState){
+			if(curState){
+				curState->onExit("");
+			}
 			curState = newState;
 			startState = curState;
 			curState->onEnter(State::ANY_STATE);

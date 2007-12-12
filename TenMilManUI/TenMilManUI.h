@@ -51,7 +51,7 @@ namespace TenUI {
 		    static TenMilManUI* inst;
 		    IGraphics* graphics;
 		    
-		    map<unsigned long , shared_ptr<DisplayObject> > rootObjs;
+		    vector< shared_ptr<DisplayObject> > rootObjs;
 		    map<unsigned long , shared_ptr<UIComponent> > allUIComps;
 		    ITenMilManUIApp *app;
 						
@@ -84,10 +84,14 @@ namespace TenUI {
 
 			IGraphics* getGraphics(){ return graphics; }
 			GraphicsOptions& getGraphicsOptions() const { return graphics->getGraphicsOptions(); }			
-			shared_ptr<UIComponent> getUIComponentsAt(int x, int y);
 			
 			void 						addUIComponent(const shared_ptr<UIComponent>& uicomp);
 			shared_ptr<UIComponent> 	getUIComponent(unsigned long uicompid);
+			shared_ptr<UIComponent> 	getUIComponentsAt(int x, int y);
+
+			void 						bringUIComponentFront(const shared_ptr<UIComponent>& uicomp);
+			void 						bringUIComponentFront(unsigned long uicompid);
+						
 	};
 
 }
