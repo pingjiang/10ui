@@ -1,5 +1,5 @@
-#ifndef UICONTROLS_TESTAPP_H_
-#define UICONTROLS_TESTAPP_H_
+#ifndef MAP_TESTAPP_H_
+#define MAP_TESTAPP_H_
 
 #include <iostream>
 #include <string>
@@ -17,13 +17,13 @@ using namespace std;
 
 namespace TenUI {
 
-	class UIControls_TestApp : public ITenMilManUIApp {
+	class Map_TestApp : public ITenMilManUIApp {
 		/***************************************/
 		/************ Public Methods ***********/
 		/***************************************/
 		public:
-			UIControls_TestApp(){}
-			virtual ~UIControls_TestApp(){}		
+			Map_TestApp(){}
+			virtual ~Map_TestApp(){}		
 
 
 		/***************************************/
@@ -47,15 +47,15 @@ namespace TenUI {
 			virtual void update_frame() throw(APPEXCEPTIONS);
 			virtual void deinit() throw(APPEXCEPTIONS) {}
 			
-			virtual char* getName()								{ return "UI Controls Test App"; }
+			virtual char* getName()								{ return "Map Test App"; }
 			
 			virtual GraphicsOptions* getGraphicsOptions() 		{ return new GraphicsOptions(	"UI Controls Test App",
 																								1024, 768, 32, 
-																	  				 			IGraphicsEnums::FULLSCREEN, 
+																	  				 			IGraphicsEnums::WINDOWED, 
 																	  				 			string("")); 		}
 			virtual IGraphics* getGraphics()					{ return OpenGL_Graphics::instance(); }
 	};
 	
 }
 
-#endif /*UICONTROLS_TESTAPP_H_*/
+#endif /*MAP_TESTAPP_H_*/
