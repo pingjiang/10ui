@@ -3,13 +3,17 @@
 #include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
 #include <TenMilManUI/TenUI_Globals.h>
 
+#include <algorithm>
+
+using std::max;
+using std::min;
 namespace TenUI{
 namespace ButtonStates{
 
 	const string DragDownState::STATE_NAME = "Down";
 
 	DragDownState::DragDownState(const shared_ptr<UIComponent>& _uiComp )
-		:DownState(_uiComp,DragDownState::STATE_NAME){}
+		:DownState(_uiComp,DragDownState::STATE_NAME),offsetX(-1),offsetY(-1){}
 	DragDownState::~DragDownState(){}
 
 	//TODO Fix the extensibilty of this function 
@@ -48,6 +52,10 @@ namespace ButtonStates{
 	void DragDownState::onEnter(const StateIDType& prevState){
 		DownState::onEnter(prevState);
 
+		/*if( prevState == HoverState::STATE_NAME || prevState == UpState::STATE_NAME ){
+			shared_ptr<HoverState> hover = dynamic_pointer_cast<HoverState>(getUIComponent()->getStateMachine()->getState(prevState));
+		}*/
+		
 		getTenUI()->bringUIComponentFront(getUIComponent());
 		
 		// Get rid of the old one
@@ -79,19 +87,36 @@ namespace ButtonStates{
 	void DragDownState::handleZoom(const shared_ptr<Event>& uievent ){
 		shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
 		if(zpe){
-			shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
-			if(zpe){			
-				int cx = getUIComponent()->getCenterX();
-				int cy = getUIComponent()->getCenterY();
+				cout << "DragDownState" << endl;
+				bool doit = false;
 				
-				getUIComponent()->setW( getUIComponent()->getW() + zpe->getZoomAmount() );
-				getUIComponent()->setH( getUIComponent()->getH() + zpe->getZoomAmount() );
-
-				getUIComponent()->setCenterX(cx);
-				getUIComponent()->setCenterY(cy);
+				if( zpe->getZoomAmount() < 0 &&  
+					getUIComponent()->getH() > 50 &&
+					getUIComponent()->getW() > 50 ){
+					
+					doit = true;
+				}else if( zpe->getZoomAmount() > 0 &&  
+						getUIComponent()->getH() < 500 &&
+						getUIComponent()->getW() < 500 ){
+					doit = true;
+				}
 				
-				getUIComponent()->redraw();
-			}		
+				if(doit){
+					int cx = getUIComponent()->getCenterX();
+					int cy = getUIComponent()->getCenterY();
+					double sum = (double)getUIComponent()->getW()+(double)getUIComponent()->getH();
+					double wratio = (double)getUIComponent()->getW() / sum;
+					double hratio = (double)getUIComponent()->getH() / sum;
+										
+					getUIComponent()->setW( max(50, min(500,(int)getUIComponent()->getW() + (int)(zpe->getZoomAmount()*wratio))) );
+					getUIComponent()->setH( max(50, min(500,(int)getUIComponent()->getH() + (int)(zpe->getZoomAmount()*hratio))) );
+			
+					getUIComponent()->setCenterX(cx);
+					getUIComponent()->setCenterY(cy);
+					
+					getUIComponent()->redraw();
+				}
+				
 		}
 	}
 	
