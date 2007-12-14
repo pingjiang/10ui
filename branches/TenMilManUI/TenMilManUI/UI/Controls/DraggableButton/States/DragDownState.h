@@ -21,6 +21,10 @@ namespace TenUI{
 namespace ButtonStates{
 	
 	class DragDownState : public DownState {
+	private:
+		int offsetX;
+		int offsetY;
+		
 	public:
 		static const string STATE_NAME;
 		

@@ -18,6 +18,10 @@ namespace TenUI{
 namespace ButtonStates{
 	
 	class HoverState : public UIComponentState, public EventHandler {
+	private:
+		int initX;
+		int initY;
+	
 	public:
 		static const string STATE_NAME;
 		
@@ -32,6 +36,9 @@ namespace ButtonStates{
 		
 		virtual void onEnter(const StateIDType& prevState);
 		virtual void onExit(const StateIDType& nextState);
+
+		int getInitiatingX();
+		int getInitiatingY();
 		
 		virtual void update(){};
 	};

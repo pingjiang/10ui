@@ -18,41 +18,28 @@ namespace ButtonStates{
 	void ZoomableUpState::handleMultiPointEvent(const shared_ptr<Event>& uievent ){
 		shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
 		if(mpe){
+			
+			/*if(mpe->getPointEvents()->size() == 2){
+				cout << "GOT TWO" << endl;
+			}*/
 			for(MultiPointEvent::PointEventSetType::iterator it = mpe->getPointEvents()->begin();
 				it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == STATE_NAME;
 				++it){
 				if((*it)->getType() == PointEvent::IN_EVENT_TYPE){
 					handlePointIn((*it));
 				}else if((*it)->getType() == ZoomPointEvent::ZOOM_EVENT_TYPE){
-					cout << "handle zoom event type" << endl;
 					handleZoom((*it));
 				}
 			}
 		}
 	}
 	void ZoomableUpState::handleZoom(const shared_ptr<Event>& uievent ){
-		shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
-		if(zpe){
-			shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
-			if(zpe){			
-				int cx = getUIComponent()->getCenterX();
-				int cy = getUIComponent()->getCenterY();
-				
-				getUIComponent()->setW( getUIComponent()->getW() + zpe->getZoomAmount() );
-				getUIComponent()->setH( getUIComponent()->getH() + zpe->getZoomAmount() );
-
-				getUIComponent()->setCenterX(cx);
-				getUIComponent()->setCenterY(cy);
-				
-				getUIComponent()->redraw();
-			}		
-		}
 	}
 	
 	void ZoomableUpState::onEnter(const StateIDType& prevState){
 		UpState::onEnter(prevState);
 
-		getTenUI()->bringUIComponentFront(getUIComponent());
+		//getTenUI()->bringUIComponentFront(getUIComponent());
 		
 		// OVERRIDE handleMultiPointEvent
 		getUIComponent()->unregisterHandler(

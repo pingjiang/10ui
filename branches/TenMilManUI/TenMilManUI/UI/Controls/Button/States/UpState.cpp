@@ -23,6 +23,7 @@ namespace ButtonStates{
 	UpState::~UpState(){}
 	
 	void UpState::handleMultiPointEvent(const shared_ptr<Event>& uievent ){
+		//cout << "handleMultiPointEvent" << endl;
 		shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
 		if(mpe){
 			for(MultiPointEvent::PointEventSetType::iterator it = mpe->getPointEvents()->begin();
@@ -36,7 +37,8 @@ namespace ButtonStates{
 	}
 	
 	void UpState::handlePointIn(const shared_ptr<Event>& uievent ){
-		
+
+		cout << "UpState::handlePointIn" << endl;
 		shared_ptr<PointEvent> pte = dynamic_pointer_cast<PointEvent>(uievent);
 		if(pte){					
 			// Multi User Support

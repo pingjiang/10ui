@@ -104,6 +104,19 @@ namespace TenUI {
 		/*****************/
 		/*  Translation  */
 		/*****************/
+			void 	DisplayObject::setGlobalCenterX(int cx){
+				setCenterX(cx - parent->getGlobalCenterX());
+			}
+			void 	DisplayObject::setGlobalCenterY(int cy){
+				setCenterY(cy - parent->getGlobalCenterY());
+			}
+			int 	DisplayObject::getGlobalCenterX(){
+				return parent->getGlobalCenterX() + centerx;
+			}
+			int 	DisplayObject::getGlobalCenterY(){
+				return parent->getGlobalCenterY() + centery;
+			}
+		
 			void 	DisplayObject::setCenterX(int cx){
 				x = (double)cx - (scalex*(double)w/2.0);
 				centerx = cx;

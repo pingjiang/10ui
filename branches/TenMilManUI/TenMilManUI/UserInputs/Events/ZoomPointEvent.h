@@ -15,7 +15,7 @@ namespace TenUI {
 		int zoomAmount;
 		
 	public:
-		ZoomPointEvent(const string& _type, unsigned long _uid, unsigned long _uiid, unsigned long _pointid, int _zoomAmount, int _x, int _y, const shared_ptr<UIComponent>& _target);
+		ZoomPointEvent(const string& _type, unsigned long _uid, unsigned long _uiid, unsigned long _pointid, int _zoomAmount, int _x, int _y, const shared_ptr<UIComponent>& _target = shared_ptr<UIComponent>());
 		virtual ~ZoomPointEvent();
 		
 		int getZoomAmount(){

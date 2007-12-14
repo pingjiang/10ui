@@ -15,9 +15,10 @@ namespace TenUI{
 namespace ButtonStates{
 
 	const string HoverState::STATE_NAME = "Hover";
-
+	
+	
 	HoverState::HoverState(const shared_ptr<UIComponent>& _uiComp)
-		:UIComponentState(_uiComp,STATE_NAME){}
+		:UIComponentState(_uiComp,STATE_NAME),initX(-1),initY(-1){}
 	HoverState::~HoverState(){}
 
 	void HoverState::handleMultiPointEvent(const shared_ptr<Event>& uievent ){
@@ -41,25 +42,53 @@ namespace ButtonStates{
 		}
 	}
 	void HoverState::handlePointDown(const shared_ptr<Event>& uievent ){
+		shared_ptr<PointEvent> pe = dynamic_pointer_cast<PointEvent>(uievent);
+		if( pe ){
+			initX = pe->getX();
+			initY = pe->getY();
+		}
 		exitState(DownState::STATE_NAME);
 	}
 	void HoverState::handlePointOut(const shared_ptr<Event>& uievent ){
+		shared_ptr<PointEvent> pe = dynamic_pointer_cast<PointEvent>(uievent);
+		if( pe ){
+			initX = pe->getX();
+			initY = pe->getY();
+		}
 		exitState(UpState::STATE_NAME);
 	}
 	void HoverState::handleZoom(const shared_ptr<Event>& uievent ){
-		shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
+		/*shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
 		if(zpe){			
-			int cx = getUIComponent()->getCenterX();
-			int cy = getUIComponent()->getCenterY();
+			cout << "HoverState" << endl;
+			bool doit = false;
 			
-			getUIComponent()->setW( getUIComponent()->getW() + zpe->getZoomAmount() );
-			getUIComponent()->setH( getUIComponent()->getH() + zpe->getZoomAmount() );
-
-			getUIComponent()->setCenterX(cx);
-			getUIComponent()->setCenterY(cy);
+			if( zpe->getZoomAmount() < 0 &&  
+				getUIComponent()->getH() > 50 &&
+				getUIComponent()->getW() > 50 ){
+				
+				doit = true;
+			}else if( zpe->getZoomAmount() > 0 &&  
+					getUIComponent()->getH() < 500 &&
+					getUIComponent()->getW() < 500 ){
+				doit = true;
+			}
 			
-			getUIComponent()->redraw();
-		}
+			
+			if(doit){
+				int cx = getUIComponent()->getCenterX();
+				int cy = getUIComponent()->getCenterY();
+				getUIComponent()->setW( getUIComponent()->getW() + zpe->getZoomAmount() );
+				getUIComponent()->setH( getUIComponent()->getH() + zpe->getZoomAmount() );
+		
+				getUIComponent()->setCenterX(cx);
+				getUIComponent()->setCenterY(cy);
+				
+				getUIComponent()->redraw();
+			}
+			
+			
+		}*/
 	}
 	
 	void HoverState::onEnter(const StateIDType& prevState){
@@ -108,6 +137,14 @@ namespace ButtonStates{
 				MultiPointEvent::MULTIPOINT_EVENT_TYPE, 
 				dynamic_pointer_cast<UpState>(shared_from_this())
 		);
+	}
+	
+
+	int HoverState::getInitiatingX(){
+		return initX;
+	}
+	int HoverState::getInitiatingY(){
+		return initY;
 	}
 	
 }}
