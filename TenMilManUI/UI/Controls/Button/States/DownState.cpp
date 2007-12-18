@@ -33,7 +33,8 @@ namespace ButtonStates{
 		}
 	}
 	void DownState::handlePointUp(const shared_ptr<Event>& uievent ){
-		exitState(HoverState::STATE_NAME);
+		//exitState(HoverState::STATE_NAME);
+		exitState(UpState::STATE_NAME);
 	}
 	void DownState::handlePointOut(const shared_ptr<Event>& uievent ){
 		exitState(UpState::STATE_NAME);

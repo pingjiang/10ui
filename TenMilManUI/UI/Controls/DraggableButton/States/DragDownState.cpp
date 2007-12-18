@@ -1,6 +1,7 @@
 #include "DragDownState.h"
 
 #include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
+#include <TenMilManUI/UI/Controls/Button/States/HoverState.h>
 #include <TenMilManUI/TenUI_Globals.h>
 
 #include <algorithm>
@@ -44,17 +45,22 @@ namespace ButtonStates{
 	void DragDownState::handlePointMove(const shared_ptr<Event>& uievent ){
 		shared_ptr<PointEvent> pte = dynamic_pointer_cast<PointEvent>(uievent); 
 		if(pte){
-			getUIComponent()->setCenterX(pte->getX());
-			getUIComponent()->setCenterY(pte->getY());
+			getUIComponent()->setCenterX(pte->getX()+offsetX);
+			getUIComponent()->setCenterY(pte->getY()+offsetY);
 		}
 		
 	}
 	void DragDownState::onEnter(const StateIDType& prevState){
 		DownState::onEnter(prevState);
 
-		/*if( prevState == HoverState::STATE_NAME || prevState == UpState::STATE_NAME ){
+		if( prevState == HoverState::STATE_NAME ){
 			shared_ptr<HoverState> hover = dynamic_pointer_cast<HoverState>(getUIComponent()->getStateMachine()->getState(prevState));
-		}*/
+			offsetX = hover->getInitiatingX();
+			offsetY = hover->getInitiatingY();
+		}else{
+			offsetX = -1;
+			offsetY = -1;
+		}
 		
 		getTenUI()->bringUIComponentFront(getUIComponent());
 		

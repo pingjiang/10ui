@@ -37,23 +37,23 @@ namespace ButtonStates{
 					}else if((*it)->getType() == ZoomPointEvent::ZOOM_EVENT_TYPE){
 						handleZoom((*it));
 					}
-				}				
+				}
 			}
 		}
 	}
 	void HoverState::handlePointDown(const shared_ptr<Event>& uievent ){
 		shared_ptr<PointEvent> pe = dynamic_pointer_cast<PointEvent>(uievent);
 		if( pe ){
-			initX = pe->getX();
-			initY = pe->getY();
+			initX = getUIComponent()->getCenterX() - pe->getX();
+			initY = getUIComponent()->getCenterY() - pe->getY();
 		}
 		exitState(DownState::STATE_NAME);
 	}
 	void HoverState::handlePointOut(const shared_ptr<Event>& uievent ){
 		shared_ptr<PointEvent> pe = dynamic_pointer_cast<PointEvent>(uievent);
 		if( pe ){
-			initX = pe->getX();
-			initY = pe->getY();
+			initX = getUIComponent()->getCenterX() - pe->getX();
+			initY = getUIComponent()->getCenterY() - pe->getY();
 		}
 		exitState(UpState::STATE_NAME);
 	}
