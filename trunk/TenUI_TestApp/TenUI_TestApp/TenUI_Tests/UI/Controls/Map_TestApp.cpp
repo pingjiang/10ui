@@ -8,7 +8,7 @@
 
 #include <TenMilManUI/UserInputs/SDLMouseInput.h>
 
-#include "UserInputs/TableInput_NewArch.h"
+//#include "UserInputs/TableInput_NewArch.h"
 
 #include <tr1/memory>
 
@@ -52,11 +52,11 @@ namespace TenUI {
 				new DraggableButton(300,300, 128,128)
 		);
 		
-		newButton = shared_ptr<DraggableButton> (new DraggableButton(-100,-100, 3422,2558));
+		newButton = shared_ptr<DraggableButton> (new DraggableButton(-100,-100, 2557,2576));
 		getTenUI()->addUIComponent( 
     			newButton
     	);
-		newButton->setAllStateStyleValue(DraggableButton::BACKGROUND_IMAGE, string("resources/images/huntarea.jpg"));
+		newButton->setAllStateStyleValue(DraggableButton::BACKGROUND_IMAGE, string("resources/images/airphotousa_twintowers.jpg"));
 		
 	}
 	
