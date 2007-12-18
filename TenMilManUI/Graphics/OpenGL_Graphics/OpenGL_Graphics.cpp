@@ -24,19 +24,6 @@ namespace TenUI{
 		const float OpenGL_Graphics::PI = 3.14159265;
 	
 		// Helper Methods
-		void OpenGL_Graphics::arcVertices(int x, int y, int radius, float a1, float a2, int resolution){
-			float step = (a2 - a1) / ((float)resolution);
-			
-			if( a2<a1 ){
-				for (double d = a1; d >= a2; d += step){
-					glVertex2i((int) (cos(d) * radius + x + 0.5), (int) (sin(d) * radius + y + 0.5));
-				}	
-			}else{
-				for (double d = a1; d <= a2; d += step){
-					glVertex2i((int) (cos(d) * radius + x + 0.5), (int) (sin(d) * radius + y + 0.5));
-				}
-			}
-		}
 		char *OpenGL_Graphics::int2bin(int a){
 			 char *str,*tmp;
 			 int cnt = 31;
@@ -392,6 +379,21 @@ namespace TenUI{
 														double radius, int resolution,
 														const ColorHex& fillColor,
 														int strokeSize, const ColorHex& strokeColor ){}
+						
+
+						void OpenGL_Graphics::arcVertices(int x, int y, int radius, float a1, float a2, int resolution){
+							float step = (a2 - a1) / ((float)resolution);
+							
+							if( a2<a1 ){
+								for (double d = a1; d >= a2; d += step){
+									glVertex2i((int) (cos(d) * radius + x + 0.5), (int) (sin(d) * radius + y + 0.5));
+								}	
+							}else{
+								for (double d = a1; d <= a2; d += step){
+									glVertex2i((int) (cos(d) * radius + x + 0.5), (int) (sin(d) * radius + y + 0.5));
+								}
+							}
+						}
 						
 				/******************************/
 				/*         Image Methods      */

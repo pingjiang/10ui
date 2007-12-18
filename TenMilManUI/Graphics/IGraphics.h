@@ -71,7 +71,8 @@ namespace TenUI{
 													int width, int height, int radius, 
 													const ColorHex& c1, const ColorHex& c2, const ColorHex& c3, const ColorHex& c4,
 													int strokeSize=0, const ColorHex& strokeColor=ColorHex() ) = 0;
-
+			void arcVertices(int x, int y, int radius, float a1, float a2, int resolution=10);
+			
 			/******************************/
 			/*     Circle Draw Methods    */
 			/******************************/
