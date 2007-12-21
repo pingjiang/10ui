@@ -76,9 +76,6 @@ namespace TenUI {
 			runSelectionRendering = false;
 		}
 		
-		if(allUIComps[graphics->getColorID(x,y)]){
-			cout << "UIComp ID: " << allUIComps[graphics->getColorID(x,y)]->getObjectID() << endl;
-		}
 		return allUIComps[graphics->getColorID(x,y)];
 	}
 	
