@@ -37,7 +37,8 @@ namespace TenUI
 	public:
 		TableInput_NewArch(std::string host, int port1, int port2);
 		virtual ~TableInput_NewArch();
-		
+
+		virtual bool hoverCapable();
 		virtual void init();
 		virtual bool update();
 		
