@@ -22,7 +22,7 @@ namespace ButtonStates{
 				++it){
 
 				// Only worry about the User that owns the UIComponent 
-				if(getUIComponent()->getOwnerUserID() == (*it)->getUserID()){
+				if(getUIComponent()->getOwnerUserID() == (*it)->getPointID()){
 					if((*it)->getType() == PointEvent::UP_EVENT_TYPE){
 						handlePointUp((*it));
 					}else if((*it)->getType() == PointEvent::OUT_EVENT_TYPE){
@@ -33,7 +33,6 @@ namespace ButtonStates{
 		}
 	}
 	void DownState::handlePointUp(const shared_ptr<Event>& uievent ){
-		//exitState(HoverState::STATE_NAME);
 		exitState(UpState::STATE_NAME);
 	}
 	void DownState::handlePointOut(const shared_ptr<Event>& uievent ){
