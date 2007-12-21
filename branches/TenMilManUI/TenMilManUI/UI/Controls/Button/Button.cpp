@@ -161,7 +161,7 @@ namespace TenUI{
 	/***********************************/
 	void Button::drawSelf(){
 		int strokeSize = any_cast<int>(curStyleSet->getValue(BORDER_SIZE_STYLE));
-		getTenUIGraphics()->drawRoundedRectangle(	left,bottom, 
+		getTenUIGraphics()->drawRoundedRectangle(	(int)left,(int)bottom, 
 													w,h,
 													any_cast<int>(curStyleSet->getValue(CORNER_RADIUS_STYLE)),
 													(any_cast<ColorHex>(curStyleSet->getValue(FILL_COLORS_STYLE))).multModifyAlpha(opacity), 
@@ -169,9 +169,9 @@ namespace TenUI{
 													(any_cast<ColorHex>(curStyleSet->getValue(BORDER_COLORS_STYLE)).multModifyAlpha(opacity)) 
 												);
 		
-		IImage* bgimage = any_cast<IImage*>(curStyleSet->getValue(BACKGROUND_IMAGE));
-		if(bgimage != 0){
-			getTenUIGraphics()->drawImage(bgimage,left+1,bottom+1,.9,w,h);
+		shared_ptr<IImage> bgimage = any_cast< shared_ptr<IImage> >(curStyleSet->getValue(BACKGROUND_IMAGE));
+		if(bgimage){
+			getTenUIGraphics()->drawImage(bgimage,(int)left+1,(int)bottom+1,.9,w,h);
 		}
 	}
 

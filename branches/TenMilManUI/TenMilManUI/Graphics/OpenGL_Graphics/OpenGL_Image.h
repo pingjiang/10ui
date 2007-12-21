@@ -21,8 +21,10 @@
 
 #include <TenMilManUI/Graphics/IImage.h>
 #include <TenMilManUI/Graphics/Util/Utils.h>
+#include <tr1/memory>
 
-using namespace std;
+using std::string;
+using std::tr1::shared_ptr;
 
 namespace TenUI{ 
 	
@@ -42,7 +44,7 @@ namespace TenUI{
 	
 	public:
 		// load images and converts them into OpenGL textures
-		static OpenGL_Image* loadFromFile(const string& file) throw(OpenGL_Image_enums::Exceptions);
+		static shared_ptr<OpenGL_Image> loadFromFile(const string& file) throw(OpenGL_Image_enums::Exceptions);
 		
 	public:
 		virtual ~OpenGL_Image();

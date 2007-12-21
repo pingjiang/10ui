@@ -4,6 +4,7 @@
 #include <math.h>
 
 using namespace std;
+using std::tr1::dynamic_pointer_cast;
 
 namespace TenUI{
 	/******************************/
@@ -135,12 +136,6 @@ namespace TenUI{
 		}
 		void OpenGL_Graphics::deinit(){
 			delete fontMgr;
-			
-			vector<OpenGL_Image *>::iterator it = images.begin();
-			while(it != images.end()){
-				(*it)->freeTexture();
-			}
-	
 			SDL_Quit();
 		}
 		string OpenGL_Graphics::getImplName(){ return string("OpenGL_Graphics"); }
@@ -399,48 +394,51 @@ namespace TenUI{
 				/*         Image Methods      */
 				/******************************/ 
 					//TODO Try default argument based on another argument
-					void OpenGL_Graphics::drawImage(const IImage* img, 
+					void OpenGL_Graphics::drawImage(const shared_ptr<IImage>& img, 
 													int x, int y, 
 													float opacity,
 													unsigned int width, unsigned int height){
 						if(img != 0){
-							OpenGL_Image* openglImage = (OpenGL_Image*) img;
-							if(height==0){
-								height = (renderMode == IGraphicsEnums::DISPLAY)?openglImage->getTextureHeight():openglImage->getImageHeight();
-							}else{
-								if(renderMode == IGraphicsEnums::DISPLAY){
-									height = ((double)height/(double)openglImage->getImageHeight())*(double)openglImage->getTextureHeight();
-								}
-							}
-							if(width==0){
-								width = (renderMode == IGraphicsEnums::DISPLAY)?openglImage->getTextureWidth():openglImage->getImageWidth();
-							}else{
-								if(renderMode == IGraphicsEnums::DISPLAY){
-									width = ((double)width/(double)openglImage->getImageWidth())*(double)openglImage->getTextureWidth();
-								}
-							}
+							shared_ptr<OpenGL_Image> openglImage = dynamic_pointer_cast<OpenGL_Image>(img);
 							
-							setColor(1.0,1.0,1.0,opacity);
-							
-							if(renderMode == IGraphicsEnums::DISPLAY) { 
-								glEnable(GL_TEXTURE_2D);
-								glBindTexture(GL_TEXTURE_2D, openglImage->getTextureID());
-							}
-								// draw rectangle
-								glBegin(GL_QUADS);		                
-									glTexCoord2i(0,0); glVertex2d(x,y);
-									glTexCoord2i(0,1); glVertex2d(x,y+height);
-									glTexCoord2i(1,1); glVertex2d(x+width,y+height);
-									glTexCoord2i(1,0); glVertex2d(x+width,y);
-								glEnd();
-	
-							if(renderMode == IGraphicsEnums::DISPLAY) { 
-								glBindTexture(GL_TEXTURE_2D, 0);
-								glDisable(GL_TEXTURE_2D);		
+							if(openglImage){
+								if(height==0){
+									height = (renderMode == IGraphicsEnums::DISPLAY)?openglImage->getTextureHeight():openglImage->getImageHeight();
+								}else{
+									if(renderMode == IGraphicsEnums::DISPLAY){
+										height = ((double)height/(double)openglImage->getImageHeight())*(double)openglImage->getTextureHeight();
+									}
+								}
+								if(width==0){
+									width = (renderMode == IGraphicsEnums::DISPLAY)?openglImage->getTextureWidth():openglImage->getImageWidth();
+								}else{
+									if(renderMode == IGraphicsEnums::DISPLAY){
+										width = ((double)width/(double)openglImage->getImageWidth())*(double)openglImage->getTextureWidth();
+									}
+								}
+								
+								setColor(1.0,1.0,1.0,opacity);
+								
+								if(renderMode == IGraphicsEnums::DISPLAY) { 
+									glEnable(GL_TEXTURE_2D);
+									glBindTexture(GL_TEXTURE_2D, openglImage->getTextureID());
+								}
+									// draw rectangle
+									glBegin(GL_QUADS);		                
+										glTexCoord2i(0,0); glVertex2d(x,y);
+										glTexCoord2i(0,1); glVertex2d(x,y+height);
+										glTexCoord2i(1,1); glVertex2d(x+width,y+height);
+										glTexCoord2i(1,0); glVertex2d(x+width,y);
+									glEnd();
+		
+								if(renderMode == IGraphicsEnums::DISPLAY) { 
+									glBindTexture(GL_TEXTURE_2D, 0);
+									glDisable(GL_TEXTURE_2D);		
+								}
 							}
 						}
 					}
-					IImage* OpenGL_Graphics::loadImage(const string& imageFile){
+					shared_ptr<IImage> OpenGL_Graphics::loadImage(const string& imageFile){
 						return OpenGL_Image::loadFromFile(imageFile);
 					}
 			

@@ -52,7 +52,7 @@ namespace TenUI {
 	
 
 	/***********************************/
-	/*      Extended Draw Methods      *addUIComponent/
+	/*      Extended Draw Methods      */
 	/***********************************/
 	void DisplayObjectContainer::drawChildren(){
 		vector< shared_ptr<DisplayObject> >::iterator it = children.begin();
