@@ -7,11 +7,9 @@
 
 #include <TenMilManUI/UI/Core/UIComponent.h>
 #include <TenMilManUI/UI/Controls/Button/Button.h>
-#include <TenMilManUI/UI/Containers/Canvas/Canvas.h>
 
 #include <TenMilManUI/UserInputs/SDLMouseInput.h>
-
-#include "UserInputs/TableInput_NewArch.h"
+//#include "UserInputs/TableInput_NewArch.h"
 
 #include <tr1/memory>
 
@@ -23,9 +21,9 @@ namespace TenUI {
 		getTenUIInputManager()->registerInput(
 			shared_ptr<SDLMouseInput>(new SDLMouseInput())
 		);
-		getTenUIInputManager()->registerInput(
+		/*getTenUIInputManager()->registerInput(
 			shared_ptr<TableInput_NewArch>(new TableInput_NewArch("pitfall.vrac.iastate.edu",50002,50003))
-		);
+		);*/
 	}
 	
 	void Map_TestApp::styleUnit(bool isRed, const shared_ptr<DraggableButton>& unit, const string& unitIcon){

@@ -8,6 +8,6 @@
 // TenUI Application Entry Point
 // IMPLEMENT_TENUI_APP(StyleTest_App)
 // IMPLEMENT_TENUI_APP(TenUI_TestApp)
-//IMPLEMENT_TENUI_APP(UIControls_TestApp)
-IMPLEMENT_TENUI_APP(Map_TestApp)
+IMPLEMENT_TENUI_APP(UIControls_TestApp)
+//IMPLEMENT_TENUI_APP(Map_TestApp)
 //IMPLEMENT_TENUI_APP(Canvas_TestApp)

@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 
-#include <TenMilManUI/ITenMilManUIApp.h>
-#include <TenMilManUI/TenMilManUI.h>
+#include <TenMilManUI/ITenUIApp.h>
+#include <TenMilManUI/TenUI.h>
 #include <TenMilManUI/TenMilManUI_Enums.h>
 #include <TenMilManUI/UserInputs/SDLMouseInput.h>
 
@@ -18,7 +18,7 @@ using namespace std;
 
 namespace TenUI {
 
-	class StyleTest_App : public ITenMilManUIApp {
+	class StyleTest_App : public ITenUIApp {
 		
 		/***************************************/
 		/************ Public Methods ***********/
