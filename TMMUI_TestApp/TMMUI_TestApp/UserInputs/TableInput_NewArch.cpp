@@ -43,16 +43,20 @@ TableInput_NewArch::TableInput_NewArch(std::string host, int port1, int port2):D
 	addEventType(PointEvent::UP_EVENT_TYPE);
 	addEventType(PointEvent::DOWN_EVENT_TYPE);
 	addEventType(MultiPointEvent::MULTIPOINT_EVENT_TYPE);
-	addEventType(ZoomPointEvent::ZOOM_EVENT_TYPE);
+	//addEventType(ZoomPointEvent::ZOOM_EVENT_TYPE);
 	//addEventType("MultiPointEvent");	// touch points
 	//ZOOM addEventType(ZoomEvent::ZOOM_EVENT_TYPE);
 }
 
 TableInput_NewArch::~TableInput_NewArch(){}
 
+
+bool TableInput_NewArch::hoverCapable(){
+	return false;
+}
+
 void TableInput_NewArch::init(){}
 bool TableInput_NewArch::update(){
-
 	
 	if(!eventQueue.empty())
 	{
@@ -84,12 +88,16 @@ bool TableInput_NewArch::update(){
 				string evtType = "UNKNOWN";
 				point pt = touchEvent->getPoints().at(i);
 				
-				if(pt.type == POINT_BIRTH)
+				if(pt.type == POINT_BIRTH){
 					evtType = PointEvent::DOWN_EVENT_TYPE;
-				else if(pt.type == POINT_DEATH)
+					//cout << "PointEvent::DOWN_EVENT_TYPE" << endl;
+				}else if(pt.type == POINT_DEATH){
 					evtType = PointEvent::UP_EVENT_TYPE;
-				else if(pt.type == POINT_MOVE)
+					//cout << "PointEvent::UP_EVENT_TYPE" << endl;
+				}else if(pt.type == POINT_MOVE){
 					evtType = PointEvent::MOVE_EVENT_TYPE;
+					//cout << "PointEvent::MOVE_EVENT_TYPE" << endl;
+				}
 				
 				//PointEvent tmpEvt();
 				shared_ptr<PointEvent> tmpEvt(new PointEvent(evtType, (pt.side > 0 ? uid[pt.side - 1] : uid[0]), uiid, pt.id, (int)pt.x, 768 - (int)pt.y, (pt.type == POINT_DEATH ? false : true)));
@@ -99,28 +107,22 @@ bool TableInput_NewArch::update(){
 				
 				multiPtEvt->addPointEvent(tmpEvt);
 				
-				//std::cout << "pt(" << pt.x << ", " << pt.y << ")\n";
-				/*if(pt.x == 0 && pt.y == 0)
+				/*std::cout << "pt(" << pt.x << ", " << pt.y << ")";
+				if(pt.x == 0 && pt.y == 0)
 					std::cout << "\t";
 				std::cout << "id(" << pt.id << ")\t";
 				std::cout << "type(" << pt.type  << ")\t";
 				std::cout << "side(" << pt.side << ")\n";*/
-				
-				
+								
 			}
 			
 			dispatchEvent(multiPtEvt);
 			
 		}
 		
-		ZoomEvent *zoomEvent = dynamic_cast<ZoomEvent*>(devEvent);
+	/*	ZoomEvent *zoomEvent = dynamic_cast<ZoomEvent*>(devEvent);
 		if(zoomEvent != 0){
-			/*std::cout << "ZoomEvent:\n";
-			std::cout << "center(" << zoomEvent->getCenterX() << "," << zoomEvent->getCenterY() << ")\tdist(" << zoomEvent->getDistance() << ")\n";
-*/
-			//shared_ptr<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
-			//mpe->addPointEvent();
-			
+
 			dispatchEvent(
 				shared_ptr<ZoomPointEvent>(
 					new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , 
@@ -130,11 +132,8 @@ bool TableInput_NewArch::update(){
 					)
 				)
 			);			
-		}
-		
-		/*if(overheadRawEvent == 0 && touchEvent == 0){
-			cout << "UNHANDLED EVENT CASE" << endl;
 		}*/
+		
 	}
 	return true;
 }
