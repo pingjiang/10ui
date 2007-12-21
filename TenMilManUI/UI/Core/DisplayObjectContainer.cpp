@@ -13,6 +13,7 @@ namespace TenUI {
 	/***********************************/  
 	void DisplayObjectContainer::addChild(shared_ptr<DisplayObject> child){
 		child->setParent( shared_from_this() );
+		//child->init();
 		children.push_back(child);
 	}	
 	void DisplayObjectContainer::removeChild(shared_ptr<DisplayObject> child){
@@ -51,7 +52,7 @@ namespace TenUI {
 	
 
 	/***********************************/
-	/*      Extended Draw Methods      */
+	/*      Extended Draw Methods      *addUIComponent/
 	/***********************************/
 	void DisplayObjectContainer::drawChildren(){
 		vector< shared_ptr<DisplayObject> >::iterator it = children.begin();
@@ -84,6 +85,7 @@ namespace TenUI {
 		}else{
 			if( _redraw_sel ){
 				glNewList(selection_displayListID, GL_COMPILE_AND_EXECUTE);
+				getTenUIGraphics()->setColorID(getObjectID());
 				drawSelf();
 				glEndList();
 				

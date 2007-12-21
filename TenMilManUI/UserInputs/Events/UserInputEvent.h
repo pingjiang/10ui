@@ -12,7 +12,7 @@ namespace TenUI {
 	public:
 		static const string QUIT_EVENT_TYPE;
 	
-	private: 
+	private:
 		UserID_Type 		uid;
 		UserInputID_Type 	uiid;
 		

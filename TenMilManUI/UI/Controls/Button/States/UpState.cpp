@@ -31,6 +31,8 @@ namespace ButtonStates{
 				++it){
 				if((*it)->getType() == PointEvent::IN_EVENT_TYPE){
 					handlePointIn((*it));
+				}else if((*it)->getType() == PointEvent::DOWN_EVENT_TYPE){
+					handlePointIn((*it));
 				}
 			}
 		}
@@ -38,12 +40,17 @@ namespace ButtonStates{
 	
 	void UpState::handlePointIn(const shared_ptr<Event>& uievent ){
 
-		cout << "UpState::handlePointIn" << endl;
 		shared_ptr<PointEvent> pte = dynamic_pointer_cast<PointEvent>(uievent);
 		if(pte){					
 			// Multi User Support
-			getUIComponent()->setOwnerUserID(pte->getUserID());
+			getUIComponent()->setOwnerUserID(pte->getPointID());
 
+			shared_ptr<PointEvent> pe = dynamic_pointer_cast<PointEvent>(uievent);
+			if( pe ){
+				initX = getUIComponent()->getGlobalCenterX() - pe->getX();
+				initY = getUIComponent()->getGlobalCenterY() - pe->getY();
+			}
+			
 			if(pte->getPressed()){
 				exitState(DownState::STATE_NAME);
 			}else{
@@ -58,8 +65,16 @@ namespace ButtonStates{
 		// Multi User Support
 		getUIComponent()->clearOwnerUserID();
 		
+		initX = -1;
+		initY = -1;
+
 		getUIComponent()->registerHandler(
 				PointEvent::IN_EVENT_TYPE, 
+				&UpState::handlePointIn , 
+				dynamic_pointer_cast<UpState>(shared_from_this())
+		);
+		getUIComponent()->registerHandler(
+				PointEvent::DOWN_EVENT_TYPE, 
 				&UpState::handlePointIn , 
 				dynamic_pointer_cast<UpState>(shared_from_this())
 		);
@@ -76,9 +91,22 @@ namespace ButtonStates{
 				dynamic_pointer_cast<UpState>(shared_from_this())
 		);
 		getUIComponent()->unregisterHandler(
+				PointEvent::DOWN_EVENT_TYPE, 
+				dynamic_pointer_cast<UpState>(shared_from_this())
+		);
+		getUIComponent()->unregisterHandler(
 				MultiPointEvent::MULTIPOINT_EVENT_TYPE, 
 				dynamic_pointer_cast<UpState>(shared_from_this())
 		);
 	}
+	
+
+	int UpState::getInitiatingX(){
+		return initX;
+	}
+	int UpState::getInitiatingY(){
+		return initY;
+	}
+	
 	
 }}

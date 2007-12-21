@@ -32,12 +32,13 @@ namespace TenUI {
 	
 		static UserID_Type getNextUserID();
 	public:
+		virtual bool hoverCapable() = 0;
+		
 		virtual void init() = 0;
 		virtual bool update() = 0;
 		
 		UserInputID_Type getUserInputID()	{ return uiid; }
 		virtual bool isQuit() { return quit; }
-	
 	};
 
 }

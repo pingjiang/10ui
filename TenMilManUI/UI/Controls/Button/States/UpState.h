@@ -20,6 +20,10 @@ namespace ButtonStates{
 	class UpState : public UIComponentState, public EventHandler {
 	private:
 		StateIDType theNextState;
+
+	private:
+		int initX;
+		int initY;
 		
 	public:
 		static const string STATE_NAME;
@@ -35,6 +39,9 @@ namespace ButtonStates{
 		virtual void onExit(const StateIDType& nextState);
 		
 		virtual void update(){};
+		
+		int getInitiatingX();
+		int getInitiatingY();
 	};
 	
 }}
