@@ -4,11 +4,10 @@
 #include <TenMilManUI/UI/Core/UIComponent.h>
 #include <TenMilManUI/UI/Controls/Button/Button.h>
 #include <TenMilManUI/UI/Controls/DraggableButton/DraggableButton.h>
-#include <TenMilManUI/UI/Containers/Canvas/Canvas.h>
 
 #include <TenMilManUI/UserInputs/SDLMouseInput.h>
 
-//#include "UserInputs/TableInput_NewArch.h"
+#include "UserInputs/TableInput_NewArch.h"
 
 #include <tr1/memory>
 
@@ -20,33 +19,12 @@ namespace TenUI {
 		getTenUIInputManager()->registerInput(
 			shared_ptr<SDLMouseInput>(new SDLMouseInput())
 		);
-		/*getTenUIInputManager()->registerInput(
+		getTenUIInputManager()->registerInput(
 			shared_ptr<TableInput_NewArch>(new TableInput_NewArch("pitfall.vrac.iastate.edu",50002,50003))
-		);*/
+		);
 	}
 
 	void UIControls_TestApp::init() throw(int){
-		//prevObjID = 0;
-		
-		/*int strokeSize = 3;
-		int buttonSize = 128;
-		for(unsigned int i = 0; i < 1024; i+=buttonSize){
-            for(unsigned int j = 0; j < 768; j+=buttonSize){
-    			shared_ptr<Button> newButton(
-    					new Button(i+strokeSize, j+strokeSize, buttonSize-strokeSize, buttonSize-strokeSize)
-    			);
-    			newButton->setOpacity((float)j/768.0);
-            	getTenUI()->addUIComponent( 
-            			newButton
-            	);
-            }
-        }
-		
-
-		shared_ptr<Canvas> newCanvas(new Canvas(0,0,0,0));
-		newCanvas->setOpacity(.25);
-    	getTenUI()->addUIComponent( newCanvas );
-		newCanvas->setStyleValue(Canvas::BACKGROUND_IMAGE, string("resources/images/myScreenShot.png"));*/
 
 		shared_ptr<DraggableButton> newButton(
 				new DraggableButton(300,300, 128,128)
@@ -94,12 +72,11 @@ namespace TenUI {
 		newButton->setAllStateStyleValue(DraggableButton::BACKGROUND_IMAGE, string("resources/images/vrac_logo_medium_001.sized.jpg"));
 
 		
-		newButton = shared_ptr<DraggableButton> (new DraggableButton(300,500, 200,200));
+		newButton = shared_ptr<DraggableButton> (new DraggableButton(400,190, 400,190));
 		getTenUI()->addUIComponent( 
     			newButton
     	);
-		newButton->setAllStateStyleValue(DraggableButton::BACKGROUND_IMAGE, string("resources/images/logo-NSF-CMYK.GIF"));
-		
+		newButton->setAllStateStyleValue(DraggableButton::BACKGROUND_IMAGE, string("resources/images/CNN.jpg"));
 	}
 	
 	void UIControls_TestApp::update_frame() throw(APPEXCEPTIONS) {		
