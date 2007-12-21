@@ -190,8 +190,6 @@ namespace TenUI {
 	}
 	
 	void StateMachine::changeState(const shared_ptr<State>& newState, const shared_ptr<Transition>& newTransition){	
-		std::cout << "ChangeState: " <<  curState->getID() << " --> " <<newState->getID() << endl;
-		
 		curState->onExit(newState->getID());
 
 		

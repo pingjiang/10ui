@@ -16,8 +16,8 @@ namespace TenUI{
 	
 
 	void StyleManager::registerUIComponent(shared_ptr<UIComponent> uiComps, const string& uiCompName, const string& parentUICompName){	
-		cout << "registering: " << uiCompName << " parent: " << parentUICompName << endl;
-
+		//TODO Make sure we're not registering a component multiple times 
+		
 		// Base StyleSetDeclaration off of parent UIComponent
 		if(parentUICompName.size() > 0 ){
 			UIComp_StateStyle_MapType::iterator parentSSDecl = compStyleMap.find(parentUICompName);
