@@ -7,8 +7,6 @@
 
 #include <TenMilManUI/UserInputs/SDLMouseInput.h>
 
-#include "UserInputs/TableInput_NewArch.h"
-
 #include <tr1/memory>
 
 using std::tr1::dynamic_pointer_cast;
@@ -19,9 +17,9 @@ namespace TenUI {
 		getTenUIInputManager()->registerInput(
 			shared_ptr<SDLMouseInput>(new SDLMouseInput())
 		);
-		getTenUIInputManager()->registerInput(
+		/*getTenUIInputManager()->registerInput(
 			shared_ptr<TableInput_NewArch>(new TableInput_NewArch("pitfall.vrac.iastate.edu",50002,50003))
-		);
+		);*/
 	}
 
 	void UIControls_TestApp::init() throw(int){

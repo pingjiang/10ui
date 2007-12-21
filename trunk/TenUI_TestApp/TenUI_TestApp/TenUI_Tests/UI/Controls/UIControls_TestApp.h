@@ -4,9 +4,8 @@
 #include <iostream>
 #include <string>
 
-#include <TenMilManUI/ITenMilManUIApp.h>
-#include <TenMilManUI/TenMilManUI.h>
-#include <TenMilManUI/TenMilManUI_Enums.h>
+#include <TenMilManUI/ITenUIApp.h>
+#include <TenMilManUI/TenUI.h>
 #include <TenMilManUI/UserInputs/SDLMouseInput.h>
 
 #include <TenMilManUI/Graphics/IGraphics.h>
@@ -17,7 +16,7 @@ using namespace std;
 
 namespace TenUI {
 
-	class UIControls_TestApp : public ITenMilManUIApp {
+	class UIControls_TestApp : public ITenUIApp {
 		/***************************************/
 		/************ Public Methods ***********/
 		/***************************************/
@@ -51,7 +50,7 @@ namespace TenUI {
 			
 			virtual GraphicsOptions* getGraphicsOptions() 		{ return new GraphicsOptions(	"UI Controls Test App",
 																								1024, 768, 32, 
-																	  				 			IGraphicsEnums::FULLSCREEN, 
+																	  				 			IGraphicsEnums::WINDOWED, 
 																	  				 			string("")); 		}
 			virtual IGraphics* getGraphics()					{ return OpenGL_Graphics::instance(); }
 	};
