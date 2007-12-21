@@ -11,6 +11,7 @@
 
 #include <TenMilManUI/Graphics/IGraphics.h>
 #include <TenMilManUI/Graphics/OpenGL_Graphics/OpenGL_Graphics.h>
+#include <TenMilManUI/UI/Controls/DraggableButton/DraggableButton.h>
 #include <TenMilManUI/Graphics/GraphicsOptions.h>
 
 using namespace std;
@@ -36,6 +37,7 @@ namespace TenUI {
 		/*********** Private Methods ***********/
 		/***************************************/
 		private:
+			void styleUnit(bool isRed, const shared_ptr<DraggableButton>& unit, const string& unitIcon);
 
 		/***************************************/
 		/**** ITenMilManUIApp Implmentation ****/
@@ -51,7 +53,7 @@ namespace TenUI {
 			
 			virtual GraphicsOptions* getGraphicsOptions() 		{ return new GraphicsOptions(	"UI Controls Test App",
 																								1024, 768, 32, 
-																	  				 			IGraphicsEnums::WINDOWED, 
+																	  				 			IGraphicsEnums::FULLSCREEN, 
 																	  				 			string("")); 		}
 			virtual IGraphics* getGraphics()					{ return OpenGL_Graphics::instance(); }
 	};
