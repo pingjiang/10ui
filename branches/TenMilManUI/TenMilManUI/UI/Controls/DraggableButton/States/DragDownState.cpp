@@ -2,6 +2,7 @@
 
 #include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
 #include <TenMilManUI/UI/Controls/Button/States/HoverState.h>
+#include <TenMilManUI/UI/Controls/Button/States/UpState.h>
 #include <TenMilManUI/TenUI_Globals.h>
 
 #include <algorithm>
@@ -28,7 +29,7 @@ namespace ButtonStates{
 				++it){
 
 				// Only worry about the User that owns the UIComponent 
-				if(getUIComponent()->getOwnerUserID() == (*it)->getUserID()){
+				if(getUIComponent()->getOwnerUserID() == (*it)->getPointID()){
 					if((*it)->getType() == PointEvent::UP_EVENT_TYPE){
 						handlePointUp((*it));
 					}else if((*it)->getType() == PointEvent::OUT_EVENT_TYPE){
@@ -45,8 +46,8 @@ namespace ButtonStates{
 	void DragDownState::handlePointMove(const shared_ptr<Event>& uievent ){
 		shared_ptr<PointEvent> pte = dynamic_pointer_cast<PointEvent>(uievent); 
 		if(pte){
-			getUIComponent()->setCenterX(pte->getX()+offsetX);
-			getUIComponent()->setCenterY(pte->getY()+offsetY);
+			getUIComponent()->setGlobalCenterX(pte->getX()+offsetX);
+			getUIComponent()->setGlobalCenterY(pte->getY()+offsetY);
 		}
 		
 	}
@@ -57,9 +58,10 @@ namespace ButtonStates{
 			shared_ptr<HoverState> hover = dynamic_pointer_cast<HoverState>(getUIComponent()->getStateMachine()->getState(prevState));
 			offsetX = hover->getInitiatingX();
 			offsetY = hover->getInitiatingY();
-		}else{
-			offsetX = -1;
-			offsetY = -1;
+		}else if( prevState == UpState::STATE_NAME ){
+			shared_ptr<UpState> hover = dynamic_pointer_cast<UpState>(getUIComponent()->getStateMachine()->getState(prevState));
+			offsetX = hover->getInitiatingX();
+			offsetY = hover->getInitiatingY();
 		}
 		
 		getTenUI()->bringUIComponentFront(getUIComponent());
@@ -129,10 +131,10 @@ namespace ButtonStates{
 	
 	void DragDownState::onExit(const StateIDType& nextState){
 		DownState::onExit(nextState);
-		/*getUIComponent()->unregisterHandler(
+		getUIComponent()->unregisterHandler(
 				MultiPointEvent::MULTIPOINT_EVENT_TYPE,
 				dynamic_pointer_cast<DragDownState>(shared_from_this())
-		);*/		
+		);
 		getUIComponent()->unregisterHandler(
 				PointEvent::MOVE_EVENT_TYPE, 
 				dynamic_pointer_cast<DragDownState>(shared_from_this())

@@ -65,7 +65,7 @@ namespace TenUI {
 			
 			graphics->beginRendering(IGraphicsEnums::SELECTION);
 			while(it != rootObjs.end()){
-				graphics->setColorID((*it)->getObjectID());
+				//graphics->setColorID((*it)->getObjectID());
 				(*it)->preDraw();
 				(*it)->draw();
 				(*it)->postDraw();
@@ -74,6 +74,10 @@ namespace TenUI {
 			graphics->endRendering();
 			
 			runSelectionRendering = false;
+		}
+		
+		if(allUIComps[graphics->getColorID(x,y)]){
+			cout << "UIComp ID: " << allUIComps[graphics->getColorID(x,y)]->getObjectID() << endl;
 		}
 		return allUIComps[graphics->getColorID(x,y)];
 	}
@@ -94,12 +98,16 @@ namespace TenUI {
 		while(it != rootObjs.end()){
 			if( (*it)->getObjectID() == uicompid ){
 				rootObjit = it;
+				break;
 			}
 			++it;
 		}
-		shared_ptr<DisplayObject> rootObj = (*rootObjit);
-		rootObjs.erase(rootObjit);
-		rootObjs.push_back(rootObj);
+		
+		if(it != rootObjs.end()){
+			shared_ptr<DisplayObject> rootObj = (*rootObjit);
+			rootObjs.erase(rootObjit);
+			rootObjs.push_back(rootObj);
+		}
 	}
 	
 	/**********************************
@@ -136,9 +144,11 @@ namespace TenUI {
 	}
 		
 	void TenMilManUI::addUIComponent(const shared_ptr<UIComponent>& uicomp){
-		rootObjs.insert(rootObjs.begin(), uicomp);
-		addUIComponent_Recursive(uicomp);
-				
+		map<unsigned long , shared_ptr<UIComponent> >::iterator it = allUIComps.find(uicomp->getObjectID());
+		if( it == allUIComps.end() ){
+			rootObjs.insert(rootObjs.begin(), uicomp);
+			addUIComponent_Recursive(uicomp);	
+		}		
 	}
 	
 	void TenMilManUI::addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp){
@@ -150,7 +160,7 @@ namespace TenUI {
 		while(it != end){
 			shared_ptr<UIComponent> child = dynamic_pointer_cast<UIComponent>(*it);
 			if(child != NULL){
-				addUIComponent(child);
+				addUIComponent_Recursive(child);
 			}
 			++it;
 		}

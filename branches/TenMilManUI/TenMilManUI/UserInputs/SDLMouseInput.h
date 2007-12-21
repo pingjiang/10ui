@@ -39,6 +39,10 @@ namespace TenUI {
 		virtual void init() {
 			uid = getNextUserID();
 		}
+
+		virtual bool hoverCapable(){
+			return true;
+		}
 		
 		virtual bool update(){
 			bool zoomin = false;

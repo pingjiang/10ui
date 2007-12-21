@@ -1,6 +1,5 @@
 #include "DraggableButton.h"
 #include "States/DragDownState.h"
-#include "States/ZoomableUpState.h"
 
 #include <TenMilManUI/TenUI_Globals.h>
 #include <TenMilManUI/Graphics/Util/ColorHex.h>
@@ -34,15 +33,6 @@ namespace TenUI{
 	/***********************************/
 	void DraggableButton::initStates(){
 		Button::initStates();
-		
-		// Override ButtonStates::UpState
-		/*stateMachine->registerState(
-				shared_ptr<ButtonStates::ZoomableUpState>(
-						new ButtonStates::ZoomableUpState(
-								dynamic_pointer_cast<UIComponent>(shared_from_this())
-						)
-				), 
-				true);*/
 		
 		// Override ButtonStates::DownState
 		stateMachine->registerState(

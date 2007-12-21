@@ -32,7 +32,6 @@ namespace ButtonStates{
 		void handleMultiPointEvent(const shared_ptr<Event>& uievent );
 		void handlePointDown(const shared_ptr<Event>& uievent );
 		void handlePointOut(const shared_ptr<Event>& uievent );
-		void handleZoom(const shared_ptr<Event>& uievent );
 		
 		virtual void onEnter(const StateIDType& prevState);
 		virtual void onExit(const StateIDType& nextState);

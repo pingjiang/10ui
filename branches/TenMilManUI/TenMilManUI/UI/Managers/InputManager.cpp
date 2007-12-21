@@ -64,6 +64,8 @@ namespace TenUI {
 		shared_ptr< vector< shared_ptr<PointEvent> > > pointEvents(new vector< shared_ptr<PointEvent> >());
 		shared_ptr<UIComponent> curTarget = getTenUI()->getUIComponentsAt(pointEvent->getX(), pointEvent->getY());
 
+		shared_ptr<UserInput> userInput = getInput(pointEvent->getUserInputID());
+
 		// Send In and Out Events
 		if( pointEvent->getType() == PointEvent::MOVE_EVENT_TYPE ){
 			
@@ -94,7 +96,8 @@ namespace TenUI {
 				}
 				
 				// Send In Event
-				if( curTarget && curTarget->getObjectID() != 0 ){
+				if( curTarget && curTarget->getObjectID() != 0 && 
+					curTarget->getOwnerUserID() == 0 ){
 					pointEvents->push_back(
 							shared_ptr<PointEvent>(
 									new PointEvent(	PointEvent::IN_EVENT_TYPE,
@@ -107,7 +110,7 @@ namespace TenUI {
 													curTarget
 									)
 							)
-					);									
+					);
 				}
 				
 				(UID_PointID_UIComp_Map[pointEvent->getUserID()])[pointEvent->getPointID()] = (curTarget)?curTarget->getObjectID():0;
@@ -115,12 +118,74 @@ namespace TenUI {
 			}
 			
 			
+		}else if(pointEvent->getType() == PointEvent::UP_EVENT_TYPE ){
+			
+			if( userInput && !userInput->hoverCapable() ){
+				
+				unordered_map< unsigned long, unsigned long >::iterator testPrevit = (UID_PointID_UIComp_Map[pointEvent->getUserID()]).find(pointEvent->getPointID());
+				if(testPrevit != (UID_PointID_UIComp_Map[pointEvent->getUserID()]).end()){
+					if( testPrevit->second ){						
+						UserID_Type targetUID = getTenUI()->getUIComponent(testPrevit->second)->getOwnerUserID();
+						
+						if( targetUID == pointEvent->getPointID() ){							
+							// Send Out Event
+							pointEvents->push_back(
+									shared_ptr<PointEvent>(
+											new PointEvent(	PointEvent::OUT_EVENT_TYPE,
+															pointEvent->getUserID(), 
+															pointEvent->getUserInputID(), 
+															pointEvent->getPointID(),
+															pointEvent->getX(),
+															pointEvent->getY(),
+															pointEvent->getPressed(),
+															getTenUI()->getUIComponent(testPrevit->second)
+											)
+									)
+							);
+
+							testPrevit->second = 0;
+						}
+					}
+
+				}				
+			}
+		}else if(pointEvent->getType() == PointEvent::DOWN_EVENT_TYPE ){
+			if( userInput && !userInput->hoverCapable() ){ 
+				
+				if( curTarget ){				
+					unordered_map< unsigned long, unsigned long >::iterator testPrevit = (UID_PointID_UIComp_Map[pointEvent->getUserID()]).find(pointEvent->getPointID());
+					if(testPrevit == (UID_PointID_UIComp_Map[pointEvent->getUserID()]).end()){
+						
+						if( curTarget->getOwnerUserID() == 0 ){
+							// Send Out Event
+							pointEvents->push_back(
+									shared_ptr<PointEvent>(
+											new PointEvent(	PointEvent::IN_EVENT_TYPE,
+															pointEvent->getUserID(), 
+															pointEvent->getUserInputID(), 
+															pointEvent->getPointID(),
+															pointEvent->getX(),
+															pointEvent->getY(),
+															pointEvent->getPressed(),
+															curTarget
+											)
+									)
+							);
+							(UID_PointID_UIComp_Map[pointEvent->getUserID()])[pointEvent->getPointID()] = curTarget->getObjectID();
+						}
+					}
+				}
+			}
 		}
+		
+		
 		if( curTarget ){
 			pointEvent->setTarget(curTarget);
-
 			pointEvents->push_back(pointEvent);
 		}
+
+			
+		
 			
 		return pointEvents;
 	}
