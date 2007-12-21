@@ -1,10 +1,10 @@
-#ifndef ITENMILMANUIAPP_H_
-#define ITENMILMANUIAPP_H_
+#ifndef ITENUIAPP_H_
+#define ITENUIAPP_H_
 
 #include <string>
 
-#include <TenMilManUI/TenMilManUI.h>
-#include <TenMilManUI/TenMilManUI_Enums.h>
+#include <TenMilManUI/TenUI.h>
+#include <TenMilManUI/TenUI_Enums.h>
 #include <TenMilManUI/UserInputs/UserInput.h>
 #include <TenMilManUI/Graphics/GraphicsOptions.h>
 
@@ -13,15 +13,15 @@ using std::string;
 
 namespace TenUI {
 
-	class TenMilManUI;
+	class TenUI;
 
 	enum APPEXCEPTIONS { APPEXCEPTION_TENMILMANUIAPP_INIT_FAILED };
 
-	class ITenMilManUIApp {
+	class ITenUIApp {
 		private:		
 		protected:
 		public:
-			ITenMilManUIApp();
+			virtual ~ITenUIApp(){};
 			
 			virtual void initInput() = 0;
 			virtual void init() throw(int) = 0;
@@ -31,9 +31,7 @@ namespace TenUI {
 			
 			virtual GraphicsOptions* getGraphicsOptions() = 0;
 			virtual IGraphics* 		 getGraphics() = 0;
-			
-			virtual ~ITenMilManUIApp(){}
 	};
 }
 
-#endif /*ITENMILMANUIAPP_H_*/
+#endif /*ITENUIAPP_H_*/

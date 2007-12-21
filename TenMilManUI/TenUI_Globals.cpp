@@ -1,13 +1,13 @@
 #include "TenUI_Globals.h"
 
 namespace TenUI{
-	TenMilManUI* getTenUI(){
-		return TenMilManUI::instance();
+	TenUI* getTenUI(){
+		return TenUI::instance();
 	}
 	IGraphics* getTenUIGraphics(){
-		return TenMilManUI::instance()->getGraphics();
+		return TenUI::instance()->getGraphics();
 	}
-	shared_ptr<TenUI::InputManager> getTenUIInputManager() { 
-		return TenUI::InputManager::instance(); 
+	shared_ptr<InputManager> getTenUIInputManager() { 
+		return InputManager::instance(); 
 	}
 }

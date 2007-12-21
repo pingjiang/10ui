@@ -1,25 +1,25 @@
-#include "TenMilManUI.h"
+#include "TenUI.h"
 
 namespace TenUI {	
 
 	/**********************************
 	 * 	   Singleton Implementation	  *	 
 	 **********************************/
-	TenMilManUI* TenMilManUI::inst = 0;
-	TenMilManUI* TenMilManUI::createInstance(ITenMilManUIApp *app) throw(int){
-		if(TenMilManUI::inst == 0){
-			TenMilManUI::inst = new TenMilManUI(app);
+	TenUI* TenUI::inst = 0;
+	TenUI* TenUI::createInstance(ITenUIApp *app) throw(int){
+		if(TenUI::inst == 0){
+			TenUI::inst = new TenUI(app);
 		}
-		return TenMilManUI::inst;
+		return TenUI::inst;
 	}
-	TenMilManUI* TenMilManUI::instance(){
-		return TenMilManUI::inst;
+	TenUI* TenUI::instance(){
+		return TenUI::inst;
 	}	
 
 	/**********************************
 	 * 	 	Constructor/Destructor	  *	 
 	 **********************************/
-	TenMilManUI::TenMilManUI(ITenMilManUIApp *app) throw(int)	{
+	TenUI::TenUI(ITenUIApp *app) throw(int)	{
 		this->app = app;	        
 		this->graphics = app->getGraphics();
 		
@@ -27,12 +27,12 @@ namespace TenUI {
 		running = true;
 		runSelectionRendering = true;
 	}	
-	TenMilManUI::~TenMilManUI(){}
+	TenUI::~TenUI(){}
 	
 	/**********************************
 	 * 	 		Public Methods	  	  *	 
 	 **********************************/	
-	void TenMilManUI::run() throw(int){		
+	void TenUI::run() throw(int){		
 		graphics->init(app->getGraphicsOptions());
 		
 		app->initInput();
@@ -53,13 +53,13 @@ namespace TenUI {
 		graphics->deinit();
 	}
 
-	void TenMilManUI::quit() throw(int){
+	void TenUI::quit() throw(int){
 		pthread_mutex_lock(&runningMutex);
 		running = false;
 		pthread_mutex_unlock(&runningMutex);
 		
 	}
-	shared_ptr<UIComponent> TenMilManUI::getUIComponentsAt(int x, int y){
+	shared_ptr<UIComponent> TenUI::getUIComponentsAt(int x, int y){
 		if( runSelectionRendering ){
 			vector<shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
 			
@@ -79,16 +79,16 @@ namespace TenUI {
 		return allUIComps[graphics->getColorID(x,y)];
 	}
 	
-	shared_ptr<UIComponent> TenMilManUI::getUIComponent(unsigned long uicompid){
+	shared_ptr<UIComponent> TenUI::getUIComponent(unsigned long uicompid){
 		map<unsigned long , shared_ptr<UIComponent> >::iterator it = allUIComps.find(uicompid);
 		return ( it != allUIComps.end() ) ? it->second : shared_ptr<UIComponent>(); 
 	}
 	
 
-	void TenMilManUI::bringUIComponentFront(const shared_ptr<UIComponent>& uicomp){
+	void TenUI::bringUIComponentFront(const shared_ptr<UIComponent>& uicomp){
 		bringUIComponentFront(uicomp->getObjectID());
 	}
-	void TenMilManUI::bringUIComponentFront(unsigned long uicompid){
+	void TenUI::bringUIComponentFront(unsigned long uicompid){
 		vector< shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
 		
 		vector< shared_ptr<DisplayObject> >::iterator rootObjit = rootObjs.end(); 
@@ -110,7 +110,7 @@ namespace TenUI {
 	/**********************************
 	 * 	 		Private Methods	  	  *	 
 	 **********************************/		
-	void TenMilManUI::draw(){
+	void TenUI::draw(){
 		vector< shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
 		
 		graphics->beginRendering(IGraphicsEnums::DISPLAY);
@@ -124,7 +124,7 @@ namespace TenUI {
 		
 		graphics->endRendering();			
 	}
-	void TenMilManUI::update(){
+	void TenUI::update(){
 		vector< shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
 		while(it != rootObjs.end()){			
 			(*it)->update();
@@ -132,7 +132,7 @@ namespace TenUI {
 		}
 	}
 	
-	bool TenMilManUI::isRunning(){
+	bool TenUI::isRunning(){
 		bool temp;
 		pthread_mutex_lock(&runningMutex);
 		temp = running;
@@ -140,7 +140,7 @@ namespace TenUI {
 		return temp;
 	}
 		
-	void TenMilManUI::addUIComponent(const shared_ptr<UIComponent>& uicomp){
+	void TenUI::addUIComponent(const shared_ptr<UIComponent>& uicomp){
 		map<unsigned long , shared_ptr<UIComponent> >::iterator it = allUIComps.find(uicomp->getObjectID());
 		if( it == allUIComps.end() ){
 			rootObjs.insert(rootObjs.begin(), uicomp);
@@ -148,7 +148,7 @@ namespace TenUI {
 		}		
 	}
 	
-	void TenMilManUI::addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp){
+	void TenUI::addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp){
 		uicomp->init();
 		allUIComps[uicomp->getObjectID()] = uicomp;
 		

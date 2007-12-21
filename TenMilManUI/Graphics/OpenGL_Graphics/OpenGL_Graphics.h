@@ -27,7 +27,10 @@
 
 #include "Font/FontManager_FT2.h"
 
+#include <tr1/memory>
+
 using namespace std;
+using std::tr1::shared_ptr;
 
 namespace TenUI{
 	
@@ -54,7 +57,6 @@ namespace TenUI{
 	private:
 		GraphicsOptions*			graphicsOptions;
 		FontManager_FT2*			fontMgr;
-		vector<OpenGL_Image*> 		images;
 		IGraphicsEnums::IGRAPHICS_RENDERING_MODE 	renderMode;
 		
 		GLuint redSelMask;
@@ -146,11 +148,11 @@ namespace TenUI{
 		/******************************/
 		/*         Image Methods      */
 		/******************************/ 
-		virtual void drawImage(	const IImage* img, 
+		virtual void drawImage(	const shared_ptr<IImage>& img, 
 								int x, int y, 
 								float opacity = 1.0,
 								unsigned int width=0, unsigned int height=0);
-		virtual IImage* loadImage(const string& imageFile);
+		virtual shared_ptr<IImage> loadImage(const string& imageFile);
 	
 		/******************************/
 		/*         Text Methods       */

@@ -1,12 +1,12 @@
 #ifndef TENUI_GLOBALS_H_
 #define TENUI_GLOBALS_H_
 
-#include "TenMilManUI.h"
+#include "TenUI.h"
 
 namespace TenUI{
-	TenMilManUI* getTenUI();
+	TenUI* getTenUI();
 	IGraphics* getTenUIGraphics();
-	shared_ptr<TenUI::InputManager> getTenUIInputManager();
+	shared_ptr<InputManager> getTenUIInputManager();
 }
 
 #endif /*TENUI_GLOBALS_H_*/

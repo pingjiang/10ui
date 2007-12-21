@@ -1,20 +1,6 @@
-#ifndef TENMILMANUI_H_
-#define TENMILMANUI_H_
+#ifndef TENUI_H_
+#define TENUI_H_
 
-// includes
-#ifdef WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-#endif
-#if defined(__APPLE__) && defined(__MACH__)
-	#include <OpenGL/gl.h>
-	#include <OpenGL/glu.h>
-#else
-	#include <GL/gl.h>
-	#include <GL/glu.h>
-#endif
-
-#include <SDL.h>
 #include <iostream>
 #include <map>
 #include <string>
@@ -23,37 +9,35 @@
 
 #include <TenMilManUI/Graphics/IGraphics.h>
 #include <TenMilManUI/Graphics/GraphicsOptions.h>
-#include <TenMilManUI/ITenMilManUIApp.h>
-#include <TenMilManUI/TenMilManUI_Enums.h>
+#include <TenMilManUI/ITenUIApp.h>
 #include <TenMilManUI/UI/Core/DisplayObject.h>
-#include <TenMilManUI/UI/Core/DisplayObjectContainer.h>
 #include <TenMilManUI/UI/Core/UIComponent.h>
 #include <TenMilManUI/UserInputs/UserInput.h>
 #include <TenMilManUI/UI/Managers/InputManager.h>
 
 #define IMPLEMENT_TENUI_APP( tenuiApp ) int main(void) {																			\
-											TenUI::ITenMilManUIApp* app = (TenUI::ITenMilManUIApp*) new TenUI::tenuiApp;			\
-											TenUI::TenMilManUI* tui = TenUI::TenMilManUI::createInstance(app);						\
+											TenUI::ITenUIApp* app = (TenUI::ITenUIApp*) new TenUI::tenuiApp;							\
+											TenUI::TenUI* tui = TenUI::TenUI::createInstance(app);									\
 											tui->run();																				\
 											return 0;																				\
-									  }
+									  	}
 using namespace std;
 using std::tr1::shared_ptr;
 
 namespace TenUI {
 
-	class ITenMilManUIApp;
-	
-	class TenMilManUI {
+	class ITenUIApp;
+	 
+	class TenUI {
 		
 		// Private Variables
 		private:
-		    static TenMilManUI* inst;
+		    static TenUI* inst;
 		    IGraphics* graphics;
 		    
 		    vector< shared_ptr<DisplayObject> > rootObjs;
 		    map<unsigned long , shared_ptr<UIComponent> > allUIComps;
-		    ITenMilManUIApp *app;
+		    ITenUIApp *app;
 						
 			// Indicates whether UI should continue running
 			// Made for Multi-Threading
@@ -65,8 +49,8 @@ namespace TenUI {
 			
 		// Private Methods
 		private:
-			TenMilManUI(ITenMilManUIApp *) throw(int);						
-			virtual ~TenMilManUI();
+			TenUI(ITenUIApp *) throw(int);						
+			virtual ~TenUI();
 						
 			void update(); 
 			void draw();
@@ -76,8 +60,8 @@ namespace TenUI {
 
 		// Public Methods
 		public:
-			static TenMilManUI* createInstance(ITenMilManUIApp *) throw(int);
-			static TenMilManUI* instance();			
+			static TenUI* createInstance(ITenUIApp *) throw(int);
+			static TenUI* instance();			
 			
 			void run() throw(int);
 			void quit() throw(int);
@@ -96,4 +80,4 @@ namespace TenUI {
 
 }
 
-#endif /*TENMILMANUI_H_*/
+#endif /*TENUI_H_*/
