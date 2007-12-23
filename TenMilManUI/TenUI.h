@@ -27,52 +27,132 @@ using std::tr1::shared_ptr;
 namespace TenUI {
 
 	class ITenUIApp;
-	 
+	
+	/**
+	 * Singleton class that manages TenUI Input, Graphics, UIComponents, and Application
+	 */
 	class TenUI {
 		
-		// Private Variables
+
+		/** @name Singleton Implementation
+		 *  Methods for adding, removing, and querying UIComponents. 
+		 */
+		//@{
 		private:
 		    static TenUI* inst;
-		    IGraphics* graphics;
-		    
-		    vector< shared_ptr<DisplayObject> > rootObjs;
-		    map<unsigned long , shared_ptr<UIComponent> > allUIComps;
-		    ITenUIApp *app;
-						
-			// Indicates whether UI should continue running
-			// Made for Multi-Threading
-		    pthread_mutex_t runningMutex;
-			bool running;
+		public:
+			/**
+			 * Creates a new instance of TenUI given a ITenUIApp.
+			 * Should only be used by the IMPLEMENT_TENUI_APP macros
+			 */
+			static TenUI* createInstance(ITenUIApp *) throw(int);
 			
-			// getUIComponentsAt
-			bool runSelectionRendering; 
-			
-		// Private Methods
+			/**
+			 * Returns a pointer to the TenUI object.
+			 */
+			static TenUI* instance();
+
+		// Constructor Destructor
 		private:
 			TenUI(ITenUIApp *) throw(int);						
 			virtual ~TenUI();
-						
+		//@}
+		
+		/** @name Graphics and Graphics Options
+		 *  Getters for the current IGraphics and GraphicsOptions objects.
+		 */
+		//@{
+		private: 	
+		    IGraphics* graphics;
+		public:
+			
+			/**
+			 * Returns a pointer to the IGraphics.
+			 */
+			IGraphics* getGraphics(){ return graphics; }
+			
+			/**
+			 * Returns the GraphicsOptions, currently being used describe the display.   
+			 */
+			GraphicsOptions& getGraphicsOptions() const { return graphics->getGraphicsOptions(); }			
+		//@}
+
+		/** @name UIComponent management
+		 *  Methods for adding, removing, and querying UIComponents. 
+		 */
+		//@{
+		private:
+		    vector< shared_ptr<DisplayObject> > rootObjs;
+		    map<unsigned long , shared_ptr<UIComponent> > allUIComps;
+		public:
+			/**
+			 * Adds a UIComponent at the root level.
+			 * 
+			 * @param uicomp 	New UIComponent to be added.
+			 */
+			void 						addUIComponent(const shared_ptr<UIComponent>& uicomp);
+			/**
+			 * Removes UIComponent from TenUI.  Doesn't have to be at the root level.
+			 * 
+			 * @param uicompid	DisplayObject ID of the UIComponent.
+			 */  
+			void 						removeUIComponent(DisplayObjectIDType uicompid){}
+
+			/**
+			 * Gets a pointer to a UIComponent given a DisplayObject ID
+			 * 
+			 * @param uicompid	Display Object ID of the UIComponent.
+			 */
+			shared_ptr<UIComponent> 	getUIComponent(DisplayObjectIDType uicompid);
+
+			/**
+			 * Gets a pointer to the top-most UIComponent at a given screen coordinate.
+			 * "top-most" describes a UIComponent that rendered later then others, and thus rendered ontop of possibly overlapping UIComponents.  
+			 * 
+			 * @param x 		X screen cordinate
+			 * @param y 		Y screen coordinate
+			 */
+			shared_ptr<UIComponent> 	getUIComponentsAt(int x, int y);
+			
+		private:
+			void addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp);
+		//@}			
+		
+		/** @name Game Loop 
+		 *  Methods for adding, removing, and querying UIComponents. 
+		 */
+		//@{
+		public:
+			/** 
+			 * Kicks off execution of the registered TenUI application
+			 * This is a blocking call.
+			 */
+			void run();
+			/**
+			 * Requests a halt of execution.
+			 * Execution will stop the next cycle that processes a quit has been requested.
+			 */
+			void quit();
+			
+		private:
 			void update(); 
 			void draw();
+			
 			bool isRunning();	
+			bool running;
 			
-			void addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp);
+			// TODO moved to graphics
+			bool runSelectionRendering; 
+		//@}
 
-		// Public Methods
-		public:
-			static TenUI* createInstance(ITenUIApp *) throw(int);
-			static TenUI* instance();			
 			
-			void run() throw(int);
-			void quit() throw(int);
-
-			IGraphics* getGraphics(){ return graphics; }
-			GraphicsOptions& getGraphicsOptions() const { return graphics->getGraphicsOptions(); }			
+		// TenUI App
+		private:
+		    ITenUIApp *app;
 			
-			void 						addUIComponent(const shared_ptr<UIComponent>& uicomp);
-			shared_ptr<UIComponent> 	getUIComponent(unsigned long uicompid);
-			shared_ptr<UIComponent> 	getUIComponentsAt(int x, int y);
-
+						
+		// TODO Localize to UIComponents.  UIComponent should offer this function to allow reording of children
+		public:		
 			void 						bringUIComponentFront(const shared_ptr<UIComponent>& uicomp);
 			void 						bringUIComponentFront(unsigned long uicompid);
 						

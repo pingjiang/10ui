@@ -23,8 +23,7 @@ namespace TenUI {
 		this->app = app;	        
 		this->graphics = app->getGraphics();
 		
-	    pthread_mutex_init(&runningMutex,NULL);	
-		running = true;
+	    running = true;
 		runSelectionRendering = true;
 	}	
 	TenUI::~TenUI(){}
@@ -32,11 +31,11 @@ namespace TenUI {
 	/**********************************
 	 * 	 		Public Methods	  	  *	 
 	 **********************************/	
-	void TenUI::run() throw(int){		
+	void TenUI::run(){		
 		graphics->init(app->getGraphicsOptions());
 		
-		app->initInput();
 		app->init();
+		app->initInput();
 		
 		while(isRunning() && !InputManager::instance()->isQuit()){
 			app->update_preframe();
@@ -53,10 +52,8 @@ namespace TenUI {
 		graphics->deinit();
 	}
 
-	void TenUI::quit() throw(int){
-		pthread_mutex_lock(&runningMutex);
+	void TenUI::quit(){
 		running = false;
-		pthread_mutex_unlock(&runningMutex);
 		
 	}
 	shared_ptr<UIComponent> TenUI::getUIComponentsAt(int x, int y){
@@ -133,11 +130,7 @@ namespace TenUI {
 	}
 	
 	bool TenUI::isRunning(){
-		bool temp;
-		pthread_mutex_lock(&runningMutex);
-		temp = running;
-		pthread_mutex_unlock(&runningMutex);
-		return temp;
+		return running;
 	}
 		
 	void TenUI::addUIComponent(const shared_ptr<UIComponent>& uicomp){
