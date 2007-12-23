@@ -5,7 +5,6 @@
 
 #include <TenMilManUI/TenUI.h>
 #include <TenMilManUI/TenUI_Enums.h>
-#include <TenMilManUI/UserInputs/UserInput.h>
 #include <TenMilManUI/Graphics/GraphicsOptions.h>
 
 using std::string;
@@ -24,10 +23,10 @@ namespace TenUI {
 			virtual ~ITenUIApp(){};
 			
 			virtual void initInput() = 0;
-			virtual void init() throw(int) = 0;
-			virtual void update_preframe() throw(APPEXCEPTIONS) = 0;
-			virtual void update_frame() throw(APPEXCEPTIONS) = 0;
-			virtual void deinit() throw(APPEXCEPTIONS) = 0;
+			virtual void init() = 0;
+			virtual void update_preframe() = 0;
+			virtual void update_frame() = 0;
+			virtual void deinit() = 0;
 			
 			virtual GraphicsOptions* getGraphicsOptions() = 0;
 			virtual IGraphics* 		 getGraphics() = 0;
