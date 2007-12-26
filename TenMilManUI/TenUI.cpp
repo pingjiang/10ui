@@ -21,7 +21,6 @@ namespace TenUI {
 	 **********************************/
 	TenUI::TenUI(ITenUIApp *app) throw(int)	{
 		this->app = app;	        
-		this->graphics = app->getGraphics();
 		
 	    running = true;
 		runSelectionRendering = true;
@@ -31,11 +30,15 @@ namespace TenUI {
 	/**********************************
 	 * 	 		Public Methods	  	  *	 
 	 **********************************/	
-	void TenUI::run(){		
-		graphics->init(app->getGraphicsOptions());
+	void TenUI::run(){	
+		
+		// Initializes Graphics
+		this->graphics = app->initGraphics();
+		
+		// Initializes UserInputs
+		app->initUserInputs();
 		
 		app->init();
-		app->initInput();
 		
 		while(isRunning() && !InputManager::instance()->isQuit()){
 			app->update_preframe();
@@ -142,7 +145,7 @@ namespace TenUI {
 	}
 	
 	void TenUI::addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp){
-		uicomp->init();
+		//uicomp->init();
 		allUIComps[uicomp->getObjectID()] = uicomp;
 		
 		vector< shared_ptr<DisplayObject> >::const_iterator end = uicomp->getChildren().end();

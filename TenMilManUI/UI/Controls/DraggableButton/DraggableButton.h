@@ -17,9 +17,20 @@ using std::endl;
 namespace TenUI{
 
 	class DraggableButton : public Button {
+		
+
+	/** @name Construction 
+	 */
+	//@{
 	public:
-		DraggableButton(int x, int y, unsigned int w=500, unsigned int h=500):Button(x,y,w,h){}
-		virtual ~DraggableButton();
+		/**
+		 * Creates a new Button.
+		 */
+		static shared_ptr<DraggableButton> create();
+	//@}
+				
+	public:
+		virtual ~DraggableButton(){}
 		
 		// UIComponent Identification
 		virtual string getUIComponentName(){
@@ -35,7 +46,7 @@ namespace TenUI{
 	/*              Event  		       */
 	/***********************************/
 	protected:
-		virtual void 			 initEvents();
+		virtual void initEvents();
 		
 	/***********************************/
 	/*          State Machine  		   */

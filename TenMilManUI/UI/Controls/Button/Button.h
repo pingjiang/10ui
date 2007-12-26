@@ -16,9 +16,19 @@ using std::endl;
 namespace TenUI{
 
 	class Button : public UIComponent {
+		
+	/** @name Construction 
+	 */
+	//@{
 	public:
-		Button(int x, int y, unsigned int w=500, unsigned int h=500):UIComponent(x,y,w,h){}
-		virtual ~Button();
+		/**
+		 * Creates a new Button.
+		 */
+		static shared_ptr<Button> create();
+	//@}
+			
+	public:
+		virtual ~Button(){}
 		
 		// UIComponent Identification
 		virtual string getUIComponentName(){

@@ -18,7 +18,14 @@ using std::tr1::dynamic_pointer_cast;
 
 namespace TenUI{
 
-	Button::~Button(){}
+	/***********************************/
+	/*          Construction  		   */
+	/***********************************/
+	shared_ptr<Button> Button::create(){
+		shared_ptr<Button> newButton(new Button());
+		newButton->init();
+		return newButton;
+	}
 	
 	/***********************************/
 	/*          State Machine  		   */

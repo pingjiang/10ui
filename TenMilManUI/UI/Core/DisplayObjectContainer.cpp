@@ -1,6 +1,6 @@
 #include "DisplayObjectContainer.h"
 
-#include "../../TenUI_Globals.h"
+#include <TenMilManUI/TenUI_Globals.h>
 
 namespace TenUI {	
 
@@ -13,7 +13,6 @@ namespace TenUI {
 	/***********************************/  
 	void DisplayObjectContainer::addChild(shared_ptr<DisplayObject> child){
 		child->setParent( shared_from_this() );
-		//child->init();
 		children.push_back(child);
 	}	
 	void DisplayObjectContainer::removeChild(shared_ptr<DisplayObject> child){

@@ -33,8 +33,7 @@ namespace TenUI {
 	 */
 	class TenUI {
 		
-
-		/** @name Singleton Implementation
+		/** @name Singleton Implementation Methods
 		 *  Methods for adding, removing, and querying UIComponents. 
 		 */
 		//@{
@@ -58,7 +57,7 @@ namespace TenUI {
 			virtual ~TenUI();
 		//@}
 		
-		/** @name Graphics and Graphics Options
+		/** @name Graphics Methods
 		 *  Getters for the current IGraphics and GraphicsOptions objects.
 		 */
 		//@{
@@ -77,7 +76,7 @@ namespace TenUI {
 			GraphicsOptions& getGraphicsOptions() const { return graphics->getGraphicsOptions(); }			
 		//@}
 
-		/** @name UIComponent management
+		/** @name UIComponent Management Methods
 		 *  Methods for adding, removing, and querying UIComponents. 
 		 */
 		//@{
@@ -118,8 +117,8 @@ namespace TenUI {
 			void addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp);
 		//@}			
 		
-		/** @name Game Loop 
-		 *  Methods for adding, removing, and querying UIComponents. 
+		/** @name Start Stop Execution Methods
+		 *  Methods for starting and stopping TenUI 
 		 */
 		//@{
 		public:
@@ -131,6 +130,7 @@ namespace TenUI {
 			/**
 			 * Requests a halt of execution.
 			 * Execution will stop the next cycle that processes a quit has been requested.
+			 * TenUI Applications should call this method to exit.
 			 */
 			void quit();
 			

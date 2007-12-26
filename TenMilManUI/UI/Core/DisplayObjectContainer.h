@@ -1,7 +1,6 @@
 #ifndef DISPLAYOBJECTCONTAINER_H_
 #define DISPLAYOBJECTCONTAINER_H_
 
-
 // includes
 #ifdef WIN32
 	#define WIN32_LEAN_AND_MEAN
@@ -17,7 +16,7 @@
 
 #include <vector>
 
-#include "DisplayObject.h"		
+#include "DisplayObject.h"
 
 #include <iostream>
 using namespace std;
@@ -34,10 +33,13 @@ namespace TenUI {
 	protected:
 		vector< shared_ptr<DisplayObject> > children;
 	
-	public:	
+	protected:
 		// constructor
-		DisplayObjectContainer( const shared_ptr<DisplayObject>& p, int x=0, int y=0, unsigned int w=0, unsigned int h=0, double rot=0.0, double s=1.0, double o=1.0)
-			:DisplayObject(p,x,y,w,h,rot,s,o){ }
+		DisplayObjectContainer( const shared_ptr<DisplayObject>& p=shared_ptr<DisplayObject>(), int x=0, int y=0, unsigned int w=0, unsigned int h=0, double rot=0.0, double s=1.0, double o=1.0)
+			:DisplayObject(p,x,y,w,h,rot,s,o){}
+		virtual void init();
+		
+	public:	
 		virtual ~DisplayObjectContainer();
 		
 		/***********************************/
@@ -50,7 +52,6 @@ namespace TenUI {
 		/***********************************/
 		/*        Init/Update Methods      */
 		/***********************************/
-		virtual void init();
 		virtual void update();
 		virtual void deinit();	
 

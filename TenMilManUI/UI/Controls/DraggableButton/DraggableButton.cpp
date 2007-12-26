@@ -16,7 +16,15 @@ using std::tr1::dynamic_pointer_cast;
 
 namespace TenUI{
 
-	DraggableButton::~DraggableButton(){}
+
+	/***********************************/
+	/*          Construction  		   */
+	/***********************************/
+	shared_ptr<DraggableButton> DraggableButton::create(){
+		shared_ptr<DraggableButton> newButton(new DraggableButton());
+		newButton->init();
+		return newButton;
+	}
 	
 
 	/***********************************/
