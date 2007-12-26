@@ -35,8 +35,11 @@ namespace TenUI {
 	/*******************************
 	*			Type Defs 		   *
 	********************************/ 
+	public:
 		typedef const shared_ptr<Event>& 									EventHandlerArgType;
 		typedef function< void (EventHandlerArgType) >						EventHandlerFuncType;
+		
+	private:
 		typedef pair< shared_ptr<EventHandler>, EventHandlerFuncType > 		HandlerPairType;
 		typedef unordered_map< 	shared_ptr<EventHandler>, 
 								EventHandlerFuncType, 

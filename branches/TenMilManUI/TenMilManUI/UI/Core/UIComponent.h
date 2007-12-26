@@ -28,11 +28,14 @@ namespace TenUI {
 
 	class UIComponent : public DisplayObjectContainer {
 	friend class UIComponentTransition;
+		
+	protected:
+		UIComponent(int x=0, int y=0, unsigned int w=100, unsigned int h=100)
+			:DisplayObjectContainer(shared_ptr<DisplayObject>(), x,y ,w,h, 0.0,1.0,1.0){
+		}
+		virtual void init();
+			
 	public:
-								 UIComponent(int x, int y, unsigned int w=100, unsigned int h=100)
-								 	:DisplayObjectContainer(shared_ptr<DisplayObject>(), x,y ,w,h, 0.0,1.0,1.0){
-									 stateMachine = shared_ptr<StateMachine>(new StateMachine());
-								 }
 		virtual 				 ~UIComponent(){};
 
 		// UIComponent Identification
@@ -66,7 +69,6 @@ namespace TenUI {
 		
 	protected:
 		shared_ptr<StateMachine> stateMachine;
-
 		virtual void 			 initStates();
 
 	/***********************************/
@@ -83,6 +85,8 @@ namespace TenUI {
 		shared_ptr< StyleSet > 											curStyleSet;
 		shared_ptr< unordered_map< string, shared_ptr<StyleSet> >  > 	stateStyleSetMap;
 
+		//TODO Initializations should occur on object construction.
+		// Right now, UIComponents need to be added to a TenUI before styling can begin 
 		virtual void 			 initStyles();
 		void 					 loadStyleSetMap();
 		void 					 setStyleSet(const string& styleSetName);
@@ -92,7 +96,6 @@ namespace TenUI {
 	/***********************************/
 	public:
 		virtual void 			 drawSelf();
-		virtual void 		  	 init();
 		virtual void 		  	 update();
 		
 	};

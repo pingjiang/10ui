@@ -62,6 +62,8 @@ namespace TenUI{
 	}
 
 	void UIComponent::initStates(){
+		stateMachine = shared_ptr<StateMachine>(new StateMachine());
+		
 		stateMachine->registerState(
 				shared_ptr<UIComponentState>(
 						new UIComponentState(
@@ -113,7 +115,6 @@ namespace TenUI{
 	}	
 	void UIComponent::initStyles(){
 		StyleManager::instance()->registerUIComponent( dynamic_pointer_cast<UIComponent>(shared_from_this()), UIComponent::getUIComponentName(), "" );
-		
 	}
 	void UIComponent::loadStyleSetMap(){
 		stateStyleSetMap = StyleManager::instance()->getStateStyleSetMap( getUIComponentName() );
@@ -137,13 +138,15 @@ namespace TenUI{
 	}
 	void UIComponent::init(){
 		DisplayObjectContainer::init();
+
+		cout << "UIComponent::init()" << endl;
 		
 		clearOwnerUserID();
 		
 		initEvents();
 		initStates();
 		initStyles();
-				
+
 		loadStyleSetMap();
 	}
 	void UIComponent::update(){

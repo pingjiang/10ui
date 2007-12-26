@@ -41,7 +41,6 @@ namespace TenUI {
 		this->setH(h);		
 		
 		setOpacity(o);
-		visible = true;
 	}
 	
 
@@ -59,16 +58,20 @@ namespace TenUI {
 	/***********************************/
 	/*     Hierarchy Getter/Setters    */
 	/***********************************/
-		unsigned long 	DisplayObject::getObjectID()				{ return objid; }
-		shared_ptr<DisplayObject>	DisplayObject::getParent()							{ return this->parent; }
-		void 			DisplayObject::setParent(const shared_ptr<DisplayObject>& p)	{ this->parent = p; }
-		bool 			DisplayObject::getEnabled()					{ return enabled; }
-		void 			DisplayObject::setEnabled(bool e)			{ enabled = e; }
+		DisplayObjectIDType 		DisplayObject::getObjectID()				{ return objid; }
+		shared_ptr<DisplayObject>	DisplayObject::getParent()					{ return this->parent; }
+		void 						DisplayObject::setParent(const shared_ptr<DisplayObject>& p)	{ this->parent = p; }
+		bool 						DisplayObject::getEnabled()					{ return enabled; }
+		void 						DisplayObject::setEnabled(bool e)			{ enabled = e; }
 		
 
 	/***********************************/
 	/*    Dimensions Getters/Setters   */
-	/***********************************/  		
+	/***********************************/  
+		void DisplayObject::setWH(unsigned int nw, unsigned int nh){
+			setW(nw);
+			setH(nh);
+		}
 		unsigned int 	DisplayObject::getW(){ return w; }
 		void 			DisplayObject::setW(unsigned int nw){
 			this->w = nw;
@@ -91,8 +94,6 @@ namespace TenUI {
 	/***********************************/
 	/*    Visibility Getter/Setters    */
 	/***********************************/  
-		bool   DisplayObject::getVisible()		{ return visible; }
-		void   DisplayObject::setVisible(bool e)	{ visible = e; }
 		double DisplayObject::getOpacity()		{ return opacity;	}
 		void   DisplayObject::setOpacity(float o) { if( o >= 0.0 && o <= 1.0 ){ opacity = o; } }	
 	
@@ -104,6 +105,11 @@ namespace TenUI {
 		/*****************/
 		/*  Translation  */
 		/*****************/
+
+			void 	DisplayObject::setGlobalCenterXY(int cx, int cy){
+				setGlobalCenterX(cx);
+				setGlobalCenterY(cy);
+			}
 			void 	DisplayObject::setGlobalCenterX(int cx){
 				setCenterX(cx - ((parent)?parent->getGlobalCenterX():0));
 			}
@@ -116,7 +122,11 @@ namespace TenUI {
 			int 	DisplayObject::getGlobalCenterY(){
 				return ((parent)?parent->getGlobalCenterY():0)  + centery;
 			}
-		
+
+			void 	DisplayObject::setCenterXY(int cx, int cy){
+				setCenterX(cx);
+				setCenterY(cy);
+			}
 			void 	DisplayObject::setCenterX(int cx){
 				x = (int) ((double)cx - (scalex*(double)w/2.0));
 				centerx = cx;
@@ -130,6 +140,12 @@ namespace TenUI {
 			}
 			int 	DisplayObject::getCenterY(){
 				return centery;
+			}
+			
+
+			void 	DisplayObject::setXY(int nx, int ny){
+				setX(nx); 
+				setY(ny);
 			}
 			void 	DisplayObject::setX(int nx){
 				x = nx;
@@ -188,30 +204,4 @@ namespace TenUI {
 			void DisplayObject::setScaleY(double s){
 				scaley = s;
 			}
-	
-
-	/*void globalToLocalCoord(int sx, int sy, double *ox, double *oy){
-		GLfloat mx = (GLfloat) sx;
-		GLfloat my = (GLfloat) sy;
-		GLdouble posX, posY, posZ;
-		
-		//glReadPixels( int(mx), int(my), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &mz );
-		gluUnProject( mx, my, 0.0, modelview, projection, viewport, &posX, &posY, &posZ);
-
-		(*ox) = posX;
-		(*oy) = posY;
-	}
-	
-	void localToGlobalCoord(int sx, int sy, int *ox, int *oy){
-		GLfloat mx = (GLfloat) sx;
-		GLfloat my = (GLfloat) sy;
-		GLdouble posX, posY, posZ;
-		
-		gluProject( mx, my, 0.0, modelview, projection, viewport, &posX, &posY, &posZ);
-
-		(*ox) = (int) posX;
-		(*oy) = (int) posY;
-	}*/
-
-	
 }
