@@ -81,7 +81,7 @@
 <a name="l00067"></a>00067                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> update(){} 
 <a name="l00068"></a>00068                 
 <a name="l00069"></a>00069                 <span class="keywordtype">void</span> preDraw(){
-<a name="l00070"></a>00070                         DisplayObject::preDraw();
+<a name="l00070"></a>00070                         <a class="code" href="classTenUI_1_1DisplayObject.html#296f20752eb127a338f1d95b48acdcf8">DisplayObject::preDraw</a>();
 <a name="l00071"></a>00071                         
 <a name="l00072"></a>00072                         glEnable(GL_SCISSOR_TEST);
 <a name="l00073"></a>00073                         
@@ -89,8 +89,8 @@
 <a name="l00075"></a>00075                         <span class="comment">//int gy;</span>
 <a name="l00076"></a>00076                         <span class="comment">//localToGlobalCoord(left, bottom, &amp;gx, &amp;gy);</span>
 <a name="l00077"></a>00077                         
-<a name="l00078"></a>00078                         glScissor(      getGlobalX()-((x2&gt;x)?0:w), 
-<a name="l00079"></a>00079                                                 getGlobalY()-((y2&gt;y)?0:h), 
+<a name="l00078"></a>00078                         glScissor(      <a class="code" href="classTenUI_1_1DisplayObject.html#31db16e6bc8ff39f32f394177716327d">getGlobalX</a>()-((x2&gt;x)?0:w), 
+<a name="l00079"></a>00079                                                 <a class="code" href="classTenUI_1_1DisplayObject.html#14f1f271b8e0b820ae0a6b611c1cb399">getGlobalY</a>()-((y2&gt;y)?0:h), 
 <a name="l00080"></a>00080                                                 w, 
 <a name="l00081"></a>00081                                                 h);
 <a name="l00082"></a>00082                                                                         
@@ -108,7 +108,7 @@
 <a name="l00094"></a>00094                 <span class="keywordtype">void</span> postDraw(){
 <a name="l00095"></a>00095                         glDisable(GL_SCISSOR_TEST);
 <a name="l00096"></a>00096 
-<a name="l00097"></a>00097                         DisplayObject::postDraw();
+<a name="l00097"></a>00097                         <a class="code" href="classTenUI_1_1DisplayObject.html#ab1e1e209b1f2c173e2eeaea3feb783b">DisplayObject::postDraw</a>();
 <a name="l00098"></a>00098                 }
 <a name="l00099"></a>00099                 
 <a name="l00100"></a>00100                 <span class="keywordtype">int</span> getX2(){
@@ -136,21 +136,21 @@
 <a name="l00122"></a>00122                 
 <a name="l00123"></a>00123                 <span class="keywordtype">void</span> setX2(<span class="keywordtype">int</span> nx){
 <a name="l00124"></a>00124                         x2 = nx;
-<a name="l00125"></a>00125                         DisplayObject::setW((x2&gt;x)?x2-x:x-x2);
+<a name="l00125"></a>00125                         <a class="code" href="classTenUI_1_1DisplayObject.html#25732a58cd2f72eac02f391b811811ac">DisplayObject::setW</a>((x2&gt;x)?x2-x:x-x2);
 <a name="l00126"></a>00126                 }
 <a name="l00127"></a>00127                 
 <a name="l00128"></a>00128                 <span class="keywordtype">void</span> setY2(<span class="keywordtype">int</span> ny){
 <a name="l00129"></a>00129                         y2 = ny;
-<a name="l00130"></a>00130                         DisplayObject::setH((y2&gt;y)?y2-y:y-y2);
+<a name="l00130"></a>00130                         <a class="code" href="classTenUI_1_1DisplayObject.html#22ad7074a49b739686b4497e2eb7b8c2">DisplayObject::setH</a>((y2&gt;y)?y2-y:y-y2);
 <a name="l00131"></a>00131                 }                               
 <a name="l00132"></a>00132                 
-<a name="l00133"></a>00133                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> setW(<span class="keywordtype">int</span> nw){
-<a name="l00134"></a>00134                         DisplayObject::setW(nw);
+<a name="l00133"></a>00133                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1DisplayObject.html#25732a58cd2f72eac02f391b811811ac">setW</a>(<span class="keywordtype">int</span> nw){
+<a name="l00134"></a>00134                         <a class="code" href="classTenUI_1_1DisplayObject.html#25732a58cd2f72eac02f391b811811ac">DisplayObject::setW</a>(nw);
 <a name="l00135"></a>00135                         x2 = x+nw;
 <a name="l00136"></a>00136                 }
 <a name="l00137"></a>00137 
-<a name="l00138"></a>00138                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> setH(<span class="keywordtype">int</span> nh){
-<a name="l00139"></a>00139                         DisplayObject::setH(nh);
+<a name="l00138"></a>00138                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1DisplayObject.html#22ad7074a49b739686b4497e2eb7b8c2">setH</a>(<span class="keywordtype">int</span> nh){
+<a name="l00139"></a>00139                         <a class="code" href="classTenUI_1_1DisplayObject.html#22ad7074a49b739686b4497e2eb7b8c2">DisplayObject::setH</a>(nh);
 <a name="l00140"></a>00140                         y2 = y+nh;
 <a name="l00141"></a>00141                 }               
 <a name="l00142"></a>00142                 
@@ -182,7 +182,7 @@
 <a name="l00168"></a>00168 
 <a name="l00169"></a>00169 }
 <a name="l00170"></a>00170 <span class="preprocessor">#endif </span><span class="comment">/*LINE_H_*/</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Dec 22 23:16:56 2007 for TenUI by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Wed Dec 26 03:54:35 2007 for TenUI by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>
