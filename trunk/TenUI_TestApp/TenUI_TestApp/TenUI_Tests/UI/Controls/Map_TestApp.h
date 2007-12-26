@@ -24,37 +24,43 @@ namespace TenUI {
 		public:
 			Map_TestApp(){}
 			virtual ~Map_TestApp(){}		
-
-
-		/***************************************/
-		/*********** Private Methods ***********/
-		/***************************************/
-		private:
-			unsigned long prevObjID;
 			
 		/***************************************/
 		/*********** Private Methods ***********/
 		/***************************************/
 		private:
-			void styleUnit(bool isRed, const shared_ptr<DraggableButton>& unit, const string& unitIcon);
+			shared_ptr<UIComponent> mapui;
+			
+			/**
+			 * Factory Method that creates the map
+			 * @param 	mapImage	String holding file path to image to be used as map.
+			 * @param 	x			starting x coordinate
+			 * @param 	y			starting y coordinate
+			 * @param 	w			width
+			 * @param 	w			height 
+			 */
+			shared_ptr<UIComponent> createMap(const string& mapImage, int x, int y, int w, int h);
+			
+			/**
+			 * Factory Method that creates a military unit
+			 * @param 	isRed		True if red, False if blue unit
+			 * @param 	unitIcon	String holding file path to image to be used as unit's icon.
+			 * @param 	x			starting x coordinate
+			 * @param 	y			starting y coordinate
+			 */
+			shared_ptr<UIComponent>	createUnit(bool isRed, const string& unitIcon, int x, int y);
 
 		/***************************************/
 		/**** ITenMilManUIApp Implmentation ****/
 		/***************************************/
 		public:
-			virtual void initInput();
-			virtual void init() throw(int);
-			virtual void update_preframe() throw(APPEXCEPTIONS) {}
-			virtual void update_frame() throw(APPEXCEPTIONS);
-			virtual void deinit() throw(APPEXCEPTIONS) {}
+			virtual IGraphics* initGraphics();
+			virtual void initUserInputs();
+			virtual void init();
+			virtual void deinit(){}
 			
-			virtual char* getName()								{ return "Map Test App"; }
-			
-			virtual GraphicsOptions* getGraphicsOptions() 		{ return new GraphicsOptions(	"UI Controls Test App",
-																								1024, 768, 32, 
-																	  				 			IGraphicsEnums::FULLSCREEN, 
-																	  				 			string("")); 		}
-			virtual IGraphics* getGraphics()					{ return OpenGL_Graphics::instance(); }
+			virtual void update_preframe(){}
+			virtual void update_frame();
 	};
 	
 }
