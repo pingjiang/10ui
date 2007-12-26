@@ -23,36 +23,32 @@ namespace TenUI {
 		public:
 			UIControls_TestApp(){}
 			virtual ~UIControls_TestApp(){}		
-
+		
 
 		/***************************************/
 		/*********** Private Methods ***********/
 		/***************************************/
-		private:
-			unsigned long prevObjID;
+			/**
+			 * Factory Method that creates a military unit
+			 * @param 	picPath		String holding file path to image to be used as picture.
+			 * @param 	x			starting x coordinate
+			 * @param 	y			starting y coordinate
+			 * @param 	w			starting width
+			 * @param 	h			starting height
+			 */
+			shared_ptr<UIComponent>	createPicture(const string& picPath, int x, int y, int w, int h);
 			
-		/***************************************/
-		/*********** Private Methods ***********/
-		/***************************************/
-		private:
-
 		/***************************************/
 		/**** ITenMilManUIApp Implmentation ****/
 		/***************************************/
 		public:
-			virtual void initInput();
-			virtual void init() throw(int);
-			virtual void update_preframe() throw(APPEXCEPTIONS) {}
-			virtual void update_frame() throw(APPEXCEPTIONS);
-			virtual void deinit() throw(APPEXCEPTIONS) {}
+			virtual IGraphics* initGraphics();
+			virtual void initUserInputs();
+			virtual void init();
+			virtual void deinit(){}
 			
-			virtual char* getName()								{ return "UI Controls Test App"; }
-			
-			virtual GraphicsOptions* getGraphicsOptions() 		{ return new GraphicsOptions(	"UI Controls Test App",
-																								1024, 768, 32, 
-																	  				 			IGraphicsEnums::WINDOWED, 
-																	  				 			string("")); 		}
-			virtual IGraphics* getGraphics()					{ return OpenGL_Graphics::instance(); }
+			virtual void update_preframe(){}
+			virtual void update_frame(){}
 	};
 	
 }
