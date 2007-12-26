@@ -12,190 +12,165 @@
     <li class="current"><a href="files.html"><span>Files</span></a></li>
   </ul>
 </div>
-<h1>TenMilManUI/UI/Core/DisplayObject.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">// display object is an object to be displayed on the screen.</span>
-<a name="l00002"></a>00002 <span class="comment">// it gets extended by other types of display objects such</span>
-<a name="l00003"></a>00003 <span class="comment">// as libraryobjects, transformable objects, and selectedobjects.</span>
-<a name="l00004"></a>00004 
-<a name="l00005"></a>00005 <span class="preprocessor">#ifndef DISPLAYOBJECT_H</span>
-<a name="l00006"></a>00006 <span class="preprocessor"></span><span class="preprocessor">#define DISPLAYOBJECT_H</span>
-<a name="l00007"></a>00007 <span class="preprocessor"></span>
-<a name="l00008"></a>00008 <span class="comment">// includes</span>
-<a name="l00009"></a>00009 <span class="preprocessor">#ifdef WIN32</span>
-<a name="l00010"></a>00010 <span class="preprocessor"></span><span class="preprocessor">        #define WIN32_LEAN_AND_MEAN</span>
-<a name="l00011"></a>00011 <span class="preprocessor"></span><span class="preprocessor">        #include &lt;windows.h&gt;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#endif</span>
-<a name="l00013"></a>00013 <span class="preprocessor"></span><span class="preprocessor">#if defined(__APPLE__) &amp;&amp; defined(__MACH__)</span>
-<a name="l00014"></a>00014 <span class="preprocessor"></span><span class="preprocessor">        #include &lt;OpenGL/gl.h&gt;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">        #include &lt;OpenGL/glu.h&gt;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#else</span>
-<a name="l00017"></a>00017 <span class="preprocessor"></span><span class="preprocessor">        #include &lt;GL/gl.h&gt;</span>
-<a name="l00018"></a>00018 <span class="preprocessor">        #include &lt;GL/glu.h&gt;</span>
-<a name="l00019"></a>00019 <span class="preprocessor">#endif</span>
-<a name="l00020"></a>00020 <span class="preprocessor"></span>
-<a name="l00021"></a>00021 <span class="preprocessor">#include &lt;math.h&gt;</span>
-<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00023"></a>00023 
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;tr1/memory&gt;</span>
-<a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;TenMilManUI/UI/Events/EventDispatcher.h&gt;</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">using</span> std::tr1::shared_ptr;
-<a name="l00029"></a>00029 <span class="keyword">using</span> std::tr1::enable_shared_from_this;
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">namespace </span>TenUI {
-<a name="l00032"></a>00032         
-<a name="l00033"></a>00033         <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> DisplayObjectIDType;
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035         <span class="keyword">class </span>DisplayObject : <span class="keyword">public</span> EventDispatcher, <span class="keyword">public</span> enable_shared_from_this&lt;DisplayObject&gt;  {
-<a name="l00036"></a>00036         <span class="keyword">private</span>:
-<a name="l00037"></a>00037                 <span class="keyword">static</span> DisplayObjectIDType nextObjectID;
-<a name="l00038"></a>00038         
-<a name="l00039"></a>00039         <span class="keyword">protected</span>:
-<a name="l00040"></a>00040                 DisplayObjectIDType objid;
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042                 <span class="comment">/***********************************/</span>
-<a name="l00043"></a>00043                 <span class="comment">/*         Member Variables        */</span>
-<a name="l00044"></a>00044                 <span class="comment">/***********************************/</span>
-<a name="l00045"></a>00045                         <span class="comment">// Hierarchy</span>
-<a name="l00046"></a>00046                         shared_ptr&lt;DisplayObject&gt; parent;
-<a name="l00047"></a>00047                         
-<a name="l00048"></a>00048                         <span class="comment">// Enable/Disable</span>
-<a name="l00049"></a>00049                         <span class="keywordtype">bool</span> enabled;
-<a name="l00050"></a>00050                 
-<a name="l00051"></a>00051                         <span class="comment">// Positioning</span>
-<a name="l00052"></a>00052                         <span class="keywordtype">int</span> x;
-<a name="l00053"></a>00053                         <span class="keywordtype">int</span> y;
-<a name="l00054"></a>00054                         
-<a name="l00055"></a>00055                         <span class="comment">// Sizing </span>
-<a name="l00056"></a>00056                         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> w;
-<a name="l00057"></a>00057                         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> h;
-<a name="l00058"></a>00058                                                         
-<a name="l00059"></a>00059                         <span class="comment">// Scaling</span>
-<a name="l00060"></a>00060                         <span class="keywordtype">double</span> scalex;
-<a name="l00061"></a>00061                         <span class="keywordtype">double</span> scaley;
-<a name="l00062"></a>00062         
-<a name="l00063"></a>00063                         <span class="comment">// Rotation</span>
-<a name="l00064"></a>00064                         <span class="keywordtype">double</span> rotation;
-<a name="l00065"></a>00065                 
-<a name="l00066"></a>00066                         <span class="comment">// Visibility</span>
-<a name="l00067"></a>00067                         <span class="keywordtype">float</span> opacity;
-<a name="l00068"></a>00068                         <span class="keywordtype">bool</span> visible;
-<a name="l00069"></a>00069                                                         
-<a name="l00070"></a>00070                         <span class="comment">// OpenGL implementation specifics</span>
-<a name="l00071"></a>00071                         <span class="comment">//GLint viewport[4];</span>
-<a name="l00072"></a>00072                         <span class="comment">//GLdouble modelview[16];</span>
-<a name="l00073"></a>00073                         <span class="comment">//GLdouble projection[16];</span>
-<a name="l00074"></a>00074                         
-<a name="l00075"></a>00075                         <span class="keywordtype">int</span> centerx;
-<a name="l00076"></a>00076                         <span class="keywordtype">int</span> centery;            
-<a name="l00077"></a>00077         
-<a name="l00078"></a>00078                         <span class="keywordtype">double</span> left;
-<a name="l00079"></a>00079                         <span class="keywordtype">double</span> bottom;
-<a name="l00080"></a>00080                 
-<a name="l00081"></a>00081                 <span class="comment">// recalc centerx, centery</span>
-<a name="l00082"></a>00082                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> calcCenterX();     
-<a name="l00083"></a>00083                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> calcCenterY();             
-<a name="l00084"></a>00084                 
-<a name="l00085"></a>00085         <span class="keyword">public</span>:
-<a name="l00086"></a>00086                 
-<a name="l00087"></a>00087                 <span class="comment">// constructor</span>
-<a name="l00088"></a>00088                 DisplayObject( <span class="keyword">const</span> shared_ptr&lt;DisplayObject&gt;&amp; p, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> w, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> h, <span class="keywordtype">double</span> r=0.0, <span class="keywordtype">double</span> s=1.0, <span class="keywordtype">float</span> o=1.0);      
-<a name="l00089"></a>00089                 <span class="keyword">virtual</span> ~DisplayObject(){}
-<a name="l00090"></a>00090                         
-<a name="l00091"></a>00091                 <span class="comment">/***********************************/</span>
-<a name="l00092"></a>00092                 <span class="comment">/*        Init/Update Methods      */</span>
-<a name="l00093"></a>00093                 <span class="comment">/***********************************/</span>
-<a name="l00094"></a>00094                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> init() = 0;
-<a name="l00095"></a>00095                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> update() = 0;
-<a name="l00096"></a>00096                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> deinit() = 0;
-<a name="l00097"></a>00097                 
-<a name="l00098"></a>00098                 <span class="comment">/***********************************/</span>
-<a name="l00099"></a>00099                 <span class="comment">/*           Draw Methods          */</span>
-<a name="l00100"></a>00100                 <span class="comment">/***********************************/</span>
-<a name="l00101"></a>00101                         <span class="comment">// Pushes View Matrix </span>
-<a name="l00102"></a>00102                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> preDraw();
-<a name="l00103"></a>00103                         <span class="comment">// Draws Object (subclassed)</span>
-<a name="l00104"></a>00104                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> draw() = 0;
-<a name="l00105"></a>00105                         <span class="comment">// Pops View Matrix</span>
-<a name="l00106"></a>00106                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDraw();
-<a name="l00107"></a>00107                 
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109                 <span class="comment">/***********************************/</span>
-<a name="l00110"></a>00110                 <span class="comment">/*     Hierarchy Getter/Setters    */</span>
-<a name="l00111"></a>00111                 <span class="comment">/***********************************/</span>  
-<a name="l00112"></a>00112                 <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>                   getObjectID();
-<a name="l00113"></a>00113                 
-<a name="l00114"></a>00114                 shared_ptr&lt;DisplayObject&gt;       getParent();            
-<a name="l00115"></a>00115                 <span class="keywordtype">void</span>                                            setParent(<span class="keyword">const</span> shared_ptr&lt;DisplayObject&gt;&amp; p);
-<a name="l00116"></a>00116         
-<a name="l00117"></a>00117                 <span class="keywordtype">bool</span>                    getEnabled();
-<a name="l00118"></a>00118                 <span class="keywordtype">void</span>                    setEnabled(<span class="keywordtype">bool</span> e);
-<a name="l00119"></a>00119                 
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121                 <span class="comment">/***********************************/</span>
-<a name="l00122"></a>00122                 <span class="comment">/*    Dimensions Getters/Setters   */</span>
-<a name="l00123"></a>00123                 <span class="comment">/***********************************/</span>  
-<a name="l00124"></a>00124                 <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>    getW();
-<a name="l00125"></a>00125                 <span class="keyword">virtual</span> <span class="keywordtype">void</span>                    setW(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nw);  
-<a name="l00126"></a>00126                 <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>    getH();
-<a name="l00127"></a>00127                 <span class="keyword">virtual</span> <span class="keywordtype">void</span>                    setH(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nh);  
-<a name="l00128"></a>00128 
-<a name="l00129"></a>00129 
-<a name="l00130"></a>00130                 <span class="comment">/***********************************/</span>
-<a name="l00131"></a>00131                 <span class="comment">/*    Visibility Getter/Setters    */</span>
-<a name="l00132"></a>00132                 <span class="comment">/***********************************/</span>  
-<a name="l00133"></a>00133                 <span class="keywordtype">bool</span>    getVisible();
-<a name="l00134"></a>00134                 <span class="keywordtype">void</span>    setVisible(<span class="keywordtype">bool</span> e);             
-<a name="l00135"></a>00135                 <span class="keywordtype">double</span>  getOpacity();           
-<a name="l00136"></a>00136                 <span class="keywordtype">void</span>    setOpacity(<span class="keywordtype">float</span> o);
-<a name="l00137"></a>00137                         
-<a name="l00138"></a>00138                 <span class="comment">/***********************************/</span>
-<a name="l00139"></a>00139                 <span class="comment">/*  Transformation Getter/Setters  */</span>
-<a name="l00140"></a>00140                 <span class="comment">/***********************************/</span>
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142                         <span class="comment">/*****************/</span>
-<a name="l00143"></a>00143                         <span class="comment">/*  Translation  */</span>
-<a name="l00144"></a>00144                         <span class="comment">/*****************/</span>     
-<a name="l00145"></a>00145                         <span class="keywordtype">void</span>    setGlobalCenterX(<span class="keywordtype">int</span> cx);
-<a name="l00146"></a>00146                         <span class="keywordtype">void</span>    setGlobalCenterY(<span class="keywordtype">int</span> cy);
-<a name="l00147"></a>00147                         <span class="keywordtype">int</span>     getGlobalCenterX();
-<a name="l00148"></a>00148                         <span class="keywordtype">int</span>     getGlobalCenterY();
-<a name="l00149"></a>00149         
-<a name="l00150"></a>00150                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    setCenterX(<span class="keywordtype">int</span> nx);                     
-<a name="l00151"></a>00151                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    setCenterY(<span class="keywordtype">int</span> ny);
-<a name="l00152"></a>00152                         <span class="keyword">virtual</span> <span class="keywordtype">int</span>     getCenterX();                   
-<a name="l00153"></a>00153                         <span class="keyword">virtual</span> <span class="keywordtype">int</span>     getCenterY();
-<a name="l00154"></a>00154                         
-<a name="l00155"></a>00155                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    setX(<span class="keywordtype">int</span> nx);
-<a name="l00156"></a>00156                         <span class="keyword">virtual</span> <span class="keywordtype">int</span>     getX();                 
-<a name="l00157"></a>00157                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    setY(<span class="keywordtype">int</span> ny);
-<a name="l00158"></a>00158                         <span class="keyword">virtual</span> <span class="keywordtype">int</span>     getY();                 
-<a name="l00159"></a>00159                                         <span class="keywordtype">double</span>  getGlobalX();
-<a name="l00160"></a>00160                                         <span class="keywordtype">double</span>  getGlobalY();                   
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162                         <span class="comment">/*****************/</span>
-<a name="l00163"></a>00163                         <span class="comment">/*    Rotation   */</span>
-<a name="l00164"></a>00164                         <span class="comment">/*****************/</span>
-<a name="l00165"></a>00165                         <span class="keywordtype">double</span>  getRotation();
-<a name="l00166"></a>00166                         <span class="keywordtype">void</span>    setRotation(<span class="keywordtype">double</span> r);
-<a name="l00167"></a>00167                         
-<a name="l00168"></a>00168                         <span class="comment">/*****************/</span>
-<a name="l00169"></a>00169                         <span class="comment">/*      Scale    */</span>
-<a name="l00170"></a>00170                         <span class="comment">/*****************/</span>             
-<a name="l00171"></a>00171                         <span class="keywordtype">double</span>  getScaleX();
-<a name="l00172"></a>00172                         <span class="keywordtype">void</span>    setScaleX(<span class="keywordtype">double</span> s);                    
-<a name="l00173"></a>00173                         <span class="keywordtype">double</span>  getScaleY();
-<a name="l00174"></a>00174                         <span class="keywordtype">void</span>    setScaleY(<span class="keywordtype">double</span> s);
-<a name="l00175"></a>00175                                 
-<a name="l00176"></a>00176                 <span class="comment">//void globalToLocalCoord(int sx, int sy, double *ox, double *oy);      </span>
-<a name="l00177"></a>00177                 <span class="comment">//void localToGlobalCoord(int sx, int sy, int *ox, int *oy);</span>
-<a name="l00178"></a>00178         
-<a name="l00179"></a>00179         };
-<a name="l00180"></a>00180 
-<a name="l00181"></a>00181 }
-<a name="l00182"></a>00182 
-<a name="l00183"></a>00183 <span class="preprocessor">#endif</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Dec 22 23:16:56 2007 for TenUI by&nbsp;
+<h1>TenMilManUI/UI/Core/DisplayObject.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef DISPLAYOBJECT_H</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define DISPLAYOBJECT_H</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;math.h&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00006"></a>00006 
+<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;tr1/functional&gt;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;tr1/memory&gt;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;TenMilManUI/UI/Events/EventDispatcher.h&gt;</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="keyword">using</span> std::tr1::shared_ptr;
+<a name="l00013"></a>00013 <span class="keyword">using</span> std::tr1::enable_shared_from_this;
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="keyword">using</span> std::tr1::bind; 
+<a name="l00016"></a>00016 <span class="keyword">using</span> std::tr1::function;
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018 <span class="keyword">namespace </span>TenUI {
+<a name="l00019"></a>00019         
+<a name="l00020"></a>00020         <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> DisplayObjectIDType;
+<a name="l00021"></a>00021 
+<a name="l00037"></a><a class="code" href="classTenUI_1_1DisplayObject.html">00037</a>         <span class="keyword">class </span><a class="code" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> : <span class="keyword">public</span> EventDispatcher, <span class="keyword">public</span> enable_shared_from_this&lt;DisplayObject&gt;  {
+<a name="l00038"></a>00038                 
+<a name="l00039"></a>00039         <span class="keyword">public</span>:
+<a name="l00043"></a><a class="code" href="classTenUI_1_1DisplayObject.html#8e4b4d534da04555067fad4b1b1611e9">00043</a>                 <span class="keyword">virtual</span> <a class="code" href="classTenUI_1_1DisplayObject.html#8e4b4d534da04555067fad4b1b1611e9">~DisplayObject</a>(){}
+<a name="l00044"></a>00044                 
+<a name="l00050"></a>00050                 <span class="keyword">protected</span>:      
+<a name="l00055"></a>00055                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1DisplayObject.html#7153d0607dc1ec89ff98edabcff69d1c">init</a>()   = 0;
+<a name="l00056"></a>00056                 <span class="keyword">public</span>:
+<a name="l00061"></a>00061                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1DisplayObject.html#a033a6ec61926f936e1b8844c1905d6e">deinit</a>() = 0;
+<a name="l00063"></a>00063                         
+<a name="l00074"></a>00074                 <span class="keyword">public</span>:
+<a name="l00079"></a>00079                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1DisplayObject.html#1a823f2f7d02eb1c381f7c0f5d97252a">update</a>() = 0;
+<a name="l00084"></a>00084                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1DisplayObject.html#296f20752eb127a338f1d95b48acdcf8">preDraw</a>();
+<a name="l00088"></a>00088                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1DisplayObject.html#c7c14fc66a4a8ef80625a808ad5eb178">draw</a>() = 0;
+<a name="l00092"></a>00092                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1DisplayObject.html#ab1e1e209b1f2c173e2eeaea3feb783b">postDraw</a>();
+<a name="l00094"></a>00094 
+<a name="l00102"></a>00102                         DisplayObjectIDType     <a class="code" href="classTenUI_1_1DisplayObject.html#e9267b4ed4e3cace5f0067118cbbadd3">getObjectID</a>();
+<a name="l00104"></a>00104                 
+<a name="l00105"></a>00105 
+<a name="l00113"></a>00113                         shared_ptr&lt;DisplayObject&gt;               <a class="code" href="classTenUI_1_1DisplayObject.html#676b77774f5a09e012e7a5fae178fa41">getParent</a>();
+<a name="l00118"></a>00118                         <span class="keywordtype">void</span>                                                    <a class="code" href="classTenUI_1_1DisplayObject.html#53f9e7ea1e8f5f433de945738caf4980">setParent</a>(<span class="keyword">const</span> shared_ptr&lt;DisplayObject&gt;&amp; p);
+<a name="l00120"></a>00120                 
+<a name="l00121"></a>00121                 <span class="keywordtype">bool</span>                                                    getEnabled();
+<a name="l00122"></a>00122                 <span class="keywordtype">void</span>                                                    setEnabled(<span class="keywordtype">bool</span> e);
+<a name="l00123"></a>00123                 
+<a name="l00124"></a>00124 
+<a name="l00129"></a>00129                 <span class="keyword">public</span>:
+<a name="l00135"></a>00135                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>                    <a class="code" href="classTenUI_1_1DisplayObject.html#9d82e5d6d35d569e80f0f6983554e814">setWH</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nw, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nh);
+<a name="l00136"></a>00136         
+<a name="l00141"></a>00141                         <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#094be93a07c392975ecfcbf6ae6df1cc">getW</a>();
+<a name="l00146"></a>00146                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>                    <a class="code" href="classTenUI_1_1DisplayObject.html#25732a58cd2f72eac02f391b811811ac">setW</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nw);
+<a name="l00151"></a>00151                         <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#f480ded3bece43a47053e22e37c04a18">getH</a>();
+<a name="l00156"></a>00156                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>                    <a class="code" href="classTenUI_1_1DisplayObject.html#22ad7074a49b739686b4497e2eb7b8c2">setH</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nh);  
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159 
+<a name="l00164"></a>00164                 <span class="keyword">public</span>:
+<a name="l00170"></a>00170                         <span class="keywordtype">double</span>  <a class="code" href="classTenUI_1_1DisplayObject.html#29759f12a6e4dd49b1478760bbc7fbf6">getOpacity</a>();           
+<a name="l00177"></a>00177                         <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#7c948009a30ea3788cf551008e59ba3a">setOpacity</a>(<span class="keywordtype">float</span> o);
+<a name="l00179"></a>00179                         
+<a name="l00180"></a>00180                 
+<a name="l00189"></a>00189                 <span class="keyword">public</span>:
+<a name="l00193"></a>00193                         <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#3702bea9c2a2e2666662929cb4cfbb03">setGlobalCenterXY</a>(<span class="keywordtype">int</span> cx, <span class="keywordtype">int</span> cy);
+<a name="l00194"></a>00194 
+<a name="l00199"></a>00199                         <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#85deac81f989084ad3b8ad96cde001c6">setGlobalCenterX</a>(<span class="keywordtype">int</span> cx);
+<a name="l00204"></a>00204                         <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#7bdcc2fd74f4763057f597eeae075dfa">setGlobalCenterY</a>(<span class="keywordtype">int</span> cy);
+<a name="l00205"></a>00205 
+<a name="l00210"></a>00210                         <span class="keywordtype">int</span>     <a class="code" href="classTenUI_1_1DisplayObject.html#1bbc5d1fa80c363ab2ef79a7146dd36f">getGlobalCenterX</a>();
+<a name="l00215"></a>00215                         <span class="keywordtype">int</span>     <a class="code" href="classTenUI_1_1DisplayObject.html#584eec7987aae6aac348974c669eb4fb">getGlobalCenterY</a>();
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217 
+<a name="l00221"></a>00221                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#f92ed4fcf4246d83ce892e7e35135248">setCenterXY</a>(<span class="keywordtype">int</span> nx, <span class="keywordtype">int</span> ny);
+<a name="l00226"></a>00226                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#e3e193ecae91fb067ba1d054244e3980">setCenterX</a>(<span class="keywordtype">int</span> nx);     
+<a name="l00231"></a>00231                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#169e5628eb3aff88677c45bd37c5c4a2">setCenterY</a>(<span class="keywordtype">int</span> ny);
+<a name="l00236"></a>00236                         <span class="keyword">virtual</span> <span class="keywordtype">int</span>     <a class="code" href="classTenUI_1_1DisplayObject.html#a46b7ca80bfeff365bd580e44f824a67">getCenterX</a>();
+<a name="l00241"></a>00241                         <span class="keyword">virtual</span> <span class="keywordtype">int</span>     <a class="code" href="classTenUI_1_1DisplayObject.html#9543315de8899b0d0bc3ad5fb8c8c8d4">getCenterY</a>();
+<a name="l00242"></a>00242 
+<a name="l00246"></a>00246                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#9d221355a1749d28fa9ab8b17db1cda9">setXY</a>(<span class="keywordtype">int</span> nx, <span class="keywordtype">int</span> ny);
+<a name="l00251"></a>00251                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#c5d2351c2986037533caa1103a96f859">setX</a>(<span class="keywordtype">int</span> nx);
+<a name="l00256"></a>00256                         <span class="keyword">virtual</span> <span class="keywordtype">int</span>     <a class="code" href="classTenUI_1_1DisplayObject.html#f79d8f969b0e63beca29584c87da7214">getX</a>();         
+<a name="l00261"></a>00261                         <span class="keyword">virtual</span> <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#0aeff7e697d2abee7fea4cabd250e9a4">setY</a>(<span class="keywordtype">int</span> ny);
+<a name="l00266"></a>00266                         <span class="keyword">virtual</span> <span class="keywordtype">int</span>     <a class="code" href="classTenUI_1_1DisplayObject.html#39f7ab50ae8e636a75d18af6f94eb33c">getY</a>();
+<a name="l00267"></a>00267                         
+<a name="l00272"></a>00272                                         <span class="keywordtype">double</span>  <a class="code" href="classTenUI_1_1DisplayObject.html#31db16e6bc8ff39f32f394177716327d">getGlobalX</a>();
+<a name="l00273"></a>00273 
+<a name="l00278"></a>00278                                         <span class="keywordtype">double</span>  <a class="code" href="classTenUI_1_1DisplayObject.html#14f1f271b8e0b820ae0a6b611c1cb399">getGlobalY</a>();   
+<a name="l00280"></a>00280 
+<a name="l00281"></a>00281 
+<a name="l00286"></a>00286                 <span class="keyword">public</span>:
+<a name="l00290"></a>00290                         <span class="keywordtype">double</span>  <a class="code" href="classTenUI_1_1DisplayObject.html#2c277c6cf82040108a868578bd0f4268">getRotation</a>();
+<a name="l00294"></a>00294                         <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#3b403291dabd59670a5fbb79768fd931">setRotation</a>(<span class="keywordtype">double</span> r);
+<a name="l00296"></a>00296                         
+<a name="l00297"></a>00297 
+<a name="l00305"></a>00305                         <span class="keywordtype">double</span>  <a class="code" href="classTenUI_1_1DisplayObject.html#9aaeb9f9f8afd067b6d1ac83e5b627da">getScaleX</a>();
+<a name="l00309"></a>00309                         <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#3e73ae5f7bcfb9bd093fa3a5d6b7f790">setScaleX</a>(<span class="keywordtype">double</span> s);
+<a name="l00310"></a>00310                         
+<a name="l00314"></a>00314                         <span class="keywordtype">double</span>  <a class="code" href="classTenUI_1_1DisplayObject.html#789c6fa898e374e27e787796ae9a1736">getScaleY</a>();
+<a name="l00318"></a>00318                         <span class="keywordtype">void</span>    <a class="code" href="classTenUI_1_1DisplayObject.html#4271be87cbe56e71abca037e84508bd6">setScaleY</a>(<span class="keywordtype">double</span> s);
+<a name="l00320"></a>00320                         
+<a name="l00321"></a>00321         <span class="keyword">protected</span>:
+<a name="l00322"></a>00322 
+<a name="l00323"></a>00323                 <span class="comment">/***********************************/</span>
+<a name="l00324"></a>00324                 <span class="comment">/*         Member Variables        */</span>
+<a name="l00325"></a>00325                 <span class="comment">/***********************************/</span>
+<a name="l00326"></a>00326                         <span class="comment">// Object ID</span>
+<a name="l00327"></a>00327                         DisplayObjectIDType objid;
+<a name="l00328"></a>00328                         
+<a name="l00329"></a>00329                         <span class="comment">// Hierarchy</span>
+<a name="l00330"></a>00330                         shared_ptr&lt;DisplayObject&gt; parent;
+<a name="l00331"></a>00331                         
+<a name="l00332"></a>00332                         <span class="comment">// Enable/Disable</span>
+<a name="l00333"></a>00333                         <span class="keywordtype">bool</span> enabled;
+<a name="l00334"></a>00334                 
+<a name="l00335"></a>00335                         <span class="comment">// Positioning</span>
+<a name="l00336"></a>00336                         <span class="keywordtype">int</span> x;
+<a name="l00337"></a>00337                         <span class="keywordtype">int</span> y;
+<a name="l00338"></a>00338                         
+<a name="l00339"></a>00339                         <span class="comment">// Sizing </span>
+<a name="l00340"></a>00340                         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> w;
+<a name="l00341"></a>00341                         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> h;
+<a name="l00342"></a>00342                                                         
+<a name="l00343"></a>00343                         <span class="comment">// Scaling</span>
+<a name="l00344"></a>00344                         <span class="keywordtype">double</span> scalex;
+<a name="l00345"></a>00345                         <span class="keywordtype">double</span> scaley;
+<a name="l00346"></a>00346         
+<a name="l00347"></a>00347                         <span class="comment">// Rotation</span>
+<a name="l00348"></a>00348                         <span class="keywordtype">double</span> rotation;
+<a name="l00349"></a>00349                 
+<a name="l00350"></a>00350                         <span class="comment">// Visibility</span>
+<a name="l00351"></a>00351                         <span class="keywordtype">float</span> opacity;
+<a name="l00352"></a>00352                         
+<a name="l00353"></a>00353                         <span class="keywordtype">int</span> centerx;
+<a name="l00354"></a>00354                         <span class="keywordtype">int</span> centery;    
+<a name="l00355"></a>00355 
+<a name="l00356"></a>00356                         <span class="comment">// recalc centerx, centery</span>
+<a name="l00357"></a>00357                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> calcCenterX();     
+<a name="l00358"></a>00358                         <span class="keyword">virtual</span> <span class="keywordtype">void</span> calcCenterY();     
+<a name="l00359"></a>00359         
+<a name="l00360"></a>00360                         <span class="keywordtype">double</span> left;
+<a name="l00361"></a>00361                         <span class="keywordtype">double</span> bottom;
+<a name="l00362"></a>00362                 
+<a name="l00363"></a>00363                 <span class="comment">/***********************************/</span>
+<a name="l00364"></a>00364                 <span class="comment">/*         Member Functions        */</span>
+<a name="l00365"></a>00365                 <span class="comment">/***********************************/</span>
+<a name="l00366"></a>00366                         <span class="comment">// Virtual Constructor Implementation</span>
+<a name="l00367"></a>00367                         <span class="comment">// Subclasses will </span>
+<a name="l00368"></a>00368                         <span class="comment">//      1) implement a "create" function </span>
+<a name="l00369"></a>00369                         <span class="comment">//      2) override init function</span>
+<a name="l00370"></a>00370                         <a class="code" href="classTenUI_1_1DisplayObject.html">DisplayObject</a>( <span class="keyword">const</span> shared_ptr&lt;DisplayObject&gt;&amp; p, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> w, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> h, <span class="keywordtype">double</span> r=0.0, <span class="keywordtype">double</span> s=1.0, <span class="keywordtype">float</span> o=1.0);
+<a name="l00371"></a>00371                         
+<a name="l00372"></a>00372         <span class="keyword">private</span>:
+<a name="l00373"></a>00373                 <span class="keyword">static</span> DisplayObjectIDType nextObjectID;
+<a name="l00374"></a>00374                 
+<a name="l00375"></a>00375         };
+<a name="l00376"></a>00376 
+<a name="l00377"></a>00377 }
+<a name="l00378"></a>00378 
+<a name="l00379"></a>00379 <span class="preprocessor">#endif</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Wed Dec 26 03:54:35 2007 for TenUI by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -44,43 +44,42 @@
 <a name="l00030"></a>00030         
 <a name="l00034"></a><a class="code" href="classTenUI_1_1TenUI.html">00034</a>         <span class="keyword">class </span><a class="code" href="classTenUI_1_1TenUI.html">TenUI</a> {
 <a name="l00035"></a>00035                 
-<a name="l00036"></a>00036 
-<a name="l00041"></a>00041                 <span class="keyword">private</span>:
-<a name="l00042"></a>00042                     <span class="keyword">static</span> <a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>* inst;
-<a name="l00043"></a>00043                 <span class="keyword">public</span>:
-<a name="l00048"></a>00048                         <span class="keyword">static</span> <a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>* <a class="code" href="classTenUI_1_1TenUI.html#8008ae41ddd25b6fc67e4b6a7d2930bb">createInstance</a>(ITenUIApp *) <span class="keywordflow">throw</span>(<span class="keywordtype">int</span>);
-<a name="l00049"></a>00049                         
-<a name="l00053"></a>00053                         <span class="keyword">static</span> <a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>* <a class="code" href="classTenUI_1_1TenUI.html#25fc3fc22914082de0e546bc4eb95ced">instance</a>();
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055                 <span class="comment">// Constructor Destructor</span>
-<a name="l00056"></a>00056                 <span class="keyword">private</span>:
-<a name="l00057"></a>00057                         <a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>(ITenUIApp *) <span class="keywordflow">throw</span>(<span class="keywordtype">int</span>);                                          
-<a name="l00058"></a>00058                         <span class="keyword">virtual</span> ~<a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>();
-<a name="l00060"></a>00060                 
-<a name="l00065"></a>00065                 <span class="keyword">private</span>:        
-<a name="l00066"></a>00066                     IGraphics* graphics;
-<a name="l00067"></a>00067                 <span class="keyword">public</span>:
-<a name="l00068"></a>00068                         
-<a name="l00072"></a><a class="code" href="classTenUI_1_1TenUI.html#a3a713d152914144293c53d9ae814ba5">00072</a>                         IGraphics* <a class="code" href="classTenUI_1_1TenUI.html#a3a713d152914144293c53d9ae814ba5">getGraphics</a>(){ <span class="keywordflow">return</span> graphics; }
-<a name="l00073"></a>00073                         
-<a name="l00077"></a><a class="code" href="classTenUI_1_1TenUI.html#870d640e7cb1d401f55ece7de64132de">00077</a>                         GraphicsOptions&amp; <a class="code" href="classTenUI_1_1TenUI.html#870d640e7cb1d401f55ece7de64132de">getGraphicsOptions</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> graphics-&gt;getGraphicsOptions(); }                  
-<a name="l00079"></a>00079 
-<a name="l00084"></a>00084                 <span class="keyword">private</span>:
-<a name="l00085"></a>00085                     vector&lt; shared_ptr&lt;DisplayObject&gt; &gt; rootObjs;
-<a name="l00086"></a>00086                     map&lt;unsigned long , shared_ptr&lt;UIComponent&gt; &gt; allUIComps;
-<a name="l00087"></a>00087                 <span class="keyword">public</span>:
-<a name="l00093"></a>00093                         <span class="keywordtype">void</span>                                            <a class="code" href="classTenUI_1_1TenUI.html#be77358cc1620b5c2b8d25e2f37a3e89">addUIComponent</a>(<span class="keyword">const</span> shared_ptr&lt;UIComponent&gt;&amp; uicomp);
-<a name="l00099"></a><a class="code" href="classTenUI_1_1TenUI.html#875359cda8cd1fd34cec441024922dc2">00099</a>                         <span class="keywordtype">void</span>                                            <a class="code" href="classTenUI_1_1TenUI.html#875359cda8cd1fd34cec441024922dc2">removeUIComponent</a>(DisplayObjectIDType uicompid){}
-<a name="l00100"></a>00100 
-<a name="l00106"></a>00106                         shared_ptr&lt;UIComponent&gt;         <a class="code" href="classTenUI_1_1TenUI.html#786f07fe46adcbbc56d4f9e800ee21dd">getUIComponent</a>(DisplayObjectIDType uicompid);
-<a name="l00107"></a>00107 
-<a name="l00115"></a>00115                         shared_ptr&lt;UIComponent&gt;         <a class="code" href="classTenUI_1_1TenUI.html#bd8c94f0aee12004941e63aecaa6fc38">getUIComponentsAt</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
-<a name="l00116"></a>00116                         
-<a name="l00117"></a>00117                 <span class="keyword">private</span>:
-<a name="l00118"></a>00118                         <span class="keywordtype">void</span> addUIComponent_Recursive(<span class="keyword">const</span> shared_ptr&lt;UIComponent&gt;&amp; uicomp);
-<a name="l00120"></a>00120                 
-<a name="l00125"></a>00125                 <span class="keyword">public</span>:
-<a name="l00130"></a>00130                         <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1TenUI.html#8b2d213bf4bb50be52643b46d6e134e6">run</a>();
+<a name="l00040"></a>00040                 <span class="keyword">private</span>:
+<a name="l00041"></a>00041                     <span class="keyword">static</span> <a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>* inst;
+<a name="l00042"></a>00042                 <span class="keyword">public</span>:
+<a name="l00047"></a>00047                         <span class="keyword">static</span> <a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>* <a class="code" href="classTenUI_1_1TenUI.html#8008ae41ddd25b6fc67e4b6a7d2930bb">createInstance</a>(<a class="code" href="classTenUI_1_1ITenUIApp.html">ITenUIApp</a> *) <span class="keywordflow">throw</span>(<span class="keywordtype">int</span>);
+<a name="l00048"></a>00048                         
+<a name="l00052"></a>00052                         <span class="keyword">static</span> <a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>* <a class="code" href="classTenUI_1_1TenUI.html#25fc3fc22914082de0e546bc4eb95ced">instance</a>();
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054                 <span class="comment">// Constructor Destructor</span>
+<a name="l00055"></a>00055                 <span class="keyword">private</span>:
+<a name="l00056"></a>00056                         <a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>(<a class="code" href="classTenUI_1_1ITenUIApp.html">ITenUIApp</a> *) <span class="keywordflow">throw</span>(<span class="keywordtype">int</span>);                                          
+<a name="l00057"></a>00057                         <span class="keyword">virtual</span> ~<a class="code" href="classTenUI_1_1TenUI.html">TenUI</a>();
+<a name="l00059"></a>00059                 
+<a name="l00064"></a>00064                 <span class="keyword">private</span>:        
+<a name="l00065"></a>00065                     IGraphics* graphics;
+<a name="l00066"></a>00066                 <span class="keyword">public</span>:
+<a name="l00067"></a>00067                         
+<a name="l00071"></a><a class="code" href="classTenUI_1_1TenUI.html#a3a713d152914144293c53d9ae814ba5">00071</a>                         IGraphics* <a class="code" href="classTenUI_1_1TenUI.html#a3a713d152914144293c53d9ae814ba5">getGraphics</a>(){ <span class="keywordflow">return</span> graphics; }
+<a name="l00072"></a>00072                         
+<a name="l00076"></a><a class="code" href="classTenUI_1_1TenUI.html#870d640e7cb1d401f55ece7de64132de">00076</a>                         GraphicsOptions&amp; <a class="code" href="classTenUI_1_1TenUI.html#870d640e7cb1d401f55ece7de64132de">getGraphicsOptions</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> graphics-&gt;getGraphicsOptions(); }                  
+<a name="l00078"></a>00078 
+<a name="l00083"></a>00083                 <span class="keyword">private</span>:
+<a name="l00084"></a>00084                     vector&lt; shared_ptr&lt;DisplayObject&gt; &gt; rootObjs;
+<a name="l00085"></a>00085                     map&lt;unsigned long , shared_ptr&lt;UIComponent&gt; &gt; allUIComps;
+<a name="l00086"></a>00086                 <span class="keyword">public</span>:
+<a name="l00092"></a>00092                         <span class="keywordtype">void</span>                                            <a class="code" href="classTenUI_1_1TenUI.html#be77358cc1620b5c2b8d25e2f37a3e89">addUIComponent</a>(<span class="keyword">const</span> shared_ptr&lt;UIComponent&gt;&amp; uicomp);
+<a name="l00098"></a><a class="code" href="classTenUI_1_1TenUI.html#875359cda8cd1fd34cec441024922dc2">00098</a>                         <span class="keywordtype">void</span>                                            <a class="code" href="classTenUI_1_1TenUI.html#875359cda8cd1fd34cec441024922dc2">removeUIComponent</a>(DisplayObjectIDType uicompid){}
+<a name="l00099"></a>00099 
+<a name="l00105"></a>00105                         shared_ptr&lt;UIComponent&gt;         <a class="code" href="classTenUI_1_1TenUI.html#786f07fe46adcbbc56d4f9e800ee21dd">getUIComponent</a>(DisplayObjectIDType uicompid);
+<a name="l00106"></a>00106 
+<a name="l00114"></a>00114                         shared_ptr&lt;UIComponent&gt;         <a class="code" href="classTenUI_1_1TenUI.html#bd8c94f0aee12004941e63aecaa6fc38">getUIComponentsAt</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);
+<a name="l00115"></a>00115                         
+<a name="l00116"></a>00116                 <span class="keyword">private</span>:
+<a name="l00117"></a>00117                         <span class="keywordtype">void</span> addUIComponent_Recursive(<span class="keyword">const</span> shared_ptr&lt;UIComponent&gt;&amp; uicomp);
+<a name="l00119"></a>00119                 
+<a name="l00124"></a>00124                 <span class="keyword">public</span>:
+<a name="l00129"></a>00129                         <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1TenUI.html#8b2d213bf4bb50be52643b46d6e134e6">run</a>();
 <a name="l00135"></a>00135                         <span class="keywordtype">void</span> <a class="code" href="classTenUI_1_1TenUI.html#148459b21ee88279db83b1ebefc08cc3">quit</a>();
 <a name="l00136"></a>00136                         
 <a name="l00137"></a>00137                 <span class="keyword">private</span>:
@@ -96,7 +95,7 @@
 <a name="l00148"></a>00148                         
 <a name="l00149"></a>00149                 <span class="comment">// TenUI App</span>
 <a name="l00150"></a>00150                 <span class="keyword">private</span>:
-<a name="l00151"></a>00151                     ITenUIApp *app;
+<a name="l00151"></a>00151                     <a class="code" href="classTenUI_1_1ITenUIApp.html">ITenUIApp</a> *app;
 <a name="l00152"></a>00152                         
 <a name="l00153"></a>00153                                                 
 <a name="l00154"></a>00154                 <span class="comment">// TODO Localize to UIComponents.  UIComponent should offer this function to allow reording of children</span>
@@ -109,7 +108,7 @@
 <a name="l00161"></a>00161 }
 <a name="l00162"></a>00162 
 <a name="l00163"></a>00163 <span class="preprocessor">#endif </span><span class="comment">/*TENUI_H_*/</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Dec 22 23:16:56 2007 for TenUI by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Wed Dec 26 03:54:35 2007 for TenUI by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>
