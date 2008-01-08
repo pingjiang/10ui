@@ -1,0 +1,29 @@
+#summary A getting started guide for TenUI Developers
+
+= Introduction =
+
+This guide will take a developer through the steps to building and running TenUI and a TenUI Application.
+
+= Prerequisites =
+  * Linux Kernel 2.6+
+  * GNU GCC 4.2+
+    * TenUI makes use of some TR1 C++ libraries
+  * SDL
+  * FreeType
+
+= Step 1: Development Tools = 
+== Eclipse ==
+[http://www.eclipse.org/downloads/moreinfo/c.php]
+
+== Subclipse SVN/Eclipse Plugin ==
+[http://subclipse.tigris.org]
+  * Use the Eclipse Update Site [http://subclipse.tigris.org/update_1.2.x]
+
+= Step 2: Checking out TenUI/TenUI_TestApp ==
+  * SVN logon and path information: [http://code.google.com/p/10ui/source]
+  *[http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_SVN_Perspective.png]
+  *http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_SVN_Checkout.png
+
+= Step 3: Compiling the TenUI Library =
+  * Make sure you are in the C/C++ Perspective
+  
