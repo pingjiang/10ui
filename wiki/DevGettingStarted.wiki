@@ -1,4 +1,5 @@
 #summary A getting started guide for TenUI Developers
+#labels Featured
 
 = Introduction =
 
@@ -27,8 +28,14 @@ This guide will take a developer through the steps to building and running TenUI
 [http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_SVN_Checkout.png]
 
 = Step 3: Building the TenUI Library =
-  * Make sure you are in the C/C++ Perspective and the C/C++ Projects View is visible
+Make sure you are in the C/C++ Perspective and the C/C++ Projects View is visible
 [http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_C_Cpp_ProjectsView.png]
 [http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_BuildProject.png]
-  * A successful build will result to the a console looking like the following:
+
+A successful build will result to the a console looking like the following:
 [http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_FinishedBuilding.png]
+
+== Possible Compile/Linker Errors ==
+Your particular setup may have the includes and libraries for SDL, FreeType, and OpenGL in a different location then is expected in the default build configuration.  Make sure that the directories for includes and libraries for SDL, FreeType, and OpenGL are correct by looking in the CDT Build Settings.
+[http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_CDT_Include.png]
+[http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_CDT_Libraries.png]
