@@ -33,6 +33,7 @@ Make sure you are in the C/C++ Perspective and the C/C++ Projects View is visibl
 [http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_BuildProject.png]
 
 A successful build will result to the a console looking like the following:
+
 [http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_FinishedBuilding.png]
 
 == Possible Compile/Linker Errors ==
