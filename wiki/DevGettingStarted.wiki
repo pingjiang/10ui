@@ -21,8 +21,10 @@ This guide will take a developer through the steps to building and running TenUI
 
 = Step 2: Checking out TenUI/TenUI_TestApp ==
   * SVN logon and path information: [http://code.google.com/p/10ui/source]
-  *[http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_SVN_Perspective.png]
-  *http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_SVN_Checkout.png
+
+[http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_SVN_Perspective.png]
+
+[http://10ui.googlecode.com/svn/wiki/resources/DevGettingStarted_files/Eclipse_SVN_Checkout.png]
 
 = Step 3: Compiling the TenUI Library =
   * Make sure you are in the C/C++ Perspective
