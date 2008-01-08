@@ -10,6 +10,7 @@
     <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
     <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
     <li><a href="files.html"><span>Files</span></a></li>
+    <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
   </ul>
 </div>
 <div class="tabs">
@@ -23,8 +24,16 @@
 <b>TenUI</b>::<a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a></div>
 <h1>TenUI::DisplayObject Class Reference</h1><!-- doxytag: class="TenUI::DisplayObject" --><code>#include &lt;<a class="el" href="DisplayObject_8h-source.html">DisplayObject.h</a>&gt;</code>
 <p>
-Inherited by TenUI::DisplayObjectContainer, TenUI::Line, TenUI::Rasterable, TenUI::Shape, and TenUI::Text<code> [private]</code>.
-<p>
+<div class="dynheader">
+Inheritance diagram for TenUI::DisplayObject:</div>
+<div class="dynsection">
+
+<p><center><img src="classTenUI_1_1DisplayObject.png" usemap="#TenUI::DisplayObject_map" border="0" alt=""></center>
+<map name="TenUI::DisplayObject_map">
+<area href="classTenUI_1_1DisplayObjectContainer.html" alt="TenUI::DisplayObjectContainer" shape="rect" coords="0,56,184,80">
+<area href="classTenUI_1_1UIComponent.html" alt="TenUI::UIComponent" shape="rect" coords="0,112,184,136">
+</map>
+</div>
 
 <p>
 <a href="classTenUI_1_1DisplayObject-members.html">List of all members.</a><hr><a name="_details"></a><h2>Detailed Description</h2>
@@ -32,7 +41,7 @@ Base Abstract class all displayable objects. Contains basic properties all displ
 <li>Object ID</li><li>Width, Height</li><li>X, Y</li><li>Scale</li><li>Rotation</li></ul>
 <p>
 Defines virtual methods that subclasses must override<ul>
-<li>init</li><li>deinit</li><li>update</li><li>draw </li></ul>
+<li><a class="el" href="classTenUI_1_1DisplayObject.html#7153d0607dc1ec89ff98edabcff69d1c">init()</a></li><li><a class="el" href="classTenUI_1_1DisplayObject.html#a033a6ec61926f936e1b8844c1905d6e">deinit()</a></li><li><a class="el" href="classTenUI_1_1DisplayObject.html#1a823f2f7d02eb1c381f7c0f5d97252a">update()</a></li><li><a class="el" href="classTenUI_1_1DisplayObject.html#c7c14fc66a4a8ef80625a808ad5eb178">draw()</a> </li></ul>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Initialization/Deinitialization</h2></td></tr>
@@ -42,14 +51,6 @@ Defines virtual methods that subclasses must override<ul>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#7153d0607dc1ec89ff98edabcff69d1c">init</a> ()=0</td></tr>
 
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#8e4b4d534da04555067fad4b1b1611e9">~DisplayObject</a> ()</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="c832a78b7b949bed8048a9f5d6a72b5e"></a><!-- doxytag: member="TenUI::DisplayObject::getEnabled" ref="c832a78b7b949bed8048a9f5d6a72b5e" args="()" -->
-bool&nbsp;</td><td class="memItemRight" valign="bottom"><b>getEnabled</b> ()</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="32ef5f5f4c3a8802860da0736f7d465f"></a><!-- doxytag: member="TenUI::DisplayObject::setEnabled" ref="32ef5f5f4c3a8802860da0736f7d465f" args="(bool e)" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>setEnabled</b> (bool e)</td></tr>
-
 <tr><td colspan="2"><div class="groupHeader">Update/Drawing</div></td></tr>
 <tr><td colspan="2"><div class="groupText">Functions that maintain updating and drawing of the DisplayObject. When TenUI loops through DisplayObjects, these functions are called for each DisplayObject in this order:<ol type=1>
 <li>update</li><li>preDraw</li><li>draw</li><li>postDraw </li></ol>
@@ -70,6 +71,12 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><b>setEnabled</b> (bool 
 &lt; <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#676b77774f5a09e012e7a5fae178fa41">getParent</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#53f9e7ea1e8f5f433de945738caf4980">setParent</a> (const shared_ptr&lt; <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> &gt; &amp;p)</td></tr>
+
+<tr><td colspan="2"><div class="groupHeader">Enable/Disable</div></td></tr>
+<tr><td colspan="2"><div class="groupText">DisplayObjects upon creation are enabled by default. If a DisplayObject is disabled, then TenUI will not the call the DisplayObject's Update/Drawing functions. <br><br></div></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#c832a78b7b949bed8048a9f5d6a72b5e">getEnabled</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#32ef5f5f4c3a8802860da0736f7d465f">setEnabled</a> (bool e)</td></tr>
 
 <tr><td colspan="2"><div class="groupHeader">Dimensions</div></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#9d82e5d6d35d569e80f0f6983554e814">setWH</a> (unsigned int nw, unsigned int nh)</td></tr>
@@ -128,7 +135,7 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><b>setEnabled</b> (bool 
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#3b403291dabd59670a5fbb79768fd931">setRotation</a> (double r)</td></tr>
 
-<tr><td colspan="2"><div class="groupHeader">Rotation</div></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Scale</div></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#9aaeb9f9f8afd067b6d1ac83e5b627da">getScaleX</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#3e73ae5f7bcfb9bd093fa3a5d6b7f790">setScaleX</a> (double s)</td></tr>
@@ -138,14 +145,11 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><b>setEnabled</b> (bool 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#4271be87cbe56e71abca037e84508bd6">setScaleY</a> (double s)</td></tr>
 
 <tr><td colspan="2"><br><h2>Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="d7d42d9dd8602d3c4743454e2e3992ec"></a><!-- doxytag: member="TenUI::DisplayObject::calcCenterX" ref="d7d42d9dd8602d3c4743454e2e3992ec" args="()" -->
-virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><b>calcCenterX</b> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#d7d42d9dd8602d3c4743454e2e3992ec">calcCenterX</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="fe4fc3d72f297b222e85bd2a8b9cbf7e"></a><!-- doxytag: member="TenUI::DisplayObject::calcCenterY" ref="fe4fc3d72f297b222e85bd2a8b9cbf7e" args="()" -->
-virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><b>calcCenterY</b> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#fe4fc3d72f297b222e85bd2a8b9cbf7e">calcCenterY</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="ad39452785ef6514b073e36213351f19"></a><!-- doxytag: member="TenUI::DisplayObject::DisplayObject" ref="ad39452785ef6514b073e36213351f19" args="(const shared_ptr&lt; DisplayObject &gt; &amp;p, int x, int y, unsigned int w, unsigned int h, double r=0.0, double s=1.0, float o=1.0)" -->
-&nbsp;</td><td class="memItemRight" valign="bottom"><b>DisplayObject</b> (const shared_ptr&lt; <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> &gt; &amp;p, int x, int y, unsigned int w, unsigned int h, double r=0.0, double s=1.0, float o=1.0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1DisplayObject.html#ad39452785ef6514b073e36213351f19">DisplayObject</a> (const shared_ptr&lt; <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> &gt; &amp;p, int x, int y, unsigned int w, unsigned int h, double r=0.0, double s=1.0, float o=1.0)</td></tr>
 
 <tr><td colspan="2"><br><h2>Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="bec8fe5485d8dec31bdddf5026398392"></a><!-- doxytag: member="TenUI::DisplayObject::objid" ref="bec8fe5485d8dec31bdddf5026398392" args="" -->
@@ -196,23 +200,71 @@ double&nbsp;</td><td class="memItemRight" valign="bottom"><b>bottom</b></td></tr
 
 </table>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="8e4b4d534da04555067fad4b1b1611e9"></a><!-- doxytag: member="TenUI::DisplayObject::~DisplayObject" ref="8e4b4d534da04555067fad4b1b1611e9" args="()" -->
+<a class="anchor" name="ad39452785ef6514b073e36213351f19"></a><!-- doxytag: member="TenUI::DisplayObject::DisplayObject" ref="ad39452785ef6514b073e36213351f19" args="(const shared_ptr&lt; DisplayObject &gt; &amp;p, int x, int y, unsigned int w, unsigned int h, double r=0.0, double s=1.0, float o=1.0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual TenUI::DisplayObject::~DisplayObject           </td>
+          <td class="memname">TenUI::DisplayObject::DisplayObject           </td>
           <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [inline, virtual]</code></td>
+          <td class="paramtype">const shared_ptr&lt; <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&nbsp;</td>
+          <td class="paramname"> <em>r</em> = <code>0.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&nbsp;</td>
+          <td class="paramname"> <em>s</em> = <code>1.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&nbsp;</td>
+          <td class="paramname"> <em>o</em> = <code>1.0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>
-Virtual Destructor 
+Virtual Constructor Implementation Subclasses will<ol type=1>
+<li>implement a "create" function</li><li>override init function </li></ol>
+
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
@@ -233,6 +285,8 @@ Virtual Destructor
 
 <p>
 Subclasses must override this method to initialize self. This method is called on creation. 
+<p>Implemented in <a class="el" href="classTenUI_1_1DisplayObjectContainer.html#4250d71ec618d75daf03e05c5489b568">TenUI::DisplayObjectContainer</a>, and <a class="el" href="classTenUI_1_1UIComponent.html#5f088b3c77400f8f0aa4a159fe7cd1ad">TenUI::UIComponent</a>.</p>
+
 </div>
 </div><p>
 <a class="anchor" name="a033a6ec61926f936e1b8844c1905d6e"></a><!-- doxytag: member="TenUI::DisplayObject::deinit" ref="a033a6ec61926f936e1b8844c1905d6e" args="()=0" -->
@@ -252,6 +306,8 @@ Subclasses must override this method to initialize self. This method is called o
 
 <p>
 Subclasses must override this method to deinitialize self. This method is called before removal from <a class="el" href="classTenUI_1_1TenUI.html">TenUI</a>. 
+<p>Implemented in <a class="el" href="classTenUI_1_1DisplayObjectContainer.html#f3e2e3305ff43e3181d7f65f4bf00f81">TenUI::DisplayObjectContainer</a>.</p>
+
 </div>
 </div><p>
 <a class="anchor" name="1a823f2f7d02eb1c381f7c0f5d97252a"></a><!-- doxytag: member="TenUI::DisplayObject::update" ref="1a823f2f7d02eb1c381f7c0f5d97252a" args="()=0" -->
@@ -271,6 +327,8 @@ Subclasses must override this method to deinitialize self. This method is called
 
 <p>
 Subclasses must override this method to update self. This method is called before drawing occurs. 
+<p>Implemented in <a class="el" href="classTenUI_1_1DisplayObjectContainer.html#81a6ae5eaf45d28f0826cec0b6e6859c">TenUI::DisplayObjectContainer</a>, and <a class="el" href="classTenUI_1_1UIComponent.html#1b3f90cafe0b722b928c967fa7c865c7">TenUI::UIComponent</a>.</p>
+
 </div>
 </div><p>
 <a class="anchor" name="296f20752eb127a338f1d95b48acdcf8"></a><!-- doxytag: member="TenUI::DisplayObject::preDraw" ref="296f20752eb127a338f1d95b48acdcf8" args="()" -->
@@ -309,6 +367,8 @@ Sets up view for drawing. This would include setting the views location, rotatio
 
 <p>
 Subclasses must override this method to specify how to draw itself 
+<p>Implemented in <a class="el" href="classTenUI_1_1DisplayObjectContainer.html#1a6856bbfceb447888e546568d30aaea">TenUI::DisplayObjectContainer</a>.</p>
+
 </div>
 </div><p>
 <a class="anchor" name="ab1e1e209b1f2c173e2eeaea3feb783b"></a><!-- doxytag: member="TenUI::DisplayObject::postDraw" ref="ab1e1e209b1f2c173e2eeaea3feb783b" args="()" -->
@@ -388,6 +448,51 @@ Gets the <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a>
 Sets the <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> that contains this <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>new parent of this <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> </td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
+<a class="anchor" name="c832a78b7b949bed8048a9f5d6a72b5e"></a><!-- doxytag: member="TenUI::DisplayObject::getEnabled" ref="c832a78b7b949bed8048a9f5d6a72b5e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool TenUI::DisplayObject::getEnabled           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Get enable/disable status. <dl class="return" compact><dt><b>Returns:</b></dt><dd>True if enabled, False if disabled </dd></dl>
+
+</div>
+</div><p>
+<a class="anchor" name="32ef5f5f4c3a8802860da0736f7d465f"></a><!-- doxytag: member="TenUI::DisplayObject::setEnabled" ref="32ef5f5f4c3a8802860da0736f7d465f" args="(bool e)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TenUI::DisplayObject::setEnabled           </td>
+          <td>(</td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>e</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Set enable status. If a <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> is disabled, then <a class="el" href="classTenUI_1_1TenUI.html">TenUI</a> will not call the DisplayObject's Update/Drawing functions. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>e</em>&nbsp;</td><td>True if enable, False if disable </td></tr>
   </table>
 </dl>
 
@@ -1076,9 +1181,47 @@ Gets vertical scale.
 Gets vertical scale. 
 </div>
 </div><p>
+<a class="anchor" name="d7d42d9dd8602d3c4743454e2e3992ec"></a><!-- doxytag: member="TenUI::DisplayObject::calcCenterX" ref="d7d42d9dd8602d3c4743454e2e3992ec" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TenUI::DisplayObject::calcCenterX           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [protected, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Recalculates the centerx based on x-coordinate and width dimension. Called whenever x-coordinate or width dimension has been modified. 
+</div>
+</div><p>
+<a class="anchor" name="fe4fc3d72f297b222e85bd2a8b9cbf7e"></a><!-- doxytag: member="TenUI::DisplayObject::calcCenterY" ref="fe4fc3d72f297b222e85bd2a8b9cbf7e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TenUI::DisplayObject::calcCenterY           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [protected, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Recalculates the centery based on y-coordinate and height dimension. Called whenever x-coordinate or width dimension has been modified. 
+</div>
+</div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>TenMilManUI/UI/Core/<a class="el" href="DisplayObject_8h-source.html">DisplayObject.h</a><li>TenMilManUI/UI/Core/DisplayObject.cpp</ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Wed Dec 26 03:54:35 2007 for TenUI by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Jan 5 08:37:41 2008 for TenUI by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>
