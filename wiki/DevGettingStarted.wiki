@@ -3,7 +3,7 @@
 
 = Introduction =
 
-This guide will take a developer through the steps to building and running TenUI and a TenUI Application.
+This guide will take a developer through the steps to building TenUI.
 
 = Prerequisites =
   * Linux Kernel 2.6+
