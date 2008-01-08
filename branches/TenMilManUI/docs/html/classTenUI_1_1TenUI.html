@@ -10,6 +10,7 @@
     <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
     <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
     <li><a href="files.html"><span>Files</span></a></li>
+    <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
   </ul>
 </div>
 <div class="tabs">
@@ -42,13 +43,13 @@ Singleton class that manages <a class="el" href="classTenUI_1_1TenUI.html">TenUI
 
 <tr><td colspan="2"><br><h2>UIComponent Management Methods</h2></td></tr>
 <tr><td colspan="2">Methods for adding, removing, and querying UIComponents. <br><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1TenUI.html#be77358cc1620b5c2b8d25e2f37a3e89">addUIComponent</a> (const shared_ptr&lt; UIComponent &gt; &amp;uicomp)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1TenUI.html#be77358cc1620b5c2b8d25e2f37a3e89">addUIComponent</a> (const shared_ptr&lt; <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> &gt; &amp;uicomp)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1TenUI.html#875359cda8cd1fd34cec441024922dc2">removeUIComponent</a> (DisplayObjectIDType uicompid)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">shared_ptr&lt; UIComponent &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1TenUI.html#786f07fe46adcbbc56d4f9e800ee21dd">getUIComponent</a> (DisplayObjectIDType uicompid)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">shared_ptr&lt; <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1TenUI.html#786f07fe46adcbbc56d4f9e800ee21dd">getUIComponent</a> (DisplayObjectIDType uicompid)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">shared_ptr&lt; UIComponent &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1TenUI.html#bd8c94f0aee12004941e63aecaa6fc38">getUIComponentsAt</a> (int x, int y)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">shared_ptr&lt; <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1TenUI.html#bd8c94f0aee12004941e63aecaa6fc38">getUIComponentsAt</a> (int x, int y)</td></tr>
 
 <tr><td colspan="2"><br><h2>Start Stop Execution Methods</h2></td></tr>
 <tr><td colspan="2">Methods for starting and stopping TenUI <br><br></td></tr>
@@ -58,7 +59,7 @@ Singleton class that manages <a class="el" href="classTenUI_1_1TenUI.html">TenUI
 
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="a7c524adfb84d0484f0690fc127eec65"></a><!-- doxytag: member="TenUI::TenUI::bringUIComponentFront" ref="a7c524adfb84d0484f0690fc127eec65" args="(const shared_ptr&lt; UIComponent &gt; &amp;uicomp)" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>bringUIComponentFront</b> (const shared_ptr&lt; UIComponent &gt; &amp;uicomp)</td></tr>
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>bringUIComponentFront</b> (const shared_ptr&lt; <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> &gt; &amp;uicomp)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="166b46210f750b3304d549ecbde47380"></a><!-- doxytag: member="TenUI::TenUI::bringUIComponentFront" ref="166b46210f750b3304d549ecbde47380" args="(unsigned long uicompid)" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><b>bringUIComponentFront</b> (unsigned long uicompid)</td></tr>
@@ -149,7 +150,7 @@ Returns the GraphicsOptions, currently being used describe the display.
         <tr>
           <td class="memname">void TenUI::TenUI::addUIComponent           </td>
           <td>(</td>
-          <td class="paramtype">const shared_ptr&lt; UIComponent &gt; &amp;&nbsp;</td>
+          <td class="paramtype">const shared_ptr&lt; <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> &gt; &amp;&nbsp;</td>
           <td class="paramname"> <em>uicomp</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
@@ -159,10 +160,10 @@ Returns the GraphicsOptions, currently being used describe the display.
 <div class="memdoc">
 
 <p>
-Adds a UIComponent at the root level.<p>
+Adds a <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> at the root level.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>uicomp</em>&nbsp;</td><td>New UIComponent to be added. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>uicomp</em>&nbsp;</td><td>New <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> to be added. </td></tr>
   </table>
 </dl>
 
@@ -185,10 +186,10 @@ Adds a UIComponent at the root level.<p>
 <div class="memdoc">
 
 <p>
-Removes UIComponent from <a class="el" href="classTenUI_1_1TenUI.html">TenUI</a>. Doesn't have to be at the root level.<p>
+Removes <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> from <a class="el" href="classTenUI_1_1TenUI.html">TenUI</a>. Doesn't have to be at the root level.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>uicompid</em>&nbsp;</td><td><a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> ID of the UIComponent. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>uicompid</em>&nbsp;</td><td><a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> ID of the <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a>. </td></tr>
   </table>
 </dl>
 
@@ -199,7 +200,7 @@ Removes UIComponent from <a class="el" href="classTenUI_1_1TenUI.html">TenUI</a>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">shared_ptr&lt;UIComponent&gt; TenUI::TenUI::getUIComponent           </td>
+          <td class="memname">shared_ptr&lt;<a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a>&gt; TenUI::TenUI::getUIComponent           </td>
           <td>(</td>
           <td class="paramtype">DisplayObjectIDType&nbsp;</td>
           <td class="paramname"> <em>uicompid</em>          </td>
@@ -211,10 +212,10 @@ Removes UIComponent from <a class="el" href="classTenUI_1_1TenUI.html">TenUI</a>
 <div class="memdoc">
 
 <p>
-Gets a pointer to a UIComponent given a <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> ID<p>
+Gets a pointer to a <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> given a <a class="el" href="classTenUI_1_1DisplayObject.html">DisplayObject</a> ID<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>uicompid</em>&nbsp;</td><td>Display Object ID of the UIComponent. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>uicompid</em>&nbsp;</td><td>Display Object ID of the <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a>. </td></tr>
   </table>
 </dl>
 
@@ -225,7 +226,7 @@ Gets a pointer to a UIComponent given a <a class="el" href="classTenUI_1_1Displa
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">shared_ptr&lt;UIComponent&gt; TenUI::TenUI::getUIComponentsAt           </td>
+          <td class="memname">shared_ptr&lt;<a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a>&gt; TenUI::TenUI::getUIComponentsAt           </td>
           <td>(</td>
           <td class="paramtype">int&nbsp;</td>
           <td class="paramname"> <em>x</em>, </td>
@@ -246,7 +247,7 @@ Gets a pointer to a UIComponent given a <a class="el" href="classTenUI_1_1Displa
 <div class="memdoc">
 
 <p>
-Gets a pointer to the top-most UIComponent at a given screen coordinate. "top-most" describes a UIComponent that rendered later then others, and thus rendered ontop of possibly overlapping UIComponents.<p>
+Gets a pointer to the top-most <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> at a given screen coordinate. "top-most" describes a <a class="el" href="classTenUI_1_1UIComponent.html">UIComponent</a> that rendered later then others, and thus rendered ontop of possibly overlapping UIComponents.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>x</em>&nbsp;</td><td>X screen cordinate </td></tr>
@@ -296,7 +297,7 @@ Requests a halt of execution. Execution will stop the next cycle that processes 
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>TenMilManUI/<a class="el" href="TenUI_8h-source.html">TenUI.h</a><li>TenMilManUI/TenUI.cpp</ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Wed Dec 26 03:54:35 2007 for TenUI by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Jan 5 08:37:41 2008 for TenUI by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

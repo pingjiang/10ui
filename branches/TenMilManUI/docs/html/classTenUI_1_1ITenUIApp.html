@@ -10,6 +10,7 @@
     <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
     <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
     <li><a href="files.html"><span>Files</span></a></li>
+    <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
   </ul>
 </div>
 <div class="tabs">
@@ -41,8 +42,7 @@ Subclassed by <a class="el" href="classTenUI_1_1TenUI.html">TenUI</a> Applicatio
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1ITenUIApp.html#c0ccab713233a136784dc4ea4c455c29">init</a> ()=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="d6780fed72de48e0ba551f42b8998c23"></a><!-- doxytag: member="TenUI::ITenUIApp::deinit" ref="d6780fed72de48e0ba551f42b8998c23" args="()=0" -->
-virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><b>deinit</b> ()=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTenUI_1_1ITenUIApp.html#d6780fed72de48e0ba551f42b8998c23">deinit</a> ()=0</td></tr>
 
 <tr><td colspan="2"><div class="groupHeader">Application Loop Methods</div></td></tr>
 <tr><td colspan="2"><div class="groupText">Callback methods called before and during frame rendering. <br><br></div></td></tr>
@@ -113,6 +113,25 @@ Applications should initialize and register UserInput objects to UserInputManage
 Applications should place any initialization code here. Code that initializes and registers UI Controls and Containers can be placed in this method. 
 </div>
 </div><p>
+<a class="anchor" name="d6780fed72de48e0ba551f42b8998c23"></a><!-- doxytag: member="TenUI::ITenUIApp::deinit" ref="d6780fed72de48e0ba551f42b8998c23" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void TenUI::ITenUIApp::deinit           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Applications should place any deinitialization code here. 
+</div>
+</div><p>
 <a class="anchor" name="3981e3c4a6ac9127503f7a149120237e"></a><!-- doxytag: member="TenUI::ITenUIApp::update_preframe" ref="3981e3c4a6ac9127503f7a149120237e" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -153,7 +172,7 @@ Callback method called during frame rendering. This method will be ran in parall
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>TenMilManUI/<a class="el" href="ITenUIApp_8h-source.html">ITenUIApp.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Wed Dec 26 03:54:35 2007 for TenUI by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Jan 5 08:37:41 2008 for TenUI by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>
