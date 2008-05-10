@@ -1,4 +1,4 @@
-#include "StateMachine.h"
+					#include "StateMachine.h"
 
 #include <iostream>
 #include "StateMachineEvent.h"
@@ -11,7 +11,7 @@ namespace TenUI {
 	}
 	StateMachine::~StateMachine(){}
 	
-	bool StateMachine::registerState(const shared_ptr<State>& newState, bool isStartState){
+	bool StateMachine::registerState(const sp<State>& newState, bool isStartState){
 		// Check for duplicate State (by StateID)
 		//StateMapType::iterator it = states.find(newState->getID());
 		//if( it == states.end() ){
@@ -20,6 +20,7 @@ namespace TenUI {
 		//}
 		
 		if(isStartState){
+			cout << "registerState( " << newState->getID() << " " << ((isStartState)?string(" true"): string(" false")) << " )" << endl;
 			if(curState){
 				curState->onExit("");
 			}
@@ -27,11 +28,12 @@ namespace TenUI {
 			startState = curState;
 			curState->onEnter(State::ANY_STATE);
 		}
-		
+
+		cout << "registerState end." << endl;
 		return false;
 	}
 	
-	bool StateMachine::registerTransition(const shared_ptr<Transition>& newTransition){
+	bool StateMachine::registerTransition(const sp<Transition>& newTransition){
 		pair<StateIDType, StateIDType> newFromTo = newTransition->getFromToStateIDPair();	
 		
 		// Check that new transition refers to valid states
@@ -71,20 +73,20 @@ namespace TenUI {
 		return false;
 	}
 	
-	shared_ptr<State> 		StateMachine::getCurState(){return curState;}
-	shared_ptr<Transition> 	StateMachine::getCurTransition(){return curTransition;}
-	shared_ptr<State>		StateMachine::getStartState(){return startState;}
+	sp<State> 		StateMachine::getCurState(){return curState;}
+	sp<Transition> 	StateMachine::getCurTransition(){return curTransition;}
+	sp<State>		StateMachine::getStartState(){return startState;}
 	
-	shared_ptr<State> StateMachine::getState(const StateIDType& stateid){
+	sp<State> StateMachine::getState(const StateIDType& stateid){
 		StateMapType::iterator it = states.find(stateid);
 		if( it != states.end() ){
 			return it->second;
 		}
-		return shared_ptr<State>();
+		return sp<State>();
 	}
 
-	shared_ptr< unordered_set<StateIDType> > StateMachine::getStateIDs(){
-		shared_ptr< unordered_set<StateIDType> > idSet( new unordered_set<StateIDType>() );
+	sp< unordered_set<StateIDType> > StateMachine::getStateIDs(){
+		sp< unordered_set<StateIDType> > idSet( new unordered_set<StateIDType>() );
 		for( StateMapType::iterator it = states.begin();
 			 it != states.end();
 			 ++it){
@@ -93,7 +95,7 @@ namespace TenUI {
 		return idSet;
 	}
 	
-	shared_ptr<Transition> StateMachine::getTransition(const StateIDType& from, const StateIDType&  to){
+	sp<Transition> StateMachine::getTransition(const StateIDType& from, const StateIDType&  to){
 		
 		// Check if from and to states exist
 		if( (from == State::ANY_STATE 	|| states.find(from) != states.end()) && 
@@ -126,18 +128,19 @@ namespace TenUI {
 				}
 		}
 		
-		return shared_ptr<Transition>();
+		return sp<Transition>();
 	}
 	
 	
 	bool StateMachine::requestStateChange(const StateIDType& nextState){
 		if(nextState != State::ANY_STATE){
-			shared_ptr<Transition> transition = getTransition(curState->getID(), nextState);
+			sp<Transition> transition = getTransition(curState->getID(), nextState);
 			if( transition ){
 				changeState(states[nextState], transition );
 				return true;
 			}
 		}
+		cout << "\t requestStateChange denied!" << endl;
 		return false;
 		
 		/*StateMapType::iterator stateit = states.find(nextState);
@@ -180,7 +183,7 @@ namespace TenUI {
 	void StateMachine::updateStateMachine(){
 		if( curTransition ){
 			if( !curTransition->update() ){
-				curTransition = shared_ptr<Transition>();
+				curTransition = sp<Transition>();
 			}
 		}else{
 			if( curState ){
@@ -189,11 +192,12 @@ namespace TenUI {
 		}
 	}
 	
-	void StateMachine::changeState(const shared_ptr<State>& newState, const shared_ptr<Transition>& newTransition){	
-		curState->onExit(newState->getID());
-
+	void StateMachine::changeState(const sp<State>& newState, const sp<Transition>& newTransition){
+		cout << "StateMachine::changeState() " << endl;
 		
-		shared_ptr<State> prevState = curState;
+		curState->onExit(newState->getID());
+		
+		sp<State> prevState = curState;
 		curState = newState;
 		curState->onEnter(prevState->getID());
 
@@ -204,7 +208,7 @@ namespace TenUI {
 		curTransition = newTransition;
 		curTransition->init(prevState->getID(), curState->getID());
 
-		dispatchEvent(shared_ptr<StateMachineEvent>(new StateMachineEvent(prevState->getID(), curState->getID(), StateMachineEvent::CHANGESTATE_EVENTTYPE)));
+		dispatchEvent(sp<StateMachineEvent>(new StateMachineEvent(prevState->getID(), curState->getID(), StateMachineEvent::CHANGESTATE_EVENTTYPE)));
 
 	}
 }

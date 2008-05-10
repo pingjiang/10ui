@@ -3,7 +3,8 @@
 
 #include <map>
 #include <string>
-#include <tr1/memory>
+
+#include <TenMilManUI/Util/SmartPointer.h>
 
 #include "StateMachineGlobals.h"
 #include "StateMachine.h"
@@ -11,8 +12,7 @@
 
 using std::string;
 using std::pair;
-using std::tr1::shared_ptr;
-using std::tr1::weak_ptr;
+
 namespace TenUI {
 
 	class StateMachine;
@@ -20,8 +20,12 @@ namespace TenUI {
 	
 	class Transition {
 	public:
-		Transition(const shared_ptr<StateMachine>& _stateMachine, const StateIDType& _from, const StateIDType& _to);
+		Transition(const StateIDType& _from, const StateIDType& _to);
 		virtual ~Transition();
+		
+		void setStateMachine(const sp<StateMachine>& sm){
+			stateMachine = sm;
+		}
 		
 		virtual void init(const StateIDType& _specificFrom, const StateIDType& _specificTo);
 		// Returns	true, 	if transition is not finish
@@ -33,7 +37,7 @@ namespace TenUI {
 		const StateIDType& getToStateID();
 		
 		const pair<StateIDType, StateIDType>& getFromToStateIDPair();
-	
+			
 	protected:
 		StateIDType 	specificFrom;
 		StateIDType 	specificTo;

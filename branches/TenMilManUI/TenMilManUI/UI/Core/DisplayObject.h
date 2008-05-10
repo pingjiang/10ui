@@ -5,12 +5,8 @@
 #include <string>
 
 #include <tr1/functional>
-#include <tr1/memory>
 
 #include <TenMilManUI/UI/Events/EventDispatcher.h>
-
-using std::tr1::shared_ptr;
-using std::tr1::enable_shared_from_this;
 
 using std::tr1::bind; 
 using std::tr1::function;
@@ -110,12 +106,12 @@ namespace TenUI {
 			/** 
 			 * Gets the DisplayObject that contains this DisplayObject
 			 */
-			shared_ptr<DisplayObject>	 	getParent();
+			sp<DisplayObject>	 	getParent();
 			/** 
 			 * Sets the DisplayObject that contains this DisplayObject
 			 * @param p 	new parent of this DisplayObject
 			 */
-			void 						 	setParent(const shared_ptr<DisplayObject>& p);
+			void 						 	setParent(const sp<DisplayObject>& p);
 		//@}
 		
 		bool 							getEnabled();
@@ -327,7 +323,7 @@ namespace TenUI {
 			DisplayObjectIDType objid;
 			
 			// Hierarchy
-			shared_ptr<DisplayObject> parent;
+			sp<DisplayObject> parent;
 			
 			// Enable/Disable
 			bool enabled;
@@ -367,7 +363,7 @@ namespace TenUI {
 			// Subclasses will 
 			//	1) implement a "create" function 
 			//	2) override init function
-			DisplayObject( const shared_ptr<DisplayObject>& p, int x, int y, unsigned int w, unsigned int h, double r=0.0, double s=1.0, float o=1.0);
+			DisplayObject( const sp<DisplayObject>& p, int x, int y, unsigned int w, unsigned int h, double r=0.0, double s=1.0, float o=1.0);
 			
 	private:
 		static DisplayObjectIDType nextObjectID;

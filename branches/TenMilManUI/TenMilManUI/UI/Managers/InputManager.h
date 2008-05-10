@@ -11,15 +11,14 @@
 #include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
 #include <TenMilManUI/UI/Events/Event.h>
 
+#include <TenMilManUI/Util/SmartPointer.h>
+
 #include <TenMilManUI/UI/Core/UIComponent.h>
 
-#include <tr1/memory>
 #include <tr1/unordered_map>
 #include <tr1/unordered_set>
 #include <vector>
 
-using std::tr1::shared_ptr;
-using std::tr1::dynamic_pointer_cast;
 using std::tr1::unordered_map;
 using std::tr1::unordered_set;
 using std::vector;
@@ -32,13 +31,13 @@ class InputManager : public EventDispatcher, public EventHandler {
 /*           Singleton  		   */
 /***********************************/
 public:
-	static shared_ptr<InputManager> instance();
+	static sp<InputManager> instance();
 private: 
-	static shared_ptr<InputManager> inst;
+	static sp<InputManager> inst;
 	InputManager();
 
 private:
-	typedef unordered_map< unsigned long, shared_ptr<UserInput> > 							InputMapType;
+	typedef unordered_map< unsigned long, sp<UserInput> > 							InputMapType;
 	typedef unordered_map< unsigned long, unordered_map< unsigned long, unsigned long > > 	UID_PointID_UIComp_MapType;
 	typedef unordered_set< unsigned long > UICompIDSet;
 	
@@ -51,13 +50,13 @@ public:
 	bool isQuit();
 	bool update();
 	
-	shared_ptr<UserInput> getInput(unsigned long uid);
+	sp<UserInput> getInput(unsigned long uid);
 	
-	void registerInput( const shared_ptr<UserInput>& ui);
+	void registerInput( const sp<UserInput>& ui);
 	
 
-	shared_ptr< vector< shared_ptr<PointEvent> > > handlePointEvent(const shared_ptr<PointEvent> &pointEvent);
-	void handleInputEvent(const shared_ptr<Event> &evt);
+	sp< vector< sp<PointEvent> > > handlePointEvent(const sp<PointEvent> &pointEvent);
+	void handleInputEvent(const sp<Event> &evt);
 };
 
 }

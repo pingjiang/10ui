@@ -17,54 +17,30 @@ using std::endl;
 namespace TenUI{
 
 	class DraggableButton : public Button {
-		
-
-	/** @name Construction 
-	 */
-	//@{
-	public:
-		/**
-		 * Creates a new Button.
-		 */
-		static shared_ptr<DraggableButton> create();
-	//@}
-				
-	public:
-		virtual ~DraggableButton(){}
-		
-		// UIComponent Identification
-		virtual string getUIComponentName(){
-			return "DraggableButton";
-		}
-
+	DECL_UICOMP(DraggableButton, Button)
+	
 	/***********************************/
-	/*        	  Properties           */
+	/*        	   States              */
 	/***********************************/
-	protected:
-			
+	BEGIN_DECLARE_STATES(DraggableButton)
+		DECLARE_STATE(DownState)
+	END_DECLARE_STATES()
+	
+	/***********************************/
+	/*        	   Styles              */
+	/***********************************/
+	BEGIN_DECLARE_STYLES(Button)
+		DECLARE_STYLE(bgImage)
+		
+		
 	/***********************************/
 	/*              Event  		       */
 	/***********************************/
 	protected:
 		virtual void initEvents();
-		
-	/***********************************/
-	/*          State Machine  		   */
-	/***********************************/
-	protected:
-		virtual void initStates();
-		
-	/***********************************/
-	/*        	    Style  			   */
-	/***********************************/
-	protected:
-		virtual void initStyles();
-
-	/***********************************/
-	/*        Game Loop Methods        */
-	/***********************************/
+				
 	public:
-					
+		virtual ~DraggableButton(){}			
 	};
 }
 

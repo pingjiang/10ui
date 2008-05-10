@@ -13,19 +13,13 @@ using std::endl;
 
 namespace TenUI{
 namespace ButtonStates{
-
-	const string HoverState::STATE_NAME = "Hover";
-	
-	
-	HoverState::HoverState(const shared_ptr<UIComponent>& _uiComp)
-		:UIComponentState(_uiComp,STATE_NAME),initX(-1),initY(-1){}
 	HoverState::~HoverState(){}
 
-	void HoverState::handleMultiPointEvent(const shared_ptr<Event>& uievent ){
-		shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
+	void HoverState::handleMultiPointEvent(const sp<Event>& uievent ){
+		sp<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
 		if(mpe){
 			for(MultiPointEvent::PointEventSetType::iterator it = mpe->getPointEvents()->begin();
-			it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == STATE_NAME;
+			it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == getStateName();
 				++it){
 				
 				// Only worry about the User that owns the UIComponent 
@@ -39,19 +33,21 @@ namespace ButtonStates{
 			}
 		}
 	}
-	void HoverState::handlePointDown(const shared_ptr<Event>& uievent ){
-		shared_ptr<PointEvent> pe = dynamic_pointer_cast<PointEvent>(uievent);
+	void HoverState::handlePointDown(const sp<Event>& uievent ){
+		sp<PointEvent> pe = dynamic_pointer_cast<PointEvent>(uievent);
 		if( pe ){
 			initX = getUIComponent()->getGlobalCenterX() - pe->getX();
 			initY = getUIComponent()->getGlobalCenterY() - pe->getY();
 		}
-		exitState(DownState::STATE_NAME);
+		exitState(DownState::getStateName());
 	}
-	void HoverState::handlePointOut(const shared_ptr<Event>& uievent ){
-		exitState(UpState::STATE_NAME);
+	void HoverState::handlePointOut(const sp<Event>& uievent ){
+		exitState(UpState::getStateName());
 	}
 	
 	void HoverState::onEnter(const StateIDType& prevState){
+		cout << "HoverState::onEnter()" << endl;
+		
 		getUIComponent()->registerHandler(
 				PointEvent::OUT_EVENT_TYPE, 
 				&HoverState::handlePointOut , 

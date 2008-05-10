@@ -5,9 +5,9 @@
 
 #include <tr1/unordered_map>
 #include <tr1/unordered_set>
-#include <tr1/memory>
 
 #include <TenMilManUI/UI/Events/EventDispatcher.h>
+#include <TenMilManUI/Util/SmartPointer.h>
 
 #include "StateMachineGlobals.h"
 #include "State.h"
@@ -17,8 +17,6 @@
 using std::pair;
 using std::tr1::unordered_map;
 using std::tr1::unordered_set;
-using std::tr1::shared_ptr;
-using std::tr1::enable_shared_from_this;
 using std::tr1::hash;
 
 namespace TenUI{
@@ -33,25 +31,25 @@ namespace TenUI{
 		StateMachine();
 		virtual ~StateMachine();
 	
-		shared_ptr<State> 		getCurState();
-		shared_ptr<Transition> 	getCurTransition();
+		sp<State> 		getCurState();
+		sp<Transition> 	getCurTransition();
 		
-		bool 					registerState(const shared_ptr<State>& newState, bool isStartState=false);
-		bool 					registerTransition(const shared_ptr<Transition>& );
+		bool 			registerState(const sp<State>& newState, bool isStartState=false);
+		bool 			registerTransition(const sp<Transition>& );
 	
-		shared_ptr<State>		getStartState();
-		shared_ptr<State> 		getState(const StateIDType& );
-		shared_ptr< unordered_set<StateIDType> > getStateIDs();
-		shared_ptr<Transition> 	getTransition(const StateIDType& , const StateIDType& );
+		sp<State>		getStartState();
+		sp<State> 		getState(const StateIDType& );
+		sp< unordered_set<StateIDType> > getStateIDs();
+		sp<Transition> 	getTransition(const StateIDType& , const StateIDType& );
 		
-		bool 					requestStateChange(const StateIDType& nextState);
+		bool 			requestStateChange(const StateIDType& nextState);
 		
-		void 					updateStateMachine();
+		void 			updateStateMachine();
 		
 	private: 
-		typedef unordered_map< StateIDType, shared_ptr<State>, hash<StateIDType> > StateMapType;
-		typedef unordered_map< pair<StateIDType, StateIDType>, shared_ptr<Transition>, hash_pair<StateIDType> > TransitionMapType;
-		typedef unordered_map< StateIDType, shared_ptr<Transition>, hash<StateIDType> > AnyStateTransitionMapType;
+		typedef unordered_map< StateIDType, sp<State>, hash<StateIDType> > StateMapType;
+		typedef unordered_map< pair<StateIDType, StateIDType>, sp<Transition>, hash_pair<StateIDType> > TransitionMapType;
+		typedef unordered_map< StateIDType, sp<Transition>, hash<StateIDType> > AnyStateTransitionMapType;
 		
 		StateMapType 				states;
 	
@@ -61,14 +59,14 @@ namespace TenUI{
 		AnyStateTransitionMapType 	fromAnyStateStates;
 		AnyStateTransitionMapType 	toAnyStateStates;
 		// super generalization (from and to anystate);
-		shared_ptr<Transition>		anyStateChangeTransition;
+		sp<Transition>		anyStateChangeTransition;
 		
-		shared_ptr<State>			startState;
-		shared_ptr<State> 			curState;
-		shared_ptr<Transition>		curTransition;
+		sp<State>			startState;
+		sp<State> 			curState;
+		sp<Transition>		curTransition;
 		
 	private:
-		void changeState(const shared_ptr<State>& newState, const shared_ptr<Transition>& transition);
+		void changeState(const sp<State>& newState, const sp<Transition>& transition);
 	};
 }
 

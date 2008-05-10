@@ -5,11 +5,10 @@
 #include "PointEvent.h"
 
 #include <TenMilManUI/UI/Core/UIComponent.h>
-#include <tr1/memory>
+#include <TenMilManUI/Util/SmartPointer.h>
+
 #include <vector>
 
-using std::tr1::shared_ptr;
-using std::tr1::dynamic_pointer_cast;
 using std::vector;
 
 namespace TenUI {
@@ -18,20 +17,20 @@ namespace TenUI {
 		
 	class MultiPointEvent : public UserInputEvent {
 	public:
-		typedef vector< shared_ptr<PointEvent> >  PointEventSetType;
+		typedef vector< sp<PointEvent> >  PointEventSetType;
 		static const string MULTIPOINT_EVENT_TYPE;
 		
 	protected:		
-		shared_ptr< vector< shared_ptr<PointEvent> > > ptEvents;
+		sp< vector< sp<PointEvent> > > ptEvents;
 		
 	public:
 		MultiPointEvent(unsigned long _uid, unsigned long _uiid);
 		virtual ~MultiPointEvent();
 
-		void addPointEvent(shared_ptr<PointEvent> ptEvent){
+		void addPointEvent(sp<PointEvent> ptEvent){
 			ptEvents->push_back(ptEvent);
 		}
-		const shared_ptr< vector<shared_ptr<PointEvent> > >& getPointEvents(){
+		const sp< vector<sp<PointEvent> > >& getPointEvents(){
 			return ptEvents;
 		}
 	};

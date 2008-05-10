@@ -31,13 +31,14 @@ namespace TenUI {
 		bool _redraw_sel;
 		
 	protected:
-		vector< shared_ptr<DisplayObject> > children;
+		vector< sp<DisplayObject> > children;
 	
 	protected:
 		// constructor
-		DisplayObjectContainer( const shared_ptr<DisplayObject>& p=shared_ptr<DisplayObject>(), int x=0, int y=0, unsigned int w=0, unsigned int h=0, double rot=0.0, double s=1.0, double o=1.0)
+		DisplayObjectContainer( const sp<DisplayObject>& p=sp<DisplayObject>(), int x=0, int y=0, unsigned int w=0, unsigned int h=0, double rot=0.0, double s=1.0, double o=1.0)
 			:DisplayObject(p,x,y,w,h,rot,s,o){}
 		virtual void init();
+		virtual void initEvents(){}
 		
 	public:	
 		virtual ~DisplayObjectContainer();
@@ -45,9 +46,9 @@ namespace TenUI {
 		/***********************************/
 		/*     Hierarchy Getter/Setters    */
 		/***********************************/  
-		virtual void addChild( shared_ptr<DisplayObject> child );		
-		virtual void removeChild( shared_ptr<DisplayObject> child );
-		virtual const vector< shared_ptr<DisplayObject> >& getChildren();
+		virtual void addChild( sp<DisplayObject> child );		
+		virtual void removeChild( sp<DisplayObject> child );
+		virtual const vector< sp<DisplayObject> >& getChildren();
 
 		/***********************************/
 		/*        Init/Update Methods      */
@@ -70,7 +71,6 @@ namespace TenUI {
 		/*           Draw Methods          */
 		/***********************************/
 		virtual void draw();
-		
 		
 	};
 }

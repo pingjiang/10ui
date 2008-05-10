@@ -2,7 +2,7 @@
 
 namespace TenUI{
 	// load images and converts them into OpenGL textures	
-	shared_ptr<OpenGL_Image> OpenGL_Image::loadFromFile(const string& file) throw(OpenGL_Image_enums::Exceptions) {
+	sp<OpenGL_Image> OpenGL_Image::loadFromFile(const string& file) throw(OpenGL_Image_enums::Exceptions) {
 		unsigned int imgw = 0;
 		unsigned int imgh = 0;
 		unsigned int texw = 0;
@@ -16,7 +16,7 @@ namespace TenUI{
 
 		image = IMG_Load(file.c_str());
 		if(!image){
-			return shared_ptr<OpenGL_Image>();
+			return sp<OpenGL_Image>();
 		}
 		SDL_Surface *tempimg = SDL_DisplayFormatAlpha(image);
 		SDL_FreeSurface(image);
@@ -48,14 +48,14 @@ namespace TenUI{
 
 		if ( image == NULL ) {
 			throw OpenGL_Image_enums::IMAGE_LOAD_FAILED;
-			return shared_ptr<OpenGL_Image>();
+			return sp<OpenGL_Image>();
 		}
 
 		// gl surfaces are upsidedown and rgb
 		tmpbuf = (Uint8 *)malloc(dest->pitch);
 		if ( tmpbuf == NULL ) {
 			fprintf(stderr, "Out of memory\n");
-			return shared_ptr<OpenGL_Image>();
+			return sp<OpenGL_Image>();
 		}
 		int bpp = image->format->BytesPerPixel;
 		rowhi = (Uint8 *)image->pixels;
@@ -116,7 +116,7 @@ namespace TenUI{
 		
 		glBindTexture(GL_TEXTURE_2D, 0);   // 2d texture (x and y size)
 		
-		return shared_ptr<OpenGL_Image>(new OpenGL_Image(imgw, imgh, texid, texw, texh));
+		return sp<OpenGL_Image>(new OpenGL_Image(imgw, imgh, texid, texw, texh));
 	}
 		
 	OpenGL_Image::~OpenGL_Image(){	freeTexture();	}		

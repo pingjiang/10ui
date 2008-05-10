@@ -8,17 +8,13 @@
 namespace TenUI{
 namespace ButtonStates{
 
-	const string DownState::STATE_NAME = "Down";
-
-	DownState::DownState(const shared_ptr<UIComponent>& _uiComp, const string& stateName)
-		:UIComponentState(_uiComp,stateName){}
 	DownState::~DownState(){}
 
-	void DownState::handleMultiPointEvent(const shared_ptr<Event>& uievent ){
-		shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
+	void DownState::handleMultiPointEvent(const sp<Event>& uievent ){
+		sp<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
 		if(mpe){
 			for(MultiPointEvent::PointEventSetType::iterator it = mpe->getPointEvents()->begin();
-			it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == STATE_NAME;
+			it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == getStateName();
 				++it){
 
 				// Only worry about the User that owns the UIComponent 
@@ -32,11 +28,11 @@ namespace ButtonStates{
 			}
 		}
 	}
-	void DownState::handlePointUp(const shared_ptr<Event>& uievent ){
-		exitState(UpState::STATE_NAME);
+	void DownState::handlePointUp(const sp<Event>& uievent ){
+		exitState(UpState::getStateName());
 	}
-	void DownState::handlePointOut(const shared_ptr<Event>& uievent ){
-		exitState(UpState::STATE_NAME);
+	void DownState::handlePointOut(const sp<Event>& uievent ){
+		exitState(UpState::getStateName());
 	}
 	
 	void DownState::onEnter(const StateIDType& prevState){

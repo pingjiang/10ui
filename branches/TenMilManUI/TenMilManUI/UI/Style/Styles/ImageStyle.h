@@ -2,25 +2,31 @@
 #define IMAGESTYLE_H_
 
 #include <TenMilManUI/Graphics/IImage.h>
+#include <TenMilManUI/Util/SmartPointer.h>
 #include <TenMilManUI/TenUI_Globals.h>
+
 #include <string>
-#include <tr1/memory>
 
 using std::string;
-using std::tr1::shared_ptr;
 
 namespace TenUI{
 	class ImageStyle : public Style {
 	public:
-		ImageStyle(const shared_ptr<IImage>& initValue){
+		ImageStyle(const sp<IImage>& initValue){
+			hasInit = true;
 			value = initValue;
 		}
 		ImageStyle(const string& initValue){
-			value = getTenUIGraphics()->loadImage(initValue);
+			urlString = initValue;
+			hasInit = false;
 		}
 		virtual ~ImageStyle(){ }
 		
 		virtual any getValue(){
+			if( !hasInit ){
+				value = getTenUIGraphics()->loadImage(urlString);
+				return value; 
+			}
 			return value;
 		}
 		virtual void setValue(const any& newValue){
@@ -32,20 +38,22 @@ namespace TenUI{
 			}
 			
 
-			shared_ptr<IImage> const* cvalue = any_cast< shared_ptr<IImage> >(&newValue);
+			sp<IImage> const* cvalue = any_cast< sp<IImage> >(&newValue);
 			if(cvalue){
 				value = *cvalue;
 				return;
 			}
 		}
-		virtual shared_ptr<Style> clone(){
-			shared_ptr<ImageStyle> newInst(new ImageStyle(value));
+		virtual sp<Style> clone(){
+			sp<ImageStyle> newInst(new ImageStyle(value));
 			newInst->declaration = declaration;
 			return newInst;
 		}
 		
 	protected: 
-		shared_ptr<IImage> value;
+		bool hasInit;
+		string urlString;
+		sp<IImage> value;
 	};
 }
 

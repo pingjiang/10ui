@@ -97,21 +97,21 @@ namespace TenUI {
 			
 			if(zoomin){
 
-				shared_ptr<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
-				mpe->addPointEvent(shared_ptr<ZoomPointEvent>(new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , uid, uiid,0,5, x,y,shared_ptr<UIComponent>() )));
+				sp<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
+				mpe->addPointEvent(sp<ZoomPointEvent>(new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , uid, uiid,0,5, x,y,sp<UIComponent>() )));
 				dispatchEvent(mpe);
 			}else if(zoomout){
 
-				shared_ptr<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
-				mpe->addPointEvent(shared_ptr<ZoomPointEvent>(new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , uid, uiid,0,-5, x,y,shared_ptr<UIComponent>() )));
+				sp<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
+				mpe->addPointEvent(sp<ZoomPointEvent>(new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , uid, uiid,0,-5, x,y,sp<UIComponent>() )));
 				dispatchEvent(mpe);
-				//dispatchEvent(shared_ptr<ZoomPointEvent>(new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , uid, uiid,0,-5, x,y,shared_ptr<UIComponent>() )));
+				//dispatchEvent(sp<ZoomPointEvent>(new ZoomPointEvent( ZoomPointEvent::ZOOM_EVENT_TYPE , uid, uiid,0,-5, x,y,sp<UIComponent>() )));
 			}else if(evtType != "" && (dx != 0 || dy != 0 || dp)){
-				shared_ptr<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
-				mpe->addPointEvent(shared_ptr<PointEvent>(new PointEvent(evtType, uid, uiid,0,x,y,pressed, shared_ptr<UIComponent>() )));
+				sp<MultiPointEvent> mpe(new MultiPointEvent(uid, uiid));
+				mpe->addPointEvent(sp<PointEvent>(new PointEvent(evtType, uid, uiid,0,x,y,pressed, sp<UIComponent>() )));
 				dispatchEvent(mpe);
 			}else if( quit ){		
-				dispatchEvent(shared_ptr<UserInputEvent>(new UserInputEvent(UserInputEvent::QUIT_EVENT_TYPE, uid, uiid)));
+				dispatchEvent(sp<UserInputEvent>(new UserInputEvent(UserInputEvent::QUIT_EVENT_TYPE, uid, uiid)));
 			}	
 			
 			return true;

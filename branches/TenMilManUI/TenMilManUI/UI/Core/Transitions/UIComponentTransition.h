@@ -10,14 +10,17 @@ namespace TenUI{
 
 	class UIComponentTransition : public Transition {
 	public:
-		UIComponentTransition(const shared_ptr<UIComponent>& _uicomp, const StateIDType& _from, const StateIDType& _to);
+		UIComponentTransition(const StateIDType& _from, const StateIDType& _to);
 		
 		bool update();
 		
-		shared_ptr<UIComponent> getUIComponent();
+		void setUIComponent(const sp<UIComponent>& uicomp);
+		sp<UIComponent> getUIComponent();
+		
+		virtual sp<UIComponentTransition> clone(){return sp<UIComponentTransition>();}
 		
 	protected:
-		shared_ptr<UIComponent> uicomp;
+		sp<UIComponent> uicomp;
 	};
 	
 }

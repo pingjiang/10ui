@@ -15,7 +15,7 @@ namespace TenUI{
 				int _x, 
 				int _y, 
 				bool _pressed, 
-				const shared_ptr<UIComponent>& _target)
+				const sp<UIComponent>& _target)
 		: UserInputEvent(_type,_uid, _uiid), pointid(_pointid),x(_x), y(_y), pressed(_pressed), target(_target){}
 	
 	PointEvent::~PointEvent(){}

@@ -6,10 +6,10 @@ namespace TenUI {
 /***********************************/
 /*           Singleton  		   */
 /***********************************/
-	shared_ptr<InputManager> InputManager::inst;
-	shared_ptr<InputManager> InputManager::instance(){
+	sp<InputManager> InputManager::inst;
+	sp<InputManager> InputManager::instance(){
 		if(!InputManager::inst){
-			InputManager::inst = shared_ptr<InputManager>(new InputManager());
+			InputManager::inst = sp<InputManager>(new InputManager());
 		}
 		return InputManager::inst;
 	}
@@ -52,19 +52,19 @@ namespace TenUI {
 		return false;
 	}
 		
-	shared_ptr<UserInput> InputManager::getInput(unsigned long uiid){
+	sp<UserInput> InputManager::getInput(unsigned long uiid){
 		InputMapType::iterator it = inputs.find(uiid);
 		if(it != inputs.end()){
 			return it->second;
 		}
-		return shared_ptr<UserInput>();
+		return sp<UserInput>();
 	}
 	
-	shared_ptr< vector< shared_ptr<PointEvent> > > InputManager::handlePointEvent(const shared_ptr<PointEvent> &pointEvent){
-		shared_ptr< vector< shared_ptr<PointEvent> > > pointEvents(new vector< shared_ptr<PointEvent> >());
-		shared_ptr<UIComponent> curTarget = getTenUI()->getUIComponentsAt(pointEvent->getX(), pointEvent->getY());
+	sp< vector< sp<PointEvent> > > InputManager::handlePointEvent(const sp<PointEvent> &pointEvent){
+		sp< vector< sp<PointEvent> > > pointEvents(new vector< sp<PointEvent> >());
+		sp<UIComponent> curTarget = getTenUI()->getUIComponentsAt(pointEvent->getX(), pointEvent->getY());
 
-		shared_ptr<UserInput> userInput = getInput(pointEvent->getUserInputID());
+		sp<UserInput> userInput = getInput(pointEvent->getUserInputID());
 
 		// Send In and Out Events
 		if( pointEvent->getType() == PointEvent::MOVE_EVENT_TYPE ){
@@ -79,7 +79,7 @@ namespace TenUI {
 				if(prevTargetID != 0){					
 					if( getTenUI()->getUIComponent(prevTargetID) ){
 						pointEvents->push_back(
-								shared_ptr<PointEvent>(
+								sp<PointEvent>(
 										new PointEvent(	PointEvent::OUT_EVENT_TYPE,
 														pointEvent->getUserID(), 
 														pointEvent->getUserInputID(), 
@@ -99,7 +99,7 @@ namespace TenUI {
 				if( curTarget && curTarget->getObjectID() != 0 && 
 					curTarget->getOwnerUserID() == 0 ){
 					pointEvents->push_back(
-							shared_ptr<PointEvent>(
+							sp<PointEvent>(
 									new PointEvent(	PointEvent::IN_EVENT_TYPE,
 													pointEvent->getUserID(), 
 													pointEvent->getUserInputID(), 
@@ -130,7 +130,7 @@ namespace TenUI {
 						if( targetUID == pointEvent->getPointID() ){							
 							// Send Out Event
 							pointEvents->push_back(
-									shared_ptr<PointEvent>(
+									sp<PointEvent>(
 											new PointEvent(	PointEvent::OUT_EVENT_TYPE,
 															pointEvent->getUserID(), 
 															pointEvent->getUserInputID(), 
@@ -159,7 +159,7 @@ namespace TenUI {
 						if( curTarget->getOwnerUserID() == 0 ){
 							// Send Out Event
 							pointEvents->push_back(
-									shared_ptr<PointEvent>(
+									sp<PointEvent>(
 											new PointEvent(	PointEvent::IN_EVENT_TYPE,
 															pointEvent->getUserID(), 
 															pointEvent->getUserInputID(), 
@@ -190,13 +190,12 @@ namespace TenUI {
 		return pointEvents;
 	}
 	
-	void InputManager::handleInputEvent(const shared_ptr<Event> &evt){
-
-		shared_ptr<PointEvent> pointEvent = dynamic_pointer_cast<PointEvent>(evt);
+	void InputManager::handleInputEvent(const sp<Event> &evt){
+		sp<PointEvent> pointEvent = dynamic_pointer_cast<PointEvent>(evt);
 		if( pointEvent ){
 
-			shared_ptr< vector< shared_ptr<PointEvent> > > eventsToDispatch = handlePointEvent(pointEvent);
-			for( vector< shared_ptr<PointEvent> >::iterator it = eventsToDispatch->begin();
+			sp< vector< sp<PointEvent> > > eventsToDispatch = handlePointEvent(pointEvent);
+			for( vector< sp<PointEvent> >::iterator it = eventsToDispatch->begin();
 				 it != eventsToDispatch->end();
 				 ++it){
 				
@@ -204,26 +203,26 @@ namespace TenUI {
 			}			
 		}else{
 
-			shared_ptr<MultiPointEvent> multiEvent = dynamic_pointer_cast<MultiPointEvent>(evt);
+			sp<MultiPointEvent> multiEvent = dynamic_pointer_cast<MultiPointEvent>(evt);
 			
 			if( multiEvent ){
 
-				unordered_map<UserID_Type, unordered_map<DisplayObjectIDType, shared_ptr<MultiPointEvent> > > userCompEvMap;
+				unordered_map<UserID_Type, unordered_map<DisplayObjectIDType, sp<MultiPointEvent> > > userCompEvMap;
 				
 				for(MultiPointEvent::PointEventSetType::iterator it = multiEvent->getPointEvents()->begin();
 					 it != multiEvent->getPointEvents()->end();
 					 ++it){
 					
-					shared_ptr< vector< shared_ptr<PointEvent> > > pointEvents = handlePointEvent( (*it) );
+					sp< vector< sp<PointEvent> > > pointEvents = handlePointEvent( (*it) );
 					
-					for(vector< shared_ptr<PointEvent> >::iterator pit = pointEvents->begin();
+					for(vector< sp<PointEvent> >::iterator pit = pointEvents->begin();
 						pit != pointEvents->end();
 						++pit){
 						
 						
-						shared_ptr<MultiPointEvent> mpe;
+						sp<MultiPointEvent> mpe;
 						if( !userCompEvMap[(*pit)->getUserID()][(*pit)->getTarget()->getObjectID()] ){
-							mpe = shared_ptr<MultiPointEvent>(new MultiPointEvent(multiEvent->getUserID(), multiEvent->getUserInputID()));
+							mpe = sp<MultiPointEvent>(new MultiPointEvent(multiEvent->getUserID(), multiEvent->getUserInputID()));
 							userCompEvMap[(*pit)->getUserID()][(*pit)->getTarget()->getObjectID()] = mpe;
 						}else{
 							mpe = userCompEvMap[(*pit)->getUserID()][(*pit)->getTarget()->getObjectID()];
@@ -232,11 +231,11 @@ namespace TenUI {
 					}
 				}
 				
-				for(unordered_map< UserID_Type, unordered_map< DisplayObjectIDType, shared_ptr<MultiPointEvent> > >::iterator it2 = userCompEvMap.begin();
+				for(unordered_map< UserID_Type, unordered_map< DisplayObjectIDType, sp<MultiPointEvent> > >::iterator it2 = userCompEvMap.begin();
 					it2 != userCompEvMap.end();
 					++it2){
 					
-					for(unordered_map<unsigned long, shared_ptr<MultiPointEvent> >::iterator mit = it2->second.begin();
+					for(unordered_map<unsigned long, sp<MultiPointEvent> >::iterator mit = it2->second.begin();
 						mit != it2->second.end();
 						++mit){
 						getTenUI()->getUIComponent(mit->first)->handleUserInputEvent(mit->second);
@@ -247,7 +246,8 @@ namespace TenUI {
 		}
 	}
 	
-	void InputManager::registerInput( const shared_ptr<UserInput>& ui){
+	void InputManager::registerInput( const sp<UserInput>& ui){
+				
 		if(ui){
 			inputs[ui->getUserInputID()] = ui;
 		}
