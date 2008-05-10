@@ -31,8 +31,8 @@ namespace TenUI{
 				return;
 			}
 		}
-		virtual shared_ptr<Style> clone(){
-			shared_ptr<ColorStyle> newInst(new ColorStyle(value));
+		virtual sp<Style> clone(){
+			sp<ColorStyle> newInst(new ColorStyle(value));
 			newInst->declaration = declaration;
 			return newInst;
 		}

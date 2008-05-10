@@ -2,6 +2,10 @@
 
 namespace TenUI {
 
-const string UIComponentState::STATE_NAME = "Start";
-
+	void UIComponentState::setUIComponent(const sp<UIComponent>& uicomp){
+		uiComponent = uicomp;
+	}
+	sp<UIComponent> UIComponentState::getUIComponent(){
+		return uiComponent;
+	}
 }

@@ -11,7 +11,7 @@ namespace TenUI{
 				int _zoomAmount,
 				int _x, 
 				int _y, 
-				const shared_ptr<UIComponent>& _target)
+				const sp<UIComponent>& _target)
 		: PointEvent(_type,_uid, _uiid,_pointid,_x, _y, false, _target), zoomAmount(_zoomAmount){}
 	
 	ZoomPointEvent::~ZoomPointEvent(){}

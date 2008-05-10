@@ -25,12 +25,13 @@
 #include <TenMilManUI/Graphics/Util/ColorHex.h>
 #include <TenMilManUI/Graphics/Util/Utils.h>
 
+#include <TenMilManUI/Util/SmartPointer.h>
+
 #include "Font/FontManager_FT2.h"
 
-#include <tr1/memory>
-
 using namespace std;
-using std::tr1::shared_ptr;
+
+
 
 namespace TenUI{
 	
@@ -148,11 +149,11 @@ namespace TenUI{
 		/******************************/
 		/*         Image Methods      */
 		/******************************/ 
-		virtual void drawImage(	const shared_ptr<IImage>& img, 
+		virtual void drawImage(	const sp<IImage>& img, 
 								int x, int y, 
 								float opacity = 1.0,
 								unsigned int width=0, unsigned int height=0);
-		virtual shared_ptr<IImage> loadImage(const string& imageFile);
+		virtual sp<IImage> loadImage(const string& imageFile);
 	
 		/******************************/
 		/*         Text Methods       */

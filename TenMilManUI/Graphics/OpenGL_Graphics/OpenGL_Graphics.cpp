@@ -394,12 +394,12 @@ namespace TenUI{
 				/*         Image Methods      */
 				/******************************/ 
 					//TODO Try default argument based on another argument
-					void OpenGL_Graphics::drawImage(const shared_ptr<IImage>& img, 
+					void OpenGL_Graphics::drawImage(const sp<IImage>& img, 
 													int x, int y, 
 													float opacity,
 													unsigned int width, unsigned int height){
 						if(img != 0){
-							shared_ptr<OpenGL_Image> openglImage = dynamic_pointer_cast<OpenGL_Image>(img);
+							sp<OpenGL_Image> openglImage = dynamic_pointer_cast<OpenGL_Image>(img);
 							
 							if(openglImage){
 								if(height==0){
@@ -438,7 +438,7 @@ namespace TenUI{
 							}
 						}
 					}
-					shared_ptr<IImage> OpenGL_Graphics::loadImage(const string& imageFile){
+					sp<IImage> OpenGL_Graphics::loadImage(const string& imageFile){
 						return OpenGL_Image::loadFromFile(imageFile);
 					}
 			

@@ -2,14 +2,13 @@
 #define HASH_SHARED_PTR_H_
 
 #include <functional>
-#include <tr1/memory>
+#include <TenMilManUI/Util/SmartPointer.h>
 
 using std::unary_function;
-using std::tr1::shared_ptr;
 
 template<class TC>
-struct hash_shared_ptr : public unary_function< const shared_ptr<TC>&, size_t> {
-	size_t operator()(const shared_ptr<TC>& val) const{
+struct hash_shared_ptr : public unary_function< const sp<TC>&, size_t> {
+	size_t operator()(const sp<TC>& val) const{
 		return (size_t) val.get();
 	}
 };

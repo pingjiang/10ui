@@ -3,17 +3,17 @@
 
 #include <string>
 
+
 #include <TenMilManUI/Graphics/Util/ColorHex.h>
 #include <TenMilManUI/Graphics/Util/Utils.h>
+#include <TenMilManUI/Util/SmartPointer.h>
 
 #include "GraphicsOptions.h"
 #include "IGraphics_Enums.h"
 #include "IImage.h"
 
-#include <tr1/memory>
 
 using namespace std;
-using std::tr1::shared_ptr;
 
 namespace TenUI{
 	
@@ -88,11 +88,11 @@ namespace TenUI{
 		/******************************/
 		/*         Image Methods      */
 		/******************************/ 
-		virtual void drawImage(	const shared_ptr<IImage>& img, 
+		virtual void drawImage(	const sp<IImage>& img, 
 								int x, int y, 
 								float opacity = 1.0,
 								unsigned int width=0, unsigned int height=0) = 0;
-		virtual shared_ptr<IImage> loadImage(const string& imageFile) = 0;
+		virtual sp<IImage> loadImage(const string& imageFile) = 0;
 
 		/******************************/
 		/*         Text Methods       */

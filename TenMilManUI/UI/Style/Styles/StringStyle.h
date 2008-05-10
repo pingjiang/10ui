@@ -19,8 +19,8 @@ namespace TenUI{
 				value = any_cast<string>(newValue);
 			}		
 		}
-		virtual shared_ptr<Style> clone(){
-			shared_ptr<StringStyle> newInst(new StringStyle(value));
+		virtual sp<Style> clone(){
+			sp<StringStyle> newInst(new StringStyle(value));
 			newInst->declaration = declaration;
 			return newInst;
 		}

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <tr1/functional>
-#include <tr1/memory>
+#include <TenMilManUI/Util/SmartPointer.h>
 
 #include "StateMachineGlobals.h"
 #include "StateMachine.h"
@@ -11,9 +11,7 @@
 using std::string;
 
 using std::tr1::function;
-using std::tr1::shared_ptr;
-using std::tr1::weak_ptr;
-using std::tr1::enable_shared_from_this;
+
 namespace TenUI {
 	class StateMachine;
 	
@@ -28,17 +26,21 @@ namespace TenUI {
 		 *       	  Public Methods           *
 		 ***************************************/
 	public:
-		State(const shared_ptr<StateMachine>& , const string&);
+		State(const string&);
 		virtual ~State(){}
 	
-		const string& getID(){
+		void setStateMachine(const sp<StateMachine>& sm){
+			stateMachine = sm;
+		}
+		
+		const StateIDType& getID(){
 			return id;
 		}
 		
 		virtual void onEnter(const StateIDType& prevState) = 0;
 		virtual void update() = 0;
 		virtual void onExit(const StateIDType& nextState) = 0;
-	
+		
 		
 		/***************************************
 		*            Helper Functions          *

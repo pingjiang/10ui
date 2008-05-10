@@ -4,10 +4,7 @@
 #include "UserInputEvent.h"
 
 #include <TenMilManUI/UI/Core/UIComponent.h>
-#include <tr1/memory>
-
-using std::tr1::shared_ptr;
-using std::tr1::dynamic_pointer_cast;
+#include <TenMilManUI/Util/SmartPointer.h>
 
 namespace TenUI {
 
@@ -25,10 +22,10 @@ namespace TenUI {
 		unsigned long pointid;
 		int x,y;
 		bool pressed;
-		shared_ptr<UIComponent> target;
+		sp<UIComponent> target;
 		
 	public:
-		PointEvent(const string& _type, unsigned long _uid, unsigned long _uiid, unsigned long _pointid, int _x, int _y, bool _pressed, const shared_ptr<UIComponent>& _target = shared_ptr<UIComponent>());
+		PointEvent(const string& _type, unsigned long _uid, unsigned long _uiid, unsigned long _pointid, int _x, int _y, bool _pressed, const sp<UIComponent>& _target = sp<UIComponent>());
 		virtual ~PointEvent();
 	
 		int getX(){
@@ -45,10 +42,10 @@ namespace TenUI {
 			return pointid;
 		}
 
-		const shared_ptr<UIComponent>& getTarget(){
+		const sp<UIComponent>& getTarget(){
 			return target;
 		}
-		void setTarget(const shared_ptr<UIComponent>& newTarget){
+		void setTarget(const sp<UIComponent>& newTarget){
 			target = newTarget;
 		}
 	};

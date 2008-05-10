@@ -15,19 +15,14 @@ using std::tr1::dynamic_pointer_cast;
 
 namespace TenUI{
 namespace ButtonStates{
-
-	const string UpState::STATE_NAME = "Start";
-
-	UpState::UpState(const shared_ptr<UIComponent>& _uiComp, const string& _stateName)
-		:UIComponentState(_uiComp,_stateName){}
 	UpState::~UpState(){}
 	
-	void UpState::handleMultiPointEvent(const shared_ptr<Event>& uievent ){
+	void UpState::handleMultiPointEvent(const sp<Event>& uievent ){
 		//cout << "handleMultiPointEvent" << endl;
-		shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
+		sp<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
 		if(mpe){
 			for(MultiPointEvent::PointEventSetType::iterator it = mpe->getPointEvents()->begin();
-				it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == STATE_NAME;
+				it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == getStateName();
 				++it){
 				if((*it)->getType() == PointEvent::IN_EVENT_TYPE){
 					handlePointIn((*it));
@@ -38,30 +33,34 @@ namespace ButtonStates{
 		}
 	}
 	
-	void UpState::handlePointIn(const shared_ptr<Event>& uievent ){
-
-		shared_ptr<PointEvent> pte = dynamic_pointer_cast<PointEvent>(uievent);
-		if(pte){					
+	void UpState::handlePointIn(const sp<Event>& uievent ){
+		sp<PointEvent> pte = dynamic_pointer_cast<PointEvent>(uievent);
+		if(pte){
+			
 			// Multi User Support
 			getUIComponent()->setOwnerUserID(pte->getPointID());
 
-			shared_ptr<PointEvent> pe = dynamic_pointer_cast<PointEvent>(uievent);
+			sp<PointEvent> pe = dynamic_pointer_cast<PointEvent>(uievent);
 			if( pe ){
 				initX = getUIComponent()->getGlobalCenterX() - pe->getX();
 				initY = getUIComponent()->getGlobalCenterY() - pe->getY();
 			}
 			
 			if(pte->getPressed()){
-				exitState(DownState::STATE_NAME);
+				exitState(DownState::getStateName());
 			}else{
-				exitState(HoverState::STATE_NAME);
+				exitState(HoverState::getStateName());
 			}
 
+		}else{
+			cout << "\tNOT PointEvent" << endl;
 		}
 
 	}
 	
 	void UpState::onEnter(const StateIDType& prevState){
+		cout << "UpState::onEnter()" << endl;
+		
 		// Multi User Support
 		getUIComponent()->clearOwnerUserID();
 		
@@ -85,7 +84,9 @@ namespace ButtonStates{
 		);
 	}
 	
-	void UpState::onExit(const StateIDType& nextState){		
+	void UpState::onExit(const StateIDType& nextState){	
+		cout << "UpState::onExit()" << endl;
+		
 		getUIComponent()->unregisterHandler(
 				PointEvent::IN_EVENT_TYPE, 
 				dynamic_pointer_cast<UpState>(shared_from_this())

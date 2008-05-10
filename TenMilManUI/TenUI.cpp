@@ -7,6 +7,7 @@ namespace TenUI {
 	 **********************************/
 	TenUI* TenUI::inst = 0;
 	TenUI* TenUI::createInstance(ITenUIApp *app) throw(int){
+		cout << "TenUI::createInstance()" << endl;
 		if(TenUI::inst == 0){
 			TenUI::inst = new TenUI(app);
 		}
@@ -59,9 +60,10 @@ namespace TenUI {
 		running = false;
 		
 	}
-	shared_ptr<UIComponent> TenUI::getUIComponentsAt(int x, int y){
+	sp<UIComponent> TenUI::getUIComponentsAt(int x, int y){
 		if( runSelectionRendering ){
-			vector<shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
+			
+			vector<sp<DisplayObject> >::iterator it = rootObjs.begin();
 			
 			graphics->beginRendering(IGraphicsEnums::SELECTION);
 			while(it != rootObjs.end()){
@@ -79,19 +81,19 @@ namespace TenUI {
 		return allUIComps[graphics->getColorID(x,y)];
 	}
 	
-	shared_ptr<UIComponent> TenUI::getUIComponent(unsigned long uicompid){
-		map<unsigned long , shared_ptr<UIComponent> >::iterator it = allUIComps.find(uicompid);
-		return ( it != allUIComps.end() ) ? it->second : shared_ptr<UIComponent>(); 
+	sp<UIComponent> TenUI::getUIComponent(unsigned long uicompid){
+		map<unsigned long , sp<UIComponent> >::iterator it = allUIComps.find(uicompid);
+		return ( it != allUIComps.end() ) ? it->second : sp<UIComponent>(); 
 	}
 	
 
-	void TenUI::bringUIComponentFront(const shared_ptr<UIComponent>& uicomp){
+	void TenUI::bringUIComponentFront(const sp<UIComponent>& uicomp){
 		bringUIComponentFront(uicomp->getObjectID());
 	}
 	void TenUI::bringUIComponentFront(unsigned long uicompid){
-		vector< shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
+		vector< sp<DisplayObject> >::iterator it = rootObjs.begin();
 		
-		vector< shared_ptr<DisplayObject> >::iterator rootObjit = rootObjs.end(); 
+		vector< sp<DisplayObject> >::iterator rootObjit = rootObjs.end(); 
 		while(it != rootObjs.end()){
 			if( (*it)->getObjectID() == uicompid ){
 				rootObjit = it;
@@ -101,7 +103,7 @@ namespace TenUI {
 		}
 		
 		if(it != rootObjs.end()){
-			shared_ptr<DisplayObject> rootObj = (*rootObjit);
+			sp<DisplayObject> rootObj = (*rootObjit);
 			rootObjs.erase(rootObjit);
 			rootObjs.push_back(rootObj);
 		}
@@ -111,7 +113,7 @@ namespace TenUI {
 	 * 	 		Private Methods	  	  *	 
 	 **********************************/		
 	void TenUI::draw(){
-		vector< shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
+		vector< sp<DisplayObject> >::iterator it = rootObjs.begin();
 		
 		graphics->beginRendering(IGraphicsEnums::DISPLAY);
 		
@@ -125,7 +127,7 @@ namespace TenUI {
 		graphics->endRendering();			
 	}
 	void TenUI::update(){
-		vector< shared_ptr<DisplayObject> >::iterator it = rootObjs.begin();
+		vector< sp<DisplayObject> >::iterator it = rootObjs.begin();
 		while(it != rootObjs.end()){			
 			(*it)->update();
 			++it;
@@ -136,22 +138,22 @@ namespace TenUI {
 		return running;
 	}
 		
-	void TenUI::addUIComponent(const shared_ptr<UIComponent>& uicomp){
-		map<unsigned long , shared_ptr<UIComponent> >::iterator it = allUIComps.find(uicomp->getObjectID());
+	void TenUI::addUIComponent(const sp<UIComponent>& uicomp){
+		map<unsigned long , sp<UIComponent> >::iterator it = allUIComps.find(uicomp->getObjectID());
 		if( it == allUIComps.end() ){
 			rootObjs.insert(rootObjs.begin(), uicomp);
 			addUIComponent_Recursive(uicomp);	
 		}		
 	}
 	
-	void TenUI::addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp){
-		//uicomp->init();
+	void TenUI::addUIComponent_Recursive(const sp<UIComponent>& uicomp){
+		cout << "TenUI::addUIComponent_Recursive(): " << uicomp->getObjectID() << endl;
 		allUIComps[uicomp->getObjectID()] = uicomp;
 		
-		vector< shared_ptr<DisplayObject> >::const_iterator end = uicomp->getChildren().end();
-		vector< shared_ptr<DisplayObject> >::const_iterator it = uicomp->getChildren().begin();
+		vector< sp<DisplayObject> >::const_iterator end = uicomp->getChildren().end();
+		vector< sp<DisplayObject> >::const_iterator it = uicomp->getChildren().begin();
 		while(it != end){
-			shared_ptr<UIComponent> child = dynamic_pointer_cast<UIComponent>(*it);
+			sp<UIComponent> child = dynamic_pointer_cast<UIComponent>(*it);
 			if(child != NULL){
 				addUIComponent_Recursive(child);
 			}

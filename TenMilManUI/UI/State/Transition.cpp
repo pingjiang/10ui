@@ -5,8 +5,7 @@ using std::cout;
 using std::endl;
 
 namespace TenUI {
-	Transition::Transition(const shared_ptr<StateMachine>& _stateMachine, const StateIDType& _from, const StateIDType& _to){
-		stateMachine = _stateMachine;
+	Transition::Transition(const StateIDType& _from, const StateIDType& _to){
 		fromTo.first = _from;
 		fromTo.second = _to;
 	}

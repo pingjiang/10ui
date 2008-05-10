@@ -2,7 +2,6 @@
 #define DOWNSTATE_H_
 
 #include <string>
-#include <tr1/memory>
 
 #include <TenMilManUI/UI/Events/EventHandler.h>
 #include <TenMilManUI/UserInputs/Events/UserInputEvent.h>
@@ -10,23 +9,17 @@
 #include <TenMilManUI/UI/Core/States/UIComponentState.h>
 
 using std::string;
-using std::tr1::shared_ptr;
-using std::tr1::dynamic_pointer_cast;
 
 namespace TenUI{
 namespace ButtonStates{
 	
 	class DownState : public UIComponentState, public EventHandler {
-	public:
-		static const string STATE_NAME;
-		
-	public:
-		DownState(const shared_ptr<UIComponent>& _uiComp, const string& stateName = STATE_NAME);
+	DECL_STATE(DownState, UIComponentState, Down)
 		virtual ~DownState();
 
-		void handleMultiPointEvent(const shared_ptr<Event>& uievent );
-		void handlePointUp(const shared_ptr<Event>& uievent );
-		void handlePointOut(const shared_ptr<Event>& uievent );
+		void handleMultiPointEvent(const sp<Event>& uievent );
+		void handlePointUp(const sp<Event>& uievent );
+		void handlePointOut(const sp<Event>& uievent );
 		
 		virtual void onEnter(const StateIDType& prevState);
 		virtual void onExit(const StateIDType& nextState);

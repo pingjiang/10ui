@@ -2,6 +2,9 @@
 #include "States/UIComponentState.h"
 
 #include <tr1/memory>
+#include <TenMilManUI/UI/Managers/UIComponentManager.h>
+#include <TenMilManUI/UI/Managers/StateManager.h>
+#include <TenMilManUI/UI/Managers/StyleManager.h>
 #include <TenMilManUI/UserInputs/Events/PointEvent.h>
 #include <TenMilManUI/UserInputs/Events/MultiPointEvent.h>
 
@@ -11,9 +14,15 @@ using std::tr1::dynamic_pointer_cast;
 
 namespace TenUI{
 
-	string UIComponent::getUIComponentName(){
-		return "UIComponent";
-	}
+	BEGIN_IMPL_EVENTS(UIComponent)
+		IMPL_EVENT(UIComponent, MultiPointEvent)
+		IMPL_EVENT(UIComponent, PointIn)
+		IMPL_EVENT(UIComponent, PointOut)
+		IMPL_EVENT(UIComponent, PointMove)
+		IMPL_EVENT(UIComponent, PointUp)
+		IMPL_EVENT(UIComponent, PointDown)
+	END_IMPL_EVENTS(UIComponent)
+
 
 	/***********************************/
 	/*              Input  		       */
@@ -26,84 +35,43 @@ namespace TenUI{
 	}
 	UserID_Type UIComponent::clearOwnerUserID(){
 		ownerUserID = 0;
+		return ownerUserID;
 	}
 	
-	void UIComponent::handleUserInputEvent(const shared_ptr<UserInputEvent>& uievent){
-		/*shared_ptr<PointEvent>pte = dynamic_pointer_cast<PointEvent>(uievent);
-		if(pte){		
-			dispatchEvent(pte);
-		}else{
-			shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
-			dispatchEvent(mpe);
-		}*/
+	void UIComponent::handleUserInputEvent(const sp<UserInputEvent>& uievent){
 		dispatchEvent(uievent);
-	}
-
-	/***********************************/
-	/*              Event  		       */
-	/***********************************/
-	void UIComponent::initEvents(){
-		addEventType(MultiPointEvent::MULTIPOINT_EVENT_TYPE);
-		addEventType(PointEvent::DOWN_EVENT_TYPE);
-		addEventType(PointEvent::UP_EVENT_TYPE);
-		addEventType(PointEvent::MOVE_EVENT_TYPE);
-		addEventType(PointEvent::IN_EVENT_TYPE);
-		addEventType(PointEvent::OUT_EVENT_TYPE);
 	}
 	
 	/***********************************/
 	/*          State Machine  		   */
 	/***********************************/
+	StateIDType UIComponent::getStartStateID(){return UIComponentState::getStateName();}
 	const string& UIComponent::getCurState(){
 		return stateMachine->getCurState()->getID();
 	}
-	const shared_ptr<StateMachine>& UIComponent::getStateMachine(){
+	const sp<StateMachine>& UIComponent::getStateMachine(){
 		return stateMachine;
 	}
-
-	void UIComponent::initStates(){
-		stateMachine = shared_ptr<StateMachine>(new StateMachine());
-		
-		stateMachine->registerState(
-				shared_ptr<UIComponentState>(
-						new UIComponentState(
-								dynamic_pointer_cast<UIComponent>(shared_from_this()),
-								UIComponentState::STATE_NAME
-						)
-				), 
-				true);
-
-		// add transitions
-		stateMachine->registerTransition(
-				shared_ptr<UIComponentTransition>(
-						new UIComponentTransition(
-								dynamic_pointer_cast<UIComponent>(shared_from_this()), 
-								State::ANY_STATE, State::ANY_STATE
-						)
-				)
-		);
-	}
-
 	/***********************************/
 	/*              Style              */
 	/***********************************/
 	void UIComponent::setAllStateStyleValue(const string& name, const any& newvalue){
-		for(unordered_map< string, shared_ptr<StyleSet> >::iterator it = stateStyleSetMap->begin();
-			it != stateStyleSetMap->end();
+		for(unordered_map< StateIDType, sp<StyleSet> >::iterator it = stateStyleSetMap.begin();
+			it != stateStyleSetMap.end();
 			++it){
 			it->second->setValue(name, newvalue);	
 		}
 	}
 	any UIComponent::getStateStyleValue(const StateIDType& stateid, const string& name){
-		unordered_map< string, shared_ptr<StyleSet> >::iterator it = stateStyleSetMap->find(stateid);
-		if( it!=stateStyleSetMap->end() ){
+		unordered_map< StateIDType, sp<StyleSet> >::iterator it = stateStyleSetMap.find(stateid);
+		if( it!=stateStyleSetMap.end() ){
 			return it->second->getValue(name);	
 		}
 		return any();
 	}
 	void UIComponent::setStateStyleValue(const StateIDType& stateid, const string& name, const any& newvalue){
-		unordered_map< string, shared_ptr<StyleSet> >::iterator it = stateStyleSetMap->find(stateid);
-		if( it!=stateStyleSetMap->end() ){
+		unordered_map< StateIDType, sp<StyleSet> >::iterator it = stateStyleSetMap.find(stateid);
+		if( it!=stateStyleSetMap.end() ){
 			return it->second->setValue(name, newvalue);	
 		}
 	}	
@@ -112,18 +80,11 @@ namespace TenUI{
 	}
 	void UIComponent::setStyleValue(const string& name, const any& newvalue){
 		return curStyleSet->setValue(name, newvalue);
-	}	
-	void UIComponent::initStyles(){
-		StyleManager::instance()->registerUIComponent( dynamic_pointer_cast<UIComponent>(shared_from_this()), UIComponent::getUIComponentName(), "" );
-	}
-	void UIComponent::loadStyleSetMap(){
-		stateStyleSetMap = StyleManager::instance()->getStateStyleSetMap( getUIComponentName() );
-		curStyleSet = (*stateStyleSetMap)[UIComponentState::STATE_NAME];
 	}
 
 	void UIComponent::setStyleSet(const string& styleSetName){
-		unordered_map< string, shared_ptr<StyleSet> >::iterator it = stateStyleSetMap->find(styleSetName);
-		if( it!=stateStyleSetMap->end() ){
+		unordered_map< string, sp<StyleSet> >::iterator it = stateStyleSetMap.find(styleSetName);
+		if( it!=stateStyleSetMap.end() ){
 			curStyleSet = it->second;
 			redraw();
 		}
@@ -136,23 +97,14 @@ namespace TenUI{
 	void UIComponent::drawSelf(){
 		//DisplayObjectContainer::drawSelf();
 	}
-	void UIComponent::init(){
-		DisplayObjectContainer::init();
-
-		cout << "UIComponent::init()" << endl;
-		
-		clearOwnerUserID();
-		
-		initEvents();
-		initStates();
-		initStyles();
-
-		loadStyleSetMap();
-	}
 	void UIComponent::update(){
 		DisplayObjectContainer::update();
 		
 		stateMachine->updateStateMachine();
 	}
-	
+
+	void UIComponent::init(){
+		DisplayObjectContainer::init();
+	}
+
 }

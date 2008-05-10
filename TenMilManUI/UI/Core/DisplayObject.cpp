@@ -25,7 +25,7 @@ namespace TenUI {
 	/////////////////////////////////////
 	//          Public Methods         //
 	/////////////////////////////////////
-	DisplayObject::DisplayObject(const shared_ptr<DisplayObject>& p, int x, int y, unsigned int w, unsigned int h, double r, double s, float o){
+	DisplayObject::DisplayObject(const sp<DisplayObject>& p, int x, int y, unsigned int w, unsigned int h, double r, double s, float o){
 		objid = ++DisplayObject::nextObjectID;
 		
 		this->parent = p;
@@ -59,8 +59,8 @@ namespace TenUI {
 	/*     Hierarchy Getter/Setters    */
 	/***********************************/
 		DisplayObjectIDType 		DisplayObject::getObjectID()				{ return objid; }
-		shared_ptr<DisplayObject>	DisplayObject::getParent()					{ return this->parent; }
-		void 						DisplayObject::setParent(const shared_ptr<DisplayObject>& p)	{ this->parent = p; }
+		sp<DisplayObject>	DisplayObject::getParent()					{ return this->parent; }
+		void 						DisplayObject::setParent(const sp<DisplayObject>& p)	{ this->parent = p; }
 		bool 						DisplayObject::getEnabled()					{ return enabled; }
 		void 						DisplayObject::setEnabled(bool e)			{ enabled = e; }
 		

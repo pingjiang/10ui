@@ -16,8 +16,7 @@ namespace TenUI {
 	
 	EventDispatcher::~EventDispatcher(){}
 	
-	void EventDispatcher::dispatchEvent(shared_ptr<Event> const & event){
-	
+	void EventDispatcher::dispatchEvent(sp<Event> const & event){		
 		HandlerMapType::iterator it = handlers.find(event->getType()); 
 		if( it != handlers.end() ){
 			curEvent = event;
@@ -29,7 +28,7 @@ namespace TenUI {
 			for_each(begin, end, dispatchEventFunc);
 			
 			for_each(allEvents_Handlers.begin(), allEvents_Handlers.end(), dispatchEventFunc);	
-		}	
+		}
 	}
 	
 	void EventDispatcher::_dispatchEvent( HandlerPairType const &handlerPair ){

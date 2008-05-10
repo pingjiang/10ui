@@ -5,24 +5,23 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <tr1/memory>
 
 #include <TenMilManUI/Graphics/IGraphics.h>
 #include <TenMilManUI/Graphics/GraphicsOptions.h>
 #include <TenMilManUI/ITenUIApp.h>
 #include <TenMilManUI/UI/Core/DisplayObject.h>
 #include <TenMilManUI/UI/Core/UIComponent.h>
-#include <TenMilManUI/UserInputs/UserInput.h>
 #include <TenMilManUI/UI/Managers/InputManager.h>
 
-#define IMPLEMENT_TENUI_APP( tenuiApp ) int main(void) {																			\
-											TenUI::ITenUIApp* app = (TenUI::ITenUIApp*) new TenUI::tenuiApp;							\
-											TenUI::TenUI* tui = TenUI::TenUI::createInstance(app);									\
-											tui->run();																				\
+#include <TenMilManUI/UserInputs/UserInput.h>
+#include <TenMilManUI/Util/SmartPointer.h>
+
+#define IMPLEMENT_TENUI_APP( tenuiApp ) TenUI::TenUI* _temp_inst = TenUI::TenUI::createInstance((TenUI::ITenUIApp*) new TenUI::tenuiApp); \
+										int main(void) {																			\
+											_temp_inst->run();																		\
 											return 0;																				\
 									  	}
 using namespace std;
-using std::tr1::shared_ptr;
 
 namespace TenUI {
 
@@ -81,15 +80,15 @@ namespace TenUI {
 		 */
 		//@{
 		private:
-		    vector< shared_ptr<DisplayObject> > rootObjs;
-		    map<unsigned long , shared_ptr<UIComponent> > allUIComps;
+		    vector< sp<DisplayObject> > rootObjs;
+		    map<unsigned long , sp<UIComponent> > allUIComps;
 		public:
 			/**
 			 * Adds a UIComponent at the root level.
 			 * 
 			 * @param uicomp 	New UIComponent to be added.
 			 */
-			void 						addUIComponent(const shared_ptr<UIComponent>& uicomp);
+			void 						addUIComponent(const sp<UIComponent>& uicomp);
 			/**
 			 * Removes UIComponent from TenUI.  Doesn't have to be at the root level.
 			 * 
@@ -102,7 +101,7 @@ namespace TenUI {
 			 * 
 			 * @param uicompid	Display Object ID of the UIComponent.
 			 */
-			shared_ptr<UIComponent> 	getUIComponent(DisplayObjectIDType uicompid);
+			sp<UIComponent> 	getUIComponent(DisplayObjectIDType uicompid);
 
 			/**
 			 * Gets a pointer to the top-most UIComponent at a given screen coordinate.
@@ -111,10 +110,10 @@ namespace TenUI {
 			 * @param x 		X screen cordinate
 			 * @param y 		Y screen coordinate
 			 */
-			shared_ptr<UIComponent> 	getUIComponentsAt(int x, int y);
+			sp<UIComponent> 	getUIComponentsAt(int x, int y);
 			
 		private:
-			void addUIComponent_Recursive(const shared_ptr<UIComponent>& uicomp);
+			void addUIComponent_Recursive(const sp<UIComponent>& uicomp);
 		//@}			
 		
 		/** @name Start Stop Execution Methods
@@ -153,7 +152,7 @@ namespace TenUI {
 						
 		// TODO Localize to UIComponents.  UIComponent should offer this function to allow reording of children
 		public:		
-			void 						bringUIComponentFront(const shared_ptr<UIComponent>& uicomp);
+			void 						bringUIComponentFront(const sp<UIComponent>& uicomp);
 			void 						bringUIComponentFront(unsigned long uicompid);
 						
 	};

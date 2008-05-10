@@ -6,7 +6,7 @@ namespace TenUI{
 
 	MultiPointEvent::MultiPointEvent(unsigned long _uid, unsigned long _uiid)
 		: UserInputEvent(MULTIPOINT_EVENT_TYPE,_uid, _uiid){
-		ptEvents = shared_ptr<vector< shared_ptr<PointEvent> > >( new vector< shared_ptr<PointEvent> >() );
+		ptEvents = sp<vector< sp<PointEvent> > >( new vector< sp<PointEvent> >() );
 	}
 	
 	MultiPointEvent::~MultiPointEvent(){}

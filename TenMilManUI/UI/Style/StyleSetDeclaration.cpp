@@ -1,16 +1,16 @@
 #include "StyleSetDeclaration.h"	
 namespace TenUI{
 
-	shared_ptr<StyleSet> StyleSetDeclaration::createStyleSet(){
-		shared_ptr< unordered_map<string, shared_ptr<Style> > > newStyleMap( new unordered_map<string, shared_ptr<Style> >() );
-		for( unordered_map<string, shared_ptr<StyleDeclaration> >::iterator it = set.begin(); 
+	sp<StyleSet> StyleSetDeclaration::createStyleSet(){
+		sp< unordered_map<string, sp<Style> > > newStyleMap( new unordered_map<string, sp<Style> >() );
+		for( unordered_map<string, sp<StyleDeclaration> >::iterator it = set.begin(); 
 			 it != set.end();
 			 ++it){
-			shared_ptr<Style> newStyle = it->second->createStyle();
+			sp<Style> newStyle = it->second->createStyle();
 			(*newStyleMap)[newStyle->getName()] = newStyle;
 		}
 		
-		return shared_ptr<StyleSet> (new StyleSet(shared_from_this(), newStyleMap));
+		return sp<StyleSet> (new StyleSet(shared_from_this(), newStyleMap));
 	}
 	
 }

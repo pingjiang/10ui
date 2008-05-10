@@ -2,30 +2,26 @@
 #define UICOMPONENT_STATE_H_
 
 #include <string>
-#include <tr1/memory>
 
 #include <TenMilManUI/UI/Core/UIComponent.h>
 #include <TenMilManUI/UI/State/State.h>
 
+#include "UIComponentStateMacros.h"
+
 using std::string;
-using std::tr1::shared_ptr;
-using std::tr1::dynamic_pointer_cast;
 
 namespace TenUI{
-	
+
+	class UIComponent;
+
 	class UIComponentState : public State {
-	public:
-		static const string STATE_NAME;
+	DECL_STATE(UIComponentState, State, Start)
 		
 	public:
-		UIComponentState(const shared_ptr<UIComponent>& _uiComp,const string& _name)
-			:State(_uiComp->getStateMachine(),_name),
-			uiComponent(_uiComp){}
 		virtual ~UIComponentState(){}
-		
-		shared_ptr<UIComponent> getUIComponent(){
-			return uiComponent;
-		}
+
+		void setUIComponent(const sp<UIComponent>& uicomp);
+		sp<UIComponent> getUIComponent();
 		
 		virtual void onEnter(const StateIDType& prevState){}
 		virtual void onExit(const StateIDType& nextState){}
@@ -33,7 +29,7 @@ namespace TenUI{
 		virtual void update(){}
 		
 	private:
-		shared_ptr<UIComponent> uiComponent;
+		sp<UIComponent> uiComponent;
 		
 	};
 	

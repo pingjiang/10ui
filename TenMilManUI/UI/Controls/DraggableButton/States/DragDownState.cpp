@@ -11,21 +11,16 @@ using std::max;
 using std::min;
 namespace TenUI{
 namespace ButtonStates{
-
-	const string DragDownState::STATE_NAME = "Down";
-
-	DragDownState::DragDownState(const shared_ptr<UIComponent>& _uiComp )
-		:DownState(_uiComp,DragDownState::STATE_NAME),offsetX(-1),offsetY(-1){}
 	DragDownState::~DragDownState(){}
 
 	//TODO Fix the extensibilty of this function 
 	// Ideas: 	UserInputEventHandler/UserInputEventDispatcher (isolate events based on userid)
 	//			UIComponentState::handleMultiPointEvent
-	void DragDownState::handleMultiPointEvent(const shared_ptr<Event>& uievent ){
-		shared_ptr<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
+	void DragDownState::handleMultiPointEvent(const sp<Event>& uievent ){
+		sp<MultiPointEvent> mpe = dynamic_pointer_cast<MultiPointEvent>(uievent);
 		if(mpe){
 			for(MultiPointEvent::PointEventSetType::iterator it = mpe->getPointEvents()->begin();
-			it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == STATE_NAME;
+			it != mpe->getPointEvents()->end() && getUIComponent()->getCurState() == getStateName();
 				++it){
 
 				// Only worry about the User that owns the UIComponent 
@@ -43,8 +38,8 @@ namespace ButtonStates{
 			}
 		}
 	}
-	void DragDownState::handlePointMove(const shared_ptr<Event>& uievent ){
-		shared_ptr<PointEvent> pte = dynamic_pointer_cast<PointEvent>(uievent); 
+	void DragDownState::handlePointMove(const sp<Event>& uievent ){
+		sp<PointEvent> pte = dynamic_pointer_cast<PointEvent>(uievent); 
 		if(pte){
 			getUIComponent()->setGlobalCenterX(pte->getX()+offsetX);
 			getUIComponent()->setGlobalCenterY(pte->getY()+offsetY);
@@ -54,12 +49,12 @@ namespace ButtonStates{
 	void DragDownState::onEnter(const StateIDType& prevState){
 		DownState::onEnter(prevState);
 
-		if( prevState == HoverState::STATE_NAME ){
-			shared_ptr<HoverState> hover = dynamic_pointer_cast<HoverState>(getUIComponent()->getStateMachine()->getState(prevState));
+		if( prevState == HoverState::getStateName() ){
+			sp<HoverState> hover = dynamic_pointer_cast<HoverState>(getUIComponent()->getStateMachine()->getState(prevState));
 			offsetX = hover->getInitiatingX();
 			offsetY = hover->getInitiatingY();
-		}else if( prevState == UpState::STATE_NAME ){
-			shared_ptr<UpState> hover = dynamic_pointer_cast<UpState>(getUIComponent()->getStateMachine()->getState(prevState));
+		}else if( prevState == UpState::getStateName() ){
+			sp<UpState> hover = dynamic_pointer_cast<UpState>(getUIComponent()->getStateMachine()->getState(prevState));
 			offsetX = hover->getInitiatingX();
 			offsetY = hover->getInitiatingY();
 		}
@@ -92,8 +87,8 @@ namespace ButtonStates{
 	}
 	
 
-	void DragDownState::handleZoom(const shared_ptr<Event>& uievent ){
-		shared_ptr<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
+	void DragDownState::handleZoom(const sp<Event>& uievent ){
+		sp<ZoomPointEvent> zpe = dynamic_pointer_cast<ZoomPointEvent>(uievent);
 		if(zpe){
 				cout << "DragDownState" << endl;
 				bool doit = false;

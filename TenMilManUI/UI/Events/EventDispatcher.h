@@ -3,30 +3,31 @@
 
 #include <algorithm>
 #include <functional>
+#include <iostream>
 #include <string>
 
 #include <tr1/functional>
-#include <tr1/memory>
 #include <tr1/unordered_map>
 
 #include <TenMilManUI/Util/hash_shared_ptr.h>
+#include <TenMilManUI/Util/SmartPointer.h>
 
 #include "Event.h"
 #include "EventHandler.h"
 
+using std::cout;
+using std::endl;
+
 using std::pair;
 using std::string;
-
 
 using std::tr1::bind; 
 using std::tr1::function;
 using std::tr1::hash;
 
 using std::tr1::unordered_map;
-using std::tr1::shared_ptr;
 
 using namespace std::tr1::placeholders;
-
 
 namespace TenUI {
 
@@ -36,12 +37,12 @@ namespace TenUI {
 	*			Type Defs 		   *
 	********************************/ 
 	public:
-		typedef const shared_ptr<Event>& 									EventHandlerArgType;
+		typedef const sp<Event>& 											EventHandlerArgType;
 		typedef function< void (EventHandlerArgType) >						EventHandlerFuncType;
 		
 	private:
-		typedef pair< shared_ptr<EventHandler>, EventHandlerFuncType > 		HandlerPairType;
-		typedef unordered_map< 	shared_ptr<EventHandler>, 
+		typedef pair< sp<EventHandler>, EventHandlerFuncType > 		HandlerPairType;
+		typedef unordered_map< 	sp<EventHandler>, 
 								EventHandlerFuncType, 
 								hash_shared_ptr<EventHandler>
 						     > 												HandlerFuncMap;
@@ -52,7 +53,7 @@ namespace TenUI {
 	*		  Member Vars 		   *
 	********************************/
 	private:
-		shared_ptr<Event> curEvent;
+		sp<Event> curEvent;
 		function< void (HandlerPairType const &) > dispatchEventFunc;
 		HandlerMapType handlers;	
 		HandlerFuncMap allEvents_Handlers;
@@ -66,7 +67,7 @@ namespace TenUI {
 		
 	protected:
 		void addEventType( const string& );
-		void dispatchEvent( shared_ptr<Event> const & );	
+		void dispatchEvent( sp<Event> const & );	
 	
 		
 	/*******************************
@@ -77,12 +78,12 @@ namespace TenUI {
 		virtual ~EventDispatcher();
 		
 		template<class TC>
-		void registerAllEventsHandler(void (TC::*f)(EventHandlerArgType), const shared_ptr<TC> & inst) {
+		void registerAllEventsHandler(void (TC::*f)(EventHandlerArgType), const sp<TC> & inst) {
 			allEvents_Handlers[inst] = bind(f, inst, _1 );
 		}
 		
 		template<class TC>
-		void registerHandler(const string& eventType, void (TC::*f)(EventHandlerArgType), const shared_ptr<TC> & inst) {
+		void registerHandler(const string& eventType, void (TC::*f)(EventHandlerArgType), const sp<TC> & inst) {
 			HandlerMapType::iterator it = handlers.find(eventType); 
 			if( it != handlers.end() ){
 				it->second[inst] = bind(f, inst, _1 );
@@ -90,7 +91,7 @@ namespace TenUI {
 		}
 	
 		template<class TC>
-		void unregisterHandler(const string& eventType, const shared_ptr<TC> & inst) {
+		void unregisterHandler(const string& eventType, const sp<TC> & inst) {
 			HandlerMapType::iterator it = handlers.find(eventType); 
 			if( it != handlers.end() ){
 				handlers[eventType].erase(inst);
